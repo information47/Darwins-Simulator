@@ -6,36 +6,30 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    Boolean Jump = false;
+    [SerializeField] float movementSpeed = 3f;
+    [SerializeField] float jumpForce = 5f;
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Bonjour START");
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        // Déplacements hortitaux et verticaux - horizontalInput retourne -1, 0 ou 1
+        rb.velocity = new Vector3(horizontalInput * movementSpeed, rb.velocity.y, verticalInput * movementSpeed);
+
+        // JUMP
+        if (Input.GetButtonDown("Jump"))
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 5, 0);
-        }
-        if (Input.GetKey(KeyCode.Z))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 5);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -5);
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(-5, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            GetComponent<Rigidbody>().velocity = new Vector3(5, 0, 0);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.y);
         }
     }
 }
