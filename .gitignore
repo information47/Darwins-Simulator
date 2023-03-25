@@ -7,7 +7,7 @@ UserSettings
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-#Assets/AssetStoreTools*
+Assets/AssetStoreTools*
 
 # Visual Studio cache directory
 .vs/
