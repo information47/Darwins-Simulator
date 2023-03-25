@@ -1,9 +1,13 @@
+Logs
+UserSettings
+.vs
+
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-Assets/AssetStoreTools*
+#Assets/AssetStoreTools*
 
 # Visual Studio cache directory
 .vs/
