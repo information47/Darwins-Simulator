@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class SavePlayer : MonoBehaviour
 {
+
     [SerializeField] float movementSpeed = 11f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] Transform groundCheck;
@@ -28,22 +29,16 @@ public class PlayerMovement : MonoBehaviour
         // Déplacements hortitaux et verticaux - horizontalInput retourne -1, 0 ou 1
         rb.velocity = new Vector3(horizontalInput * movementSpeed, rb.velocity.y, verticalInput * movementSpeed);
 
-        // Rotation du personnage
-        if (rb.velocity.magnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0f, rb.velocity.z));
-        }
-
         // JUMP
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.y);
         }
-
     }
 
     bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, 0.1f, ground);
     }
+
 }
