@@ -1,6 +1,8 @@
 Logs
 UserSettings
 .vs
+Assembly-CSharp.csproj
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
 
 [Ll]ibrary/
 [Tt]emp/
@@ -42,4 +44,3 @@ sysinfo.txt
 
 # Crashlytics generated file
 Assets/StreamingAssets/crashlytics-build.properties
-
