@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4772594608428404657}
   - component: {fileID: 4772594608428404658}
   - component: {fileID: 4772594608428404659}
-  - component: {fileID: 4772594608428404662}
+  - component: {fileID: 4366879183433671513}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -118,7 +118,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4772594608428404662
+--- !u!114 &4366879183433671513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

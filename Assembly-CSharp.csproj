@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D73CE5E7-9C3A-A555-9F94-CC55F96268CA}</ProjectGuid>
+    <ProjectGuid>{21D0DE5B-9CD1-BF7B-F5E0-4B31C2498EEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -59,8 +59,9 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\NPC.cs" />
     <Compile Include="Assets\Scripts\RandomSpawn.cs" />
-    <Compile Include="Assets\Scripts\SavePlayer.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\SavePlayer.cs" />
+    <Compile Include="Assets\Scripts\RandomFood.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
