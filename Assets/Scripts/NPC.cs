@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NPC : MonoBehaviour
 {
-
+    public FieldOfView fov;
     public float speed; // vitesse de mouvement
     public float changeInterval; // intervalle de temps entre chaque changement de direction aléatoire
 
@@ -20,26 +20,36 @@ public class NPC : MonoBehaviour
         changeInterval = 3.0f; // intervalle de temps par défaut
         lastChangeTime = Time.time; // initialisation du temps du dernier changement de direction aléatoire
         rb = GetComponent<Rigidbody>();
+        // On lie avec le fichier FieldOfView pour le champs de vision
+        fov = FindObjectOfType<FieldOfView>();
     }
 
     // Mise à jour du mouvement
     void Update()
     {
-        // vérifie si l'interval de temps entre chaque changement de direction aléatoire est écoulé
-        if (Time.time - lastChangeTime > changeInterval)
+        if (fov.canSeePlayer) // Si le NPC peut voir de la nourriture
         {
-            // change la direction de mouvement aléatoirement
-            movementDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
-            // met à jour le temps du dernier changement de direction aléatoire
-            lastChangeTime = Time.time;
+            Debug.Log("DIRECTION FOOD");
+            movementDirection = (fov.playerRef.transform.position - transform.position).normalized; // Met à jour la direction de mouvement pour se diriger vers la nourriture
         }
-
-        // lance un rayon devant le NPC pour détecter une collision
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, movementDirection, out hit, 1f))
+        else // Si le NPC ne peut pas voir de la nourriture
         {
-            // si une collision est détectée, change la direction de mouvement aléatoirement
-            movementDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+            // vérifie si l'interval de temps entre chaque changement de direction aléatoire est écoulé
+            if (Time.time - lastChangeTime > changeInterval)
+            {
+                // change la direction de mouvement aléatoirement
+                movementDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+                // met à jour le temps du dernier changement de direction aléatoire
+                lastChangeTime = Time.time;
+            }
+
+            // lance un rayon devant le NPC pour détecter une collision
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, movementDirection, out hit, 1f))
+            {
+                // si une collision est détectée, change la direction de mouvement aléatoirement
+                movementDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+            }
         }
 
         // déplace l'objet dans sa direction de mouvement actuelle avec sa vitesse de mouvement
@@ -51,4 +61,5 @@ public class NPC : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(new Vector3(movementDirection.x, 0f, movementDirection.z));
         }
     }
+
 }

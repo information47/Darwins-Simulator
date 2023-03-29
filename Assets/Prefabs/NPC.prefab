@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4772594608428404658}
   - component: {fileID: 4772594608428404659}
   - component: {fileID: 4366879183433671513}
+  - component: {fileID: 8516150951597994433}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -130,8 +131,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b916286c9b4724696f5ee889f78eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fov: {fileID: 0}
   speed: 0
   changeInterval: 0
+--- !u!114 &8516150951597994433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772594608428404653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87df19decd032744b813790a689cbe89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  angle: 70
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  canSeePlayer: 0
 --- !u!1 &4772594609949346780
 GameObject:
   m_ObjectHideFlags: 0
