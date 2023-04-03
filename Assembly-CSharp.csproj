@@ -61,6 +61,7 @@
     <Compile Include="Assets\Npcscript.cs" />
     <Compile Include="Assets\Scripts\FoodScript.cs" />
     <Compile Include="Assets\Scripts\FoodSpawner.cs" />
+    <Compile Include="Assets\Scripts\FieldOfView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

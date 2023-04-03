@@ -77,7 +77,6 @@ public class NpcScript : MonoBehaviour
         if (other.CompareTag("Food"))
         {
             this.food += 1;
-            Debug.Log("food + 1");
             if (this.food == 2)
             {
                 satiated = true;
