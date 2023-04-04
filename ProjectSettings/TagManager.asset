@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - NPC
+  - Food
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Food
   - Water
   - UI
   - Ground
-  - 
+  - NPC
   - 
   - 
   - 
