@@ -1,11 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NpcScript : MonoBehaviour
 {
+
+    //comportement
+    private FieldOfView fow;
+  
+    private bool See = false;
+
+    //couleur
     private Renderer rend;
+
+    //déplacement
     NavMeshAgent agent;
     public Transform[] waypoint;
     float waypointIndexX;
@@ -20,6 +30,7 @@ public class NpcScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
         rend = GetComponent<Renderer>();
+        fow = GetComponent<FieldOfView>();
     }
     // Update is called once per frame
     void Update()
@@ -27,15 +38,25 @@ public class NpcScript : MonoBehaviour
         if (Vector3.Distance(transform.position, target) < 1)
         {
             IterateWaypointIndex();
-            UpdateDestination();
-            if (satiated == true)
+            SeeTarget();
+            if (See)
             {
-                rend.material.color = Color.cyan;
+                Debug.Log("see!");
+                GoEat(fow.visibleTargets);
+            }
+            else
+            {
+                UpdateDestination();
+                if (satiated == true)
+                {
+                    rend.material.color = Color.cyan;
+                }
             }
         }
     }
 
-    // methodes 
+    // methodes
+    // déplacements
     void UpdateDestination()
     {
         target = new Vector3(waypointIndexX, transform.position.y, waypointIndexZ);
@@ -71,9 +92,23 @@ public class NpcScript : MonoBehaviour
         waypointIndexX = Random.Range(minX, maxX);
         waypointIndexZ = Random.Range(minZ, maxZ);
     }
+    // Champs de vision
+    void SeeTarget()
+    {
+        if (fow.visibleTargets.Count != 0)
+        {
+            See = true;
+        }
+    }
+
+    void GoEat(List<Transform> visibleTargets)
+    {
+        target = new Vector3(visibleTargets[0].position.x, visibleTargets[0].position.y, visibleTargets[0].position.z);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Food"))
         {
             this.food += 1;
@@ -84,4 +119,6 @@ public class NpcScript : MonoBehaviour
 
         }
     }
+
+    
 }

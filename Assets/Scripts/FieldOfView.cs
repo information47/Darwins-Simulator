@@ -6,8 +6,6 @@ using UnityEngine;
 public class FieldOfView : MonoBehaviour
 {
 
-    private Renderer rend;
-    private bool changeColor = false;
 
     public float ViewRadius;
     [Range(0, 360)]
@@ -22,24 +20,15 @@ public class FieldOfView : MonoBehaviour
     private void Start()
     {
         StartCoroutine("FindTargetWithDelay",0.2f);
-        rend = GetComponent<Renderer>();
     }
 
     IEnumerator FindTargetWithDelay(float delay)
     {
         while (true)
         {
-            changeColor = false;   
+
             yield return new WaitForSeconds (delay);
             FindVisibleTargets();
-            if (changeColor)
-            {
-                rend.material.color = Color.white;
-            }
-            else
-            {
-                rend.material.color = Color.red;
-            }
         }
     }
 
@@ -62,7 +51,6 @@ public class FieldOfView : MonoBehaviour
                     if (target != null)
                     {
                         visibleTargets.Add(target);
-                        changeColor = true;
                     }
                 }
             }
