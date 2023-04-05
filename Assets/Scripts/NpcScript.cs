@@ -23,7 +23,10 @@ public class NpcScript : MonoBehaviour
     Vector3 target;
     private int food;
     private bool satiated = false;
-    
+
+    // carateristiques
+    public double energy = 1000;
+
 
 
     private void Start()
@@ -36,6 +39,14 @@ public class NpcScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        energy -= 0.01;
+        if (energy <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+        
+
+
         if (Vector3.Distance(transform.position, target) < 1)
         {
             IterateWaypointIndex();
@@ -112,6 +123,7 @@ public class NpcScript : MonoBehaviour
             if (this.food == 2)
             {
                 satiated = true;
+                energy += 100;
             }
 
         }

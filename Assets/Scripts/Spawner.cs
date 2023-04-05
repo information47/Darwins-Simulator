@@ -7,11 +7,11 @@ public class Spawner : MonoBehaviour
     public GameObject[] listnpc;
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         listnpc = GameObject.FindGameObjectsWithTag("NPC");
 
-        if (listnpc.Length < 10)
+        for (int i=0; i<10; i++)
         {
             Vector3 randomSpawn = new Vector3(Random.Range(0,4), 6 , Random.Range(-12,3));
             Instantiate(npc,randomSpawn,Quaternion.identity);
