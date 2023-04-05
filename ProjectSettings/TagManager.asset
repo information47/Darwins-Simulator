@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Food
+  - Waypoint
   layers:
   - Default
   - TransparentFX

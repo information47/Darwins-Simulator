@@ -7,8 +7,6 @@ public class FoodSpawner : MonoBehaviour
 {
     public GameObject food;
     public GameObject[] listFood;
-    private float timer = 0f;
-    private bool eaten = false;
 
     // Update is called once per frame
     void Update()
@@ -20,12 +18,13 @@ public class FoodSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        if (listFood.Length < 11)
+        if (listFood.Length == 0)
         {
-            eaten = true;
-            Vector3 randomSpawn = new Vector3(Random.Range(-13, 11), 6, Random.Range(-18, 0));
-            Instantiate(food, randomSpawn, Quaternion.identity);
-            timer += Time.deltaTime;
+            for (int i = 0; i < 11; i++)
+            {
+                Vector3 randomSpawn = new Vector3(Random.Range(-13, 11), 6, Random.Range(-18, 0));
+                Instantiate(food, randomSpawn, Quaternion.identity);
+            }
         }
         
     }

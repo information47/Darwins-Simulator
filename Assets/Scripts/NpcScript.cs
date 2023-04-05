@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,12 +20,17 @@ public class NpcScript : MonoBehaviour
 
     //déplacement
     NavMeshAgent agent;
-    public Transform[] waypoint;
-    float waypointIndexX;
-    float waypointIndexZ;
+    public GameObject[] waypoint;
+    public float waypointIndexX;
+    public float waypointIndexZ;
     Vector3 target;
     private int food;
     private bool satiated = false;
+
+    public float minX = 0;
+    public float maxX = 0;
+    public float minZ = 0;
+    public float maxZ = 0;
 
 
     private void Start()
@@ -61,16 +67,14 @@ public class NpcScript : MonoBehaviour
     // déplacements
     void UpdateDestination()
     {
-        target = new Vector3(waypointIndexX, transform.position.y, waypointIndexZ);
+        target = new Vector3(waypointIndexX, this.transform.position.y, waypointIndexZ);
         agent.SetDestination(target);
     }
 
     void IterateWaypointIndex()
     {
-        float minX = 0;
-        float maxX = 0;
-        float minZ = 0;
-        float maxZ = 0;
+        waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
+
         foreach (var waypoint in waypoint)
         {
             if (waypoint.transform.position.x < minX)
