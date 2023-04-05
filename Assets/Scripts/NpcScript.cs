@@ -10,12 +10,18 @@ public class NpcScript : MonoBehaviour
     //comportement
     private FieldOfView fow;
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
     float objectiveX = 0f;
     float objectiveY = 0f;
     float objectiveZ = 0f;
 >>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
+=======
+    float objectiveX = 0f;
+    float objectiveY = 0f;
+    float objectiveZ = 0f;
+>>>>>>> Mirindra
     private bool See = false;
 
     //couleur
@@ -57,12 +63,15 @@ public class NpcScript : MonoBehaviour
         {
             IterateWaypointIndex();
 <<<<<<< HEAD
+<<<<<<< HEAD
             SeeTarget();
             if (See)
             {
                // GoEat(fow.visibleTargets);
             }
 =======
+=======
+>>>>>>> Mirindra
         }
         SeeTarget();
         if (See)
@@ -123,15 +132,21 @@ public class NpcScript : MonoBehaviour
     void SeeTarget()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (fow.visibleTargets.Count != 0)
         {
 =======
+=======
+>>>>>>> Mirindra
         if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
         {
             objectiveX = fow.visibleTargets[0].position.x;
             objectiveY = fow.visibleTargets[0].position.y;
             objectiveZ = fow.visibleTargets[0].position.z;
+<<<<<<< HEAD
 >>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
+=======
+>>>>>>> Mirindra
             See = true;
         }
     }
@@ -139,11 +154,16 @@ public class NpcScript : MonoBehaviour
     void GoEat(List<Transform> visibleTargets)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         target = new Vector3(visibleTargets[0].position.x, visibleTargets[0].position.y, visibleTargets[0].position.z);
 =======
         target = new Vector3(objectiveX, objectiveY, objectiveZ);
         agent.SetDestination(target);
 >>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
+=======
+        target = new Vector3(objectiveX, objectiveY, objectiveZ);
+        agent.SetDestination(target);
+>>>>>>> Mirindra
     }
 
     private void OnTriggerEnter(Collider other)
