@@ -53,6 +53,12 @@
     <UnityVersion>2021.3.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+>>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
     <Compile Include="Assets\Scripts\FoodSpawner.cs" />
     <Compile Include="Assets\Scripts\FieldOfView.cs" />
     <Compile Include="Assets\Scripts\NpcScript.cs" />
