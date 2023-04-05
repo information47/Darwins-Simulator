@@ -9,19 +9,11 @@ public class NpcScript : MonoBehaviour
 
     //comportement
     private FieldOfView fow;
-<<<<<<< HEAD
-<<<<<<< HEAD
-  
-=======
+
     float objectiveX = 0f;
     float objectiveY = 0f;
     float objectiveZ = 0f;
->>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
-=======
-    float objectiveX = 0f;
-    float objectiveY = 0f;
-    float objectiveZ = 0f;
->>>>>>> Mirindra
+    
     private bool See = false;
 
     //couleur
@@ -35,9 +27,14 @@ public class NpcScript : MonoBehaviour
     Vector3 target;
     private int food;
     private bool satiated = false;
+    private Vector3 lastPosition;
+    private float distanceTraveled = 0f;
 
     // carateristiques
     public double energy = 1000;
+    public double vitality = 100;
+
+    private float energyDecreaseRate = 0.1f; // taux de diminution de l'énergie par unité de distance parcourue
 
 
 
@@ -47,31 +44,29 @@ public class NpcScript : MonoBehaviour
         UpdateDestination();
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
+        // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
+
     }
     // Update is called once per frame
     void Update()
     {
-        energy -= 0.01;
-        if (energy <= 0)
+        energyLoss();
+        
+        if (energy <= 300)
+        {
+            vitalityLoss();
+        }
+        
+        if (vitality <=0)
         {
             Destroy(this.gameObject);
         }
-        
 
 
         if (Vector3.Distance(transform.position, target) < 1)
         {
             IterateWaypointIndex();
-<<<<<<< HEAD
-<<<<<<< HEAD
-            SeeTarget();
-            if (See)
-            {
-               // GoEat(fow.visibleTargets);
-            }
-=======
-=======
->>>>>>> Mirindra
+
         }
         SeeTarget();
         if (See)
@@ -82,7 +77,6 @@ public class NpcScript : MonoBehaviour
         else
         {
             UpdateDestination();
->>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
             if (satiated == true)
             {
                 rend.material.color = Color.cyan;
@@ -97,6 +91,22 @@ public class NpcScript : MonoBehaviour
     {
         target = new Vector3(waypointIndexX, transform.position.y, waypointIndexZ);
         agent.SetDestination(target);
+    }
+
+    void energyLoss()
+    {
+        // calcul de la distance parcourue
+        distanceTraveled += Vector3.Distance(transform.position, lastPosition);
+        lastPosition = transform.position;
+
+        // diminution de l'énergie en fonction de la distance parcourue
+        energy -= distanceTraveled * energyDecreaseRate;
+        distanceTraveled = 0f;
+    }
+
+    void vitalityLoss()
+    {
+        this.vitality -= 0.01;
     }
 
     void IterateWaypointIndex()
@@ -131,39 +141,26 @@ public class NpcScript : MonoBehaviour
     // Champs de vision
     void SeeTarget()
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if (fow.visibleTargets.Count != 0)
-        {
-=======
-=======
->>>>>>> Mirindra
+
+
         if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
         {
             objectiveX = fow.visibleTargets[0].position.x;
             objectiveY = fow.visibleTargets[0].position.y;
             objectiveZ = fow.visibleTargets[0].position.z;
-<<<<<<< HEAD
->>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
-=======
->>>>>>> Mirindra
+
             See = true;
         }
     }
 
     void GoEat(List<Transform> visibleTargets)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         target = new Vector3(visibleTargets[0].position.x, visibleTargets[0].position.y, visibleTargets[0].position.z);
-=======
         target = new Vector3(objectiveX, objectiveY, objectiveZ);
         agent.SetDestination(target);
->>>>>>> a2d766cd4c56f9070c33a1477db8d8a215983891
-=======
         target = new Vector3(objectiveX, objectiveY, objectiveZ);
         agent.SetDestination(target);
->>>>>>> Mirindra
     }
 
     private void OnTriggerEnter(Collider other)
