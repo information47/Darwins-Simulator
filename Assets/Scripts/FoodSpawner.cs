@@ -23,7 +23,7 @@ public class FoodSpawner : MonoBehaviour
         if (listFood.Length < 11)
         {
             eaten = true;
-            Vector3 randomSpawn = new Vector3(Random.Range(-9, 8), 6, Random.Range(-17, 0));
+            Vector3 randomSpawn = new Vector3(Random.Range(-13, 11), 6, Random.Range(-18, 0));
             Instantiate(food, randomSpawn, Quaternion.identity);
             timer += Time.deltaTime;
         }
