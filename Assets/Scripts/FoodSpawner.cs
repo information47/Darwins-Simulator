@@ -20,7 +20,7 @@ public class FoodSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        if (listFood.Length < 2)
+        if (listFood.Length < 11)
         {
             eaten = true;
             Vector3 randomSpawn = new Vector3(Random.Range(-9, 8), 6, Random.Range(-17, 0));

@@ -9,7 +9,9 @@ public class NpcScript : MonoBehaviour
 
     //comportement
     private FieldOfView fow;
-  
+    float objectiveX = 0f;
+    float objectiveY = 0f;
+    float objectiveZ = 0f;
     private bool See = false;
 
     //couleur
@@ -38,19 +40,19 @@ public class NpcScript : MonoBehaviour
         if (Vector3.Distance(transform.position, target) < 1)
         {
             IterateWaypointIndex();
-            SeeTarget();
-            if (See)
+        }
+        SeeTarget();
+        if (See)
+        {
+            GoEat(fow.visibleTargets);
+            See = false;
+        }
+        else
+        {
+            UpdateDestination();
+            if (satiated == true)
             {
-                Debug.Log("see!");
-                GoEat(fow.visibleTargets);
-            }
-            else
-            {
-                UpdateDestination();
-                if (satiated == true)
-                {
-                    rend.material.color = Color.cyan;
-                }
+                rend.material.color = Color.cyan;
             }
         }
     }
@@ -95,15 +97,19 @@ public class NpcScript : MonoBehaviour
     // Champs de vision
     void SeeTarget()
     {
-        if (fow.visibleTargets.Count != 0)
+        if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
         {
+            objectiveX = fow.visibleTargets[0].position.x;
+            objectiveY = fow.visibleTargets[0].position.y;
+            objectiveZ = fow.visibleTargets[0].position.z;
             See = true;
         }
     }
 
     void GoEat(List<Transform> visibleTargets)
     {
-        target = new Vector3(visibleTargets[0].position.x, visibleTargets[0].position.y, visibleTargets[0].position.z);
+        target = new Vector3(objectiveX, objectiveY, objectiveZ);
+        agent.SetDestination(target);
     }
 
     private void OnTriggerEnter(Collider other)
