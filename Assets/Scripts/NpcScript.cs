@@ -13,7 +13,7 @@ public class NpcScript : MonoBehaviour
     float objectiveX = 0f;
     float objectiveY = 0f;
     float objectiveZ = 0f;
-    
+
     private bool See = false;
 
     //couleur
@@ -31,10 +31,9 @@ public class NpcScript : MonoBehaviour
     private float distanceTraveled = 0f;
 
     // carateristiques
-    public double energy = 1000;
+    public double energy = 100;
     public double vitality = 100;
-
-    private float energyDecreaseRate = 0.1f; // taux de diminution de l'énergie par unité de distance parcourue
+    private float energyDecreaseRate = 1.0f; // taux de diminution de l'énergie par unité de distance parcourue
 
 
 
@@ -52,9 +51,9 @@ public class NpcScript : MonoBehaviour
     {
         energyLoss();
         
-        if (energy <= 300)
+        if (energy <= 30)
         {
-            vitalityLoss();
+            vitality -= 0.1;
         }
         
         if (vitality <=0)
@@ -66,7 +65,6 @@ public class NpcScript : MonoBehaviour
         if (Vector3.Distance(transform.position, target) < 1)
         {
             IterateWaypointIndex();
-
         }
         SeeTarget();
         if (See)
@@ -104,11 +102,6 @@ public class NpcScript : MonoBehaviour
         distanceTraveled = 0f;
     }
 
-    void vitalityLoss()
-    {
-        this.vitality -= 0.01;
-    }
-
     void IterateWaypointIndex()
     {
         float minX = 0;
@@ -141,8 +134,6 @@ public class NpcScript : MonoBehaviour
     // Champs de vision
     void SeeTarget()
     {
-
-
         if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
         {
             objectiveX = fow.visibleTargets[0].position.x;
@@ -155,10 +146,6 @@ public class NpcScript : MonoBehaviour
 
     void GoEat(List<Transform> visibleTargets)
     {
-
-        target = new Vector3(visibleTargets[0].position.x, visibleTargets[0].position.y, visibleTargets[0].position.z);
-        target = new Vector3(objectiveX, objectiveY, objectiveZ);
-        agent.SetDestination(target);
         target = new Vector3(objectiveX, objectiveY, objectiveZ);
         agent.SetDestination(target);
     }
@@ -169,10 +156,11 @@ public class NpcScript : MonoBehaviour
         if (other.CompareTag("Food"))
         {
             this.food += 1;
+            energy += 10;
+
             if (this.food == 2)
             {
                 satiated = true;
-                energy += 100;
             }
 
         }
