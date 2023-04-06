@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     {
         listnpc = GameObject.FindGameObjectsWithTag("NPC");
 
-        if (listnpc.Length < 1)
+        if (listnpc.Length < 10)
         {
             Vector3 randomSpawn = new Vector3(Random.Range(-13,11), 6 , Random.Range(-18,0));
             Instantiate(npc,randomSpawn,Quaternion.identity);
