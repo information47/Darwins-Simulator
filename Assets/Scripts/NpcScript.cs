@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using Color = UnityEngine.Color;
 
 public class NpcScript : MonoBehaviour
 {
@@ -34,6 +36,7 @@ public class NpcScript : MonoBehaviour
     public double energy = 100;
     public double vitality = 100;
     private float energyDecreaseRate = 1.0f; // taux de diminution de l'énergie par unité de distance parcourue
+    public float size;
 
 
 
@@ -44,12 +47,13 @@ public class NpcScript : MonoBehaviour
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
         // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
-        this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5);
-        Debug.Log(this.transform.localScale);
+        this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
     }
     // Update is called once per frame
     void Update()
     {
+        size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
+
         energyLoss();
         
         if (energy <= 30)
@@ -98,8 +102,12 @@ public class NpcScript : MonoBehaviour
         distanceTraveled += Vector3.Distance(transform.position, lastPosition);
         lastPosition = transform.position;
 
-        // diminution de l'énergie en fonction de la distance parcourue
-        energy -= distanceTraveled * energyDecreaseRate;
+        //calcul de la taille du NPC
+        // float size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
+
+
+        // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
+        energy -= distanceTraveled * energyDecreaseRate * size ;
         distanceTraveled = 0f;
     }
 
