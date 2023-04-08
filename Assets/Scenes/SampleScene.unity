@@ -841,6 +841,8 @@ MonoBehaviour:
   - {fileID: 2084651821}
   - {fileID: 751076940}
   - {fileID: 1665164468}
+  energy: 100
+  vitality: 100
 --- !u!195 &1133506579
 NavMeshAgent:
   m_ObjectHideFlags: 0

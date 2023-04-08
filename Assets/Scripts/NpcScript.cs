@@ -44,7 +44,8 @@ public class NpcScript : MonoBehaviour
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
         // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
-
+        this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5);
+        Debug.Log(this.transform.localScale);
     }
     // Update is called once per frame
     void Update()
