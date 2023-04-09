@@ -836,6 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc143f645f229ea4a90205677b677e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Npc: {fileID: 1133506572}
   waypoint:
   - {fileID: 628175220}
   - {fileID: 2084651821}

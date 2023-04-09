@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ using Color = UnityEngine.Color;
 
 public class NpcScript : MonoBehaviour
 {
+    [SerializeField] private GameObject Npc;
 
     //comportement
     private FieldOfView fow;
@@ -17,6 +19,8 @@ public class NpcScript : MonoBehaviour
     float objectiveZ = 0f;
 
     private bool See = false;
+
+    private const int energyToReproduce = 150;
 
     //couleur
     private Renderer rend;
@@ -33,10 +37,9 @@ public class NpcScript : MonoBehaviour
     private float distanceTraveled = 0f;
 
     // carateristiques
-    public double energy = 100;
-    public double vitality = 100;
+    [SerializeField] private double energy = 100;
+    [SerializeField] private double vitality = 100;
     private float energyDecreaseRate = 1.0f; // taux de diminution de l'énergie par unité de distance parcourue
-    public float size;
 
 
 
@@ -47,18 +50,23 @@ public class NpcScript : MonoBehaviour
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
         // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
-        this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
+        // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
     }
     // Update is called once per frame
     void Update()
     {
-        size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
-
         energyLoss();
         
-        if (energy <= 30)
+        switch(energy)
         {
-            vitality -= 0.1;
+            case  >= energyToReproduce:
+                Reproduce();
+                break;
+
+            case <= 30:
+                vitality -= 0.1;
+                break;
+
         }
         
         if (vitality <=0)
@@ -98,18 +106,29 @@ public class NpcScript : MonoBehaviour
 
     void energyLoss()
     {
+        //calcul de la taille du NPC
+        float size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
+        
         // calcul de la distance parcourue
         distanceTraveled += Vector3.Distance(transform.position, lastPosition);
         lastPosition = transform.position;
 
-        //calcul de la taille du NPC
-        // float size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
 
 
         // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecreaseRate * size ;
         distanceTraveled = 0f;
     }
+
+    void Reproduce()
+    {
+        energy /= 2f; // transfert de la moitié de l'énergie au nouvel enfant
+
+        Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
+        Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
+        Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
+    }
+
 
     void IterateWaypointIndex()
     {
