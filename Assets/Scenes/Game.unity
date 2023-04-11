@@ -513,6 +513,7 @@ GameObject:
   - component: {fileID: 200898856}
   - component: {fileID: 200898855}
   - component: {fileID: 200898859}
+  - component: {fileID: 200898860}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -614,6 +615,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6718e7789408374b84318195da4a137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myUIGroup: {fileID: 200898860}
+--- !u!225 &200898860
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200898854}
+  m_Enabled: 1
+  m_Alpha: 0.99
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &240828135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,7 +1439,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 200898859}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: ShowMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3564,8 +3578,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 200898859}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 5
+        m_MethodName: HideMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

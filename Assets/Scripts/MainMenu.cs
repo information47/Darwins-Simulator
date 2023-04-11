@@ -1,14 +1,27 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public void StartGame(string sceneName)
+    [SerializeField] private CanvasGroup myUIGroup;
+    public void ShowMenu()
     {
-        Debug.Log("Start Game");
-        //SceneManager.LoadScene(sceneName);
+        Debug.Log("ShowMenu");
+        // Rends le Canva visible en mettant sa valeur alpha à 1
+        myUIGroup.alpha = 1;
+        // Stop la mise à jour des objets du jeu en mettant timeScale à 0
+        Time.timeScale = 0f;
+    }
 
+    public void HideMenu()
+    {
+        Debug.Log("HideMenu");
+        // Rends le Canva non visible en mettant sa valeur alpha à 0
+        myUIGroup.alpha = 0;
+        // Relance la mise à jour des objets du jeu en mettant timeScale à 1
+        Time.timeScale = 1f;
     }
 
     public void QuitGame()
@@ -27,29 +40,21 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Sound");
     }
 
-    public void FocusMainCamera()
+    private void Start()
     {
-        // Trouver la caméra principale dans la scène
-        Camera mainCamera = Camera.main;
-
-        // Vérifier si la caméra a été trouvée
-        if (mainCamera != null)
-        {
-            // Changer la position de la caméra actuelle à celle de la caméra principale
-            if (Camera.current != null)
-            {
-                Camera.current.transform.position = mainCamera.transform.position;
-                Camera.current.transform.rotation = mainCamera.transform.rotation;
-            }
-            else
-            {
-                Debug.LogError("La caméra actuelle n'a pas été trouvée.");
-            }
-        }
-        else
-        {
-            Debug.LogError("La caméra principale n'a pas été trouvée dans la scène.");
-        }
+        // Stop le jeu tant que le joueur n'appuis pas sur PLAY
+        Time.timeScale = 0f;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShowMenu();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            HideMenu();
+        }
+    }
 }
