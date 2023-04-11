@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc143f645f229ea4a90205677b677e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Npc: {fileID: 4772594608428404653}
   waypoint:
   - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
   - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
@@ -139,6 +140,8 @@ MonoBehaviour:
   - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
   waypointIndexX: 0
   waypointIndexZ: 0
+  energy: 100
+  vitality: 100
   minX: 0
   maxX: 0
   minZ: 0
