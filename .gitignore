@@ -3,6 +3,7 @@ UserSettings
 .vs
 Assembly-CSharp.csproj
 ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+ProjectSettings/ProjectVersion.txt
 
 [Ll]ibrary/
 [Tt]emp/
