@@ -15,7 +15,7 @@ public class FoodSpawner : MonoBehaviour
         listFood = GameObject.FindGameObjectsWithTag("Food");
         timer++;
         
-        if (timer > 5000)
+        if (timer > 2500)
         {
             timer = 0;
             Spawn();
@@ -27,7 +27,7 @@ public class FoodSpawner : MonoBehaviour
     {
         if (listFood.Length < 10 - listFood.Length )
         {
-            for (int i = 0; i < 10 - listFood.Length; i++)
+            for (int i = 0; i < 15 - listFood.Length; i++)
             {
                 Vector3 randomSpawn = new Vector3(Random.Range(-11, 10), 6, Random.Range(-36, -54));
                 Instantiate(food, randomSpawn, Quaternion.identity);

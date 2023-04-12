@@ -40,7 +40,7 @@ public class NpcScript : MonoBehaviour
     // carateristiques
     [SerializeField] private double energy = 100;
     [SerializeField] private double vitality = 100;
-    private float energyDecreaseRate = 1.0f; // taux de diminution de l'énergie par unité de distance parcourue
+    private float energyDecreaseRate = 0.5f; // taux de diminution de l'énergie par unité de distance parcourue
     public float minX;
     public float maxX;
     public float minZ;
