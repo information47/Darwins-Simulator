@@ -52,7 +52,7 @@ public class NpcScript : MonoBehaviour
         maxX = 10;
         minZ = -54;
         maxZ = -36;
-        waypointIndexX = 11;
+        waypointIndexX = -1;
         waypointIndexZ = -45;
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
@@ -142,26 +142,6 @@ public class NpcScript : MonoBehaviour
     void IterateWaypointIndex()
     {
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
-        UnityEngine.Debug.Log("IterateWaypointIndex");
-/*        foreach (var waypoint in waypoint)
-        {
-            if (waypoint.transform.position.x < minX)
-            {
-                minX = waypoint.transform.position.x;
-            }
-            if (waypoint.transform.position.x > maxX)
-            {
-                maxX = waypoint.transform.position.x;
-            }
-            if (waypoint.transform.position.z < minZ)
-            {
-                minZ = waypoint.transform.position.z;
-            }
-            if (waypoint.transform.position.z > maxZ)
-            {
-                maxZ = waypoint.transform.position.z;
-            }
-        }*/
 
         waypointIndexX = Random.Range(minX, maxX);
         waypointIndexZ = Random.Range(minZ, maxZ);
