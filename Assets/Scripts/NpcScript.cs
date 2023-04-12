@@ -31,7 +31,7 @@ public class NpcScript : MonoBehaviour
     public GameObject[] waypoint;
     public float waypointIndexX;
     public float waypointIndexZ;
-    Vector3 target;
+    public Vector3 target;
     private int food;
     private bool satiated = false;
     private Vector3 lastPosition;
@@ -41,13 +41,19 @@ public class NpcScript : MonoBehaviour
     [SerializeField] private double energy = 100;
     [SerializeField] private double vitality = 100;
     private float energyDecreaseRate = 1.0f; // taux de diminution de l'énergie par unité de distance parcourue
-    public float minX = 0;
-    public float maxX = 0;
-    public float minZ = 0;
-    public float maxZ = 0;
+    public float minX;
+    public float maxX;
+    public float minZ;
+    public float maxZ;
 
     private void Start()
     {
+        minX = -11;
+        maxX = 10;
+        minZ = -54;
+        maxZ = -36;
+        waypointIndexX = 11;
+        waypointIndexZ = -45;
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
         rend = GetComponent<Renderer>();
@@ -136,8 +142,8 @@ public class NpcScript : MonoBehaviour
     void IterateWaypointIndex()
     {
         waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
-
-        foreach (var waypoint in waypoint)
+        UnityEngine.Debug.Log("IterateWaypointIndex");
+/*        foreach (var waypoint in waypoint)
         {
             if (waypoint.transform.position.x < minX)
             {
@@ -155,7 +161,7 @@ public class NpcScript : MonoBehaviour
             {
                 maxZ = waypoint.transform.position.z;
             }
-        }
+        }*/
 
         waypointIndexX = Random.Range(minX, maxX);
         waypointIndexZ = Random.Range(minZ, maxZ);

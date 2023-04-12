@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
 
         for (int i=0; i<2; i++)
         {
-            Vector3 randomSpawn = new Vector3(Random.Range(-13,11), 6 , Random.Range(-18,0));
+            Vector3 randomSpawn = new Vector3(Random.Range(-12,11), 6 , Random.Range(-35,-55));
             Instantiate(npc,randomSpawn,Quaternion.identity);
         }      
     }

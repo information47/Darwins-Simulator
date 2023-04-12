@@ -29,7 +29,7 @@ public class FoodSpawner : MonoBehaviour
         {
             for (int i = 0; i < 10 - listFood.Length; i++)
             {
-                Vector3 randomSpawn = new Vector3(Random.Range(-13, 11), 6, Random.Range(-18, 0));
+                Vector3 randomSpawn = new Vector3(Random.Range(-11, 10), 6, Random.Range(-36, -54));
                 Instantiate(food, randomSpawn, Quaternion.identity);
             }
         }
