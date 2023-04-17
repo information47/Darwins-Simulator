@@ -140,6 +140,7 @@ MonoBehaviour:
   - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
   waypointIndexX: 0
   waypointIndexZ: 0
+  target: {x: 0, y: 0, z: 0}
   energy: 100
   vitality: 100
   minX: 0
