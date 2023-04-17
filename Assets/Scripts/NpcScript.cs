@@ -141,8 +141,6 @@ public class NpcScript : MonoBehaviour
 
     void IterateWaypointIndex()
     {
-        waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
-
         waypointIndexX = Random.Range(minX, maxX);
         waypointIndexZ = Random.Range(minZ, maxZ);
     }
