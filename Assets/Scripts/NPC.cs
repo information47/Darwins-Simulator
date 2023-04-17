@@ -10,6 +10,8 @@ public class NPC : MonoBehaviour
     private float lastChangeTime; // temps du dernier changement de direction aléatoire
     private Vector3 movementDirection; // direction de mouvement actuelle
 
+    public ParticleSystem deathParticles;
+
     Rigidbody rb;
 
     // Initialisation
@@ -50,5 +52,15 @@ public class NPC : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(new Vector3(movementDirection.x, 0f, movementDirection.z));
         }
+    }
+
+    private void Death()
+    {
+        Destroy();
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

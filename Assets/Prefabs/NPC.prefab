@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   changeInterval: 0
+  deathParticles: {fileID: 2512190076224249353, guid: ac95ea76a41482347bc640fd6e053b78, type: 3}
 --- !u!1 &4772594609949346780
 GameObject:
   m_ObjectHideFlags: 0
