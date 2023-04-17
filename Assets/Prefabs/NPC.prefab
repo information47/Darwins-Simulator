@@ -13,10 +13,12 @@ GameObject:
   - component: {fileID: 4772594608428404657}
   - component: {fileID: 4772594608428404658}
   - component: {fileID: 4772594608428404659}
-  - component: {fileID: 4772594608428404662}
-  m_Layer: 0
+  - component: {fileID: 1133506578}
+  - component: {fileID: 1133506579}
+  - component: {fileID: 1133506585}
+  m_Layer: 7
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,9 +30,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4772594608428404653}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.64, y: 6.202828, z: -13.46}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4772594609949346787}
@@ -118,7 +120,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4772594608428404662
+--- !u!114 &1133506578
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,11 +129,67 @@ MonoBehaviour:
   m_GameObject: {fileID: 4772594608428404653}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b916286c9b4724696f5ee889f78eef, type: 3}
+  m_Script: {fileID: 11500000, guid: cc143f645f229ea4a90205677b677e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  changeInterval: 0
+  Npc: {fileID: 4772594608428404653}
+  waypoint:
+  - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
+  - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
+  - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
+  - {fileID: 8881812525463775254, guid: 51eaa9f95ccd7a646be0ee30fe738070, type: 3}
+  waypointIndexX: 0
+  waypointIndexZ: 0
+  target: {x: 0, y: 0, z: 0}
+  energy: 100
+  vitality: 100
+  minX: 0
+  maxX: 0
+  minZ: 0
+  maxZ: 0
+--- !u!195 &1133506579
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772594608428404653}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1133506585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772594608428404653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f5056742242874cb5e27142d9de588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ViewRadius: 5
+  ViewAngle: 77
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  visibleTargets: []
 --- !u!1 &4772594609949346780
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4772594609949346787}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,6 +287,10 @@ PrefabInstance:
     - target: {fileID: 1644779965550953721, guid: 2171676ea69279c45a957835eae3a43c, type: 3}
       propertyPath: m_Name
       value: Lunettes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644779965550953721, guid: 2171676ea69279c45a957835eae3a43c, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2171676ea69279c45a957835eae3a43c, type: 3}
