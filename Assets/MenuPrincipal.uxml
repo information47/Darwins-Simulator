@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement>
+        <ui:VisualElement name="Container" style="top: 275px; height: 158px; -unity-background-image-tint-color: rgb(0, 0, 0); background-color: rgb(245, 202, 202);">
+            <ui:Button text="Button" display-tooltip-when-elided="true" style="height: 46px; width: 90px; -unity-text-align: middle-center; left: 248px; top: 31px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
