@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenuSave : MonoBehaviour
 {
     [SerializeField] private Canvas MenuCanva;
     [SerializeField] private Canvas InterfaceCanva;
