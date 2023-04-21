@@ -60,7 +60,9 @@
     <Compile Include="Assets\Scripts\RandomSpawn.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\NPC.cs" />
-    <Compile Include="Assets\Scripts\SavePlayer.cs" />
+
+    <Compile Include="Assets\Scripts\RandomSpawn.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
