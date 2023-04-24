@@ -12,15 +12,17 @@ public class FoodSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        listFood = GameObject.FindGameObjectsWithTag("Food");
-        timer++;
-        
-        if (timer > 2500)
+        if (Time.timeScale != 0f) // Vérifie si le temps n'est pas en pause
         {
-            timer = 0;
-            Spawn();
-        }
+            listFood = GameObject.FindGameObjectsWithTag("Food");
+            timer++;
 
+            if (timer > 2500)
+            {
+                timer = 0;
+                Spawn();
+            }
+        }
     }
 
     private void Spawn()

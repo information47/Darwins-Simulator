@@ -11,6 +11,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 0f;
         pauseMenu.isPaused = false;
         mainMenu.SetActive(true);
     }
