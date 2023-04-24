@@ -37,6 +37,9 @@ public class NpcScript : MonoBehaviour
     private Vector3 lastPosition;
     private float distanceTraveled = 0f;
 
+    [Range(-1f, 1f)]
+    public float a, t;
+
     // carateristiques
     [SerializeField] private double energy = 100;
     [SerializeField] private double vitality = 100;
@@ -55,7 +58,7 @@ public class NpcScript : MonoBehaviour
         waypointIndexX = -1;
         waypointIndexZ = -45;
         agent = GetComponent<NavMeshAgent>();
-        UpdateDestination();
+        // UpdateDestination();
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
         // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
@@ -84,35 +87,53 @@ public class NpcScript : MonoBehaviour
         }
 
 
-        if (Vector3.Distance(transform.position, target) < 1)
-        {
-            IterateWaypointIndex();
-        }
-        SeeTarget();
-        if (See)
-        {
-            GoEat(fow.visibleTargets);
-            See = false;
-        }
-        else
-        {
-            UpdateDestination();
-            if (satiated == true)
-            {
-                rend.material.color = Color.cyan;
-            }
-            UpdateDestination();
-        }
+        //if (Vector3.Distance(transform.position, target) < 1)
+        //{
+        //    IterateWaypointIndex();
+        //}
+        //SeeTarget();
+        //if (See)
+        //{
+        //    // GoEat(fow.visibleTargets);
+        //    // See = false;
+        //}
+        //else
+        //{
+        //    UpdateDestination();
+        //    if (satiated == true)
+        //    {
+        //        rend.material.color = Color.cyan;
+        //    }
+        //    UpdateDestination();
+        //}
+
+        moveNPC(a, t);
+
+
     }
 
     // methodes
     // déplacements
-    void UpdateDestination()
-    {
-        target = new Vector3(waypointIndexX, this.transform.position.y, waypointIndexZ);
-        agent.SetDestination(target);
-    }
 
+    //void UpdateDestination()
+    //{
+    //    target = new Vector3(waypointIndexX, this.transform.position.y, waypointIndexZ);
+    //    agent.SetDestination(target);
+    //}
+
+    void moveNPC(float v, float h)
+    {
+        // get position
+        Vector3 input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, v * 2f), 1f);
+        input = transform.TransformDirection(input);
+
+        // move NPC
+        transform.position += input * Time.deltaTime;
+
+        // rotation of NPC
+        transform.eulerAngles += new Vector3(0, (h * 90), 0) * Time.deltaTime;
+    }
+    
     void energyLoss()
     {
         //calcul de la taille du NPC
