@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class NeatGenome
 {
- 
+    public List<NodeGene> nodeGenes;
+    public List<ConGene> conGenes;
+
+    public NeatGenome()
+    {
+        nodeGenes = new List<NodeGene>();
+        conGenes = new List<ConGene>();
+    }
+    public NeatGenome(List<NodeGene> nodeGens, List<ConGene> conGens)
+    {
+        nodeGenes = nodeGens;
+        conGenes = conGens;
+    }
 }
 
 public class NodeGene
@@ -17,7 +29,7 @@ public class NodeGene
 
     public TYPE type;
 
-    NodeGene(int givenId, TYPE givenType)
+    public NodeGene(int givenId, TYPE givenType)
     {
         id = givenId;
         type = givenType;
