@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3205272421360593052}
   - component: {fileID: 2530826529600978354}
   - component: {fileID: 7737973546142673169}
+  - component: {fileID: 2301328290159632351}
   m_Layer: 7
   m_Name: CameraBot
   m_TagString: Untagged
@@ -98,6 +99,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thirdPersonCamera: {fileID: 2530826529600978354}
   targets: []
+--- !u!1818360608 &2301328290159632351
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641792161530330389}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0.00999999, y: 0.64000016, z: -2.0900002}
+  m_TranslationOffset: {x: 0.00999999, y: 1.3200002, z: -1.9200002}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 4772594608428404663}
+    weight: 1
 --- !u!1 &4772594608428404653
 GameObject:
   m_ObjectHideFlags: 0

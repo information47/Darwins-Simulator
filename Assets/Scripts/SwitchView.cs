@@ -19,10 +19,10 @@ public class SwitchView : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            currentTargetIndex = (currentTargetIndex + 1) % targets.Length;
-            Transform target = targets[currentTargetIndex].transform;
-            thirdPersonCamera.transform.position = target.Find("Camera Pivot").position;
-            thirdPersonCamera.transform.rotation = target.Find("Camera Pivot").rotation;
+            currentTargetIndex = (currentTargetIndex + 1) % targets.Length; Debug.Log(" 1 currentTargetIndex : " + currentTargetIndex);
+            Transform target = targets[currentTargetIndex].transform; Debug.Log("2 Target :" + target );
+            thirdPersonCamera.transform.position = target.Find("Camera Pivot").position; Debug.Log( " 3 targets: " + targets );
+            thirdPersonCamera.transform.rotation = target.Find("Camera Pivot").rotation; Debug.Log(" 4 thirdPersonCamera.transform.rotation :" + thirdPersonCamera);
         }
     }
 }
