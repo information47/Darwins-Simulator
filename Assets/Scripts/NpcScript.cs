@@ -23,6 +23,16 @@ public class NpcScript : MonoBehaviour
 
     private const int energyToReproduce = 150;
 
+    public NeatNetwork myNetwork;
+
+    public int inputNodes, outputNodes, hiddenNodes;
+    private float[] sensors;
+
+
+
+    public float surviveTime = 0;
+
+
     //couleur
     private Renderer rend;
 
@@ -63,6 +73,9 @@ public class NpcScript : MonoBehaviour
         fow = GetComponent<FieldOfView>();
         // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
+
+        sensors = new float[inputNodes];
+
     }
     // Update is called once per frame
     void Update()
