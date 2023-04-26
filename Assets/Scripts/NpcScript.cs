@@ -7,6 +7,7 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.AI;
 using Color = UnityEngine.Color;
+using Debug = UnityEngine.Debug;
 
 public class NpcScript : MonoBehaviour
 {
@@ -19,13 +20,19 @@ public class NpcScript : MonoBehaviour
     float objectiveY = 0f;
     float objectiveZ = 0f;
 
+    private float hitDivider = 20f;
+    private float rayDistance = 40f;
+
     private bool See = false;
 
     private const int energyToReproduce = 150;
 
     public NeatNetwork myNetwork;
 
-    public int inputNodes, outputNodes, hiddenNodes;
+    public int inputNodes = 3;
+    public int outputNodes = 2;
+    public int hiddenNodes = 0;
+    
     private float[] sensors;
 
 
@@ -37,13 +44,9 @@ public class NpcScript : MonoBehaviour
     private Renderer rend;
 
     //déplacement
-    NavMeshAgent agent;
-    public GameObject[] waypoint;
-    public float waypointIndexX;
-    public float waypointIndexZ;
+
     public Vector3 target;
     private int food;
-    private bool satiated = false;
     private Vector3 lastPosition;
     private float distanceTraveled = 0f;
 
@@ -54,24 +57,12 @@ public class NpcScript : MonoBehaviour
     [SerializeField] private double energy = 100;
     [SerializeField] private double vitality = 100;
     private float energyDecreaseRate = 0.5f; // taux de diminution de l'énergie par unité de distance parcourue
-    public float minX;
-    public float maxX;
-    public float minZ;
-    public float maxZ;
 
     private void Start()
     {
-        minX = -11;
-        maxX = 10;
-        minZ = -54;
-        maxZ = -36;
-        waypointIndexX = -1;
-        waypointIndexZ = -45;
-        agent = GetComponent<NavMeshAgent>();
-        // UpdateDestination();
+        myNetwork = new NeatNetwork(inputNodes, outputNodes, hiddenNodes);
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
-        // agent.speed = agent.speed * 5;   // modifie la vitesse du NPC
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
 
         sensors = new float[inputNodes];
@@ -81,10 +72,10 @@ public class NpcScript : MonoBehaviour
     void Update()
     {
         energyLoss();
-        
-        switch(energy)
+
+        switch (energy)
         {
-            case  >= energyToReproduce:
+            case >= energyToReproduce:
                 Reproduce();
                 break;
 
@@ -93,32 +84,33 @@ public class NpcScript : MonoBehaviour
                 break;
 
         }
-        
-        if (vitality <=0)
+
+        if (vitality <= 0)
         {
             Destroy(this.gameObject);
         }
+
+        // fetch datas from sensors
+        InputSensors();
+
+        // send sensors data as input in the network
+        float[] outputs = myNetwork.FeedForwardNetwork(sensors);
+
+        moveNPC(outputs[0], outputs[1]);
+
 
 
         //if (Vector3.Distance(transform.position, target) < 1)
         //{
         //    IterateWaypointIndex();
         //}
-        //SeeTarget();
+        SeeTarget();
         //if (See)
         //{
         //    // GoEat(fow.visibleTargets);
         //    // See = false;
         //}
-        //else
-        //{
-        //    UpdateDestination();
-        //    if (satiated == true)
-        //    {
-        //        rend.material.color = Color.cyan;
-        //    }
-        //    UpdateDestination();
-        //}
+      
 
         moveNPC(a, t);
 
@@ -126,13 +118,7 @@ public class NpcScript : MonoBehaviour
     }
 
     // methodes
-    // déplacements
 
-    //void UpdateDestination()
-    //{
-    //    target = new Vector3(waypointIndexX, this.transform.position.y, waypointIndexZ);
-    //    agent.SetDestination(target);
-    //}
 
     void moveNPC(float v, float h)
     {
@@ -173,13 +159,7 @@ public class NpcScript : MonoBehaviour
     }
 
 
-    void IterateWaypointIndex()
-    {
-        waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
-
-        waypointIndexX = Random.Range(minX, maxX);
-        waypointIndexZ = Random.Range(minZ, maxZ);
-    }
+    
     // Champs de vision
     void SeeTarget()
     {
@@ -192,10 +172,66 @@ public class NpcScript : MonoBehaviour
         }
     }
 
-    void GoEat(List<Transform> visibleTargets)
+    private void InputSensors()
     {
-        target = new Vector3(objectiveX, objectiveY, objectiveZ);
-        agent.SetDestination(target);
+        Ray r = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                Debug.Log("see wall");
+
+                sensors[0] = hit.distance / hitDivider;
+                Debug.DrawLine(r.origin, hit.point, Color.white);
+            }
+        }
+        r.direction = (transform.forward + transform.right);
+        if (Physics.Raycast(r, out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                sensors[1] = hit.distance / hitDivider;
+                Debug.DrawLine(r.origin, hit.point, Color.white);
+            }
+        }
+        r.direction = (transform.forward - transform.right);
+        if (Physics.Raycast(r, out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                sensors[2] = hit.distance / hitDivider;
+                Debug.DrawLine(r.origin, hit.point, Color.white);
+            }
+        }
+
+        //r.direction = (transform.forward);
+        //if (Physics.Raycast(r, out hit, rayDistance))
+        //{
+        //    if (hit.transform.CompareTag("Food"))
+        //    {
+        //        sensors[3] = hit.distance / hitDivider;
+        //        Debug.DrawLine(r.origin, hit.point, Color.yellow);
+        //    }
+        //}
+        //r.direction = (transform.forward + transform.right);
+        //if (Physics.Raycast(r, out hit, rayDistance))
+        //{
+        //    if (hit.transform.CompareTag("Food"))
+        //    {
+        //        sensors[4] = hit.distance / hitDivider;
+        //        Debug.DrawLine(r.origin, hit.point, Color.yellow);
+        //    }
+        //}
+        //r.direction = (transform.forward - transform.right);
+        //if (Physics.Raycast(r, out hit, rayDistance))
+        //{
+        //    if (hit.transform.CompareTag("Food"))
+        //    {
+        //        sensors[5] = hit.distance / hitDivider;
+        //        Debug.DrawLine(r.origin, hit.point, Color.yellow);
+        //    }
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -205,12 +241,6 @@ public class NpcScript : MonoBehaviour
         {
             this.food += 1;
             energy += 10;
-
-            if (this.food == 2)
-            {
-                satiated = true;
-            }
-
         }
     }
 

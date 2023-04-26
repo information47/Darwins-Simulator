@@ -61,6 +61,16 @@ public class NeatNetwork
             nodeId += 1;
         }
 
+        ConGene newCon1 = new ConGene(Random.Range(0, 3), Random.Range(3, 5), Random.Range(0f, 1f), true, 0);
+        newConGenes.Add(newCon1);
+        
+        ConGene newCon2 = new ConGene(Random.Range(0, 3), Random.Range(3, 5), Random.Range(0f, 1f), true, 0);
+        newConGenes.Add(newCon2);
+
+        ConGene newCon3 = new ConGene(Random.Range(0, 3), Random.Range(3, 5), Random.Range(0f, 1f), true, 0);
+        newConGenes.Add(newCon3);
+
+
         NeatGenome newGenome = new NeatGenome(newNodeGenes, newConGenes);
         return newGenome;
     }
