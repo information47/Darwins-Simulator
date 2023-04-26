@@ -40,6 +40,7 @@ public class NeatNetwork
         List<ConGene> newConGenes = new List<ConGene>();
         int nodeId = 0;
 
+        // create a new node typed Input
         for (int i = 0; i < inp; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Input);
@@ -61,14 +62,20 @@ public class NeatNetwork
             nodeId += 1;
         }
 
-        ConGene newCon1 = new ConGene(Random.Range(0, 3), Random.Range(3, 5), Random.Range(0f, 1f), true, 0);
+        ConGene newCon1 = new ConGene(0, 6, Random.Range(0f, 1f), true, 2);
         newConGenes.Add(newCon1);
-        
-        ConGene newCon2 = new ConGene(Random.Range(0, 3), Random.Range(3, 5), Random.Range(0f, 1f), true, 0);
+
+        ConGene newCon2 = new ConGene(1, 6, Random.Range(0f, 1f), true, 2);
         newConGenes.Add(newCon2);
 
-        ConGene newCon3 = new ConGene(Random.Range(0, 3), Random.Range(3, 5), Random.Range(0f, 1f), true, 0);
+        ConGene newCon3 = new ConGene(2, 6, Random.Range(0f, 1f), true, 1);
         newConGenes.Add(newCon3);
+
+        ConGene newCon4 = new ConGene(3, 5, Random.Range(0f, 1f), true, 2);
+        newConGenes.Add(newCon4);
+
+        ConGene newCon5 = new ConGene(4, 5, Random.Range(0f, 1f), true, 2);
+        newConGenes.Add(newCon5);
 
 
         NeatGenome newGenome = new NeatGenome(newNodeGenes, newConGenes);
@@ -78,8 +85,10 @@ public class NeatNetwork
     private void CreateNetwork()
     {
         ResetNetwork();
+
+        List<NodeGene> nodeGenes = myGenome.GetNodeGenes();
         // Creation of Network Structure: Nodes
-        foreach (NodeGene nodeGene in myGenome.nodeGenes)
+        foreach (NodeGene nodeGene in nodeGenes)
         {
             Node newNode = new Node(nodeGene.id);
             nodes.Add(newNode);

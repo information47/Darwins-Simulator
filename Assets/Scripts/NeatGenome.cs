@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class NeatGenome
 {
-    public List<NodeGene> nodeGenes;
+    private List<NodeGene> _nodeGenes;
     public List<ConGene> conGenes;
 
     public NeatGenome()
     {
-        nodeGenes = new List<NodeGene>();
+        _nodeGenes = new List<NodeGene>();
         conGenes = new List<ConGene>();
     }
     public NeatGenome(List<NodeGene> nodeGens, List<ConGene> conGens)
     {
-        nodeGenes = nodeGens;
+        _nodeGenes = nodeGens;
         conGenes = conGens;
     }
+
+    // getters and setters
+    public void SetNodeGenes(List<NodeGene> newNodeGenes)
+    {
+        _nodeGenes = newNodeGenes;
+    }
+    public List<NodeGene> GetNodeGenes()
+    {
+        return _nodeGenes;
+    }
+
 }
+
+
+
 
 public class NodeGene
 {
@@ -53,3 +67,4 @@ public class ConGene
         innovNum = innov; 
     }
 }
+

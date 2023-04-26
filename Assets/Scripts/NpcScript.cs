@@ -13,37 +13,26 @@ public class NpcScript : MonoBehaviour
 {
     [SerializeField] private GameObject Npc;
 
-    //comportement
+    // comportement
     private FieldOfView fow;
 
-    float objectiveX = 0f;
-    float objectiveY = 0f;
-    float objectiveZ = 0f;
-
-    private float hitDivider = 20f;
-    private float rayDistance = 40f;
+    // RayCast
+    private float hitDivider = 1f;
+    private float rayDistance = 5f;
 
     private bool See = false;
 
     private const int energyToReproduce = 150;
-
-    public NeatNetwork myNetwork;
-
-    public int inputNodes = 3;
-    public int outputNodes = 2;
-    public int hiddenNodes = 0;
     
     private float[] sensors;
 
+    private float surviveTime = 0;
 
 
-    public float surviveTime = 0;
-
-
-    //couleur
+    // color
     private Renderer rend;
 
-    //déplacement
+    // movement
 
     public Vector3 target;
     private int food;
@@ -58,6 +47,13 @@ public class NpcScript : MonoBehaviour
     [SerializeField] private double vitality = 100;
     private float energyDecreaseRate = 0.5f; // taux de diminution de l'énergie par unité de distance parcourue
 
+    // network
+    public NeatNetwork myNetwork;
+
+    public int inputNodes = 5;
+    public int outputNodes = 2;
+    public int hiddenNodes = 0;
+
     private void Start()
     {
         myNetwork = new NeatNetwork(inputNodes, outputNodes, hiddenNodes);
@@ -66,6 +62,7 @@ public class NpcScript : MonoBehaviour
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
 
         sensors = new float[inputNodes];
+
 
     }
     // Update is called once per frame
@@ -98,39 +95,23 @@ public class NpcScript : MonoBehaviour
 
         moveNPC(outputs[0], outputs[1]);
 
-
-
-        //if (Vector3.Distance(transform.position, target) < 1)
-        //{
-        //    IterateWaypointIndex();
-        //}
-        SeeTarget();
-        //if (See)
-        //{
-        //    // GoEat(fow.visibleTargets);
-        //    // See = false;
-        //}
       
-
-        moveNPC(a, t);
-
-
     }
 
     // methodes
 
 
-    void moveNPC(float v, float h)
+    void moveNPC(float speed, float rotation)
     {
         // get position
-        Vector3 input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, v * 2f), 1f);
+        Vector3 input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, speed * 2f), 1f);
         input = transform.TransformDirection(input);
 
         // move NPC
         transform.position += input * Time.deltaTime;
 
         // rotation of NPC
-        transform.eulerAngles += new Vector3(0, (h * 90), 0) * Time.deltaTime;
+        transform.eulerAngles += new Vector3(0, (rotation * 90), 0) * Time.deltaTime;
     }
     
     void energyLoss()
@@ -161,27 +142,26 @@ public class NpcScript : MonoBehaviour
 
     
     // Champs de vision
-    void SeeTarget()
+    public Transform SeeClosetTarget()
     {
-        if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
-        {
-            objectiveX = fow.visibleTargets[0].position.x;
-            objectiveY = fow.visibleTargets[0].position.y;
-            objectiveZ = fow.visibleTargets[0].position.z;
-            See = true;
-        }
+        Transform closetTraget = fow.visibleTargets[0]; 
+        See = true;
+
+        return closetTraget;
+        
     }
 
     private void InputSensors()
     {
+        float dstToTarget = 0;
+        float angleToTarget = 0;
+
         Ray r = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(r, out hit, rayDistance))
         {
             if (hit.transform.CompareTag("Wall"))
             {
-                Debug.Log("see wall");
-
                 sensors[0] = hit.distance / hitDivider;
                 Debug.DrawLine(r.origin, hit.point, Color.white);
             }
@@ -203,6 +183,23 @@ public class NpcScript : MonoBehaviour
                 sensors[2] = hit.distance / hitDivider;
                 Debug.DrawLine(r.origin, hit.point, Color.white);
             }
+        }
+
+        // if there is at least 1 visible target in the fow
+        if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
+        {
+            Transform closetTarget = SeeClosetTarget();
+            Vector3 dirToTarget = (closetTarget.position - transform.position).normalized;
+
+            // distance entre la target et le NPC
+            dstToTarget = Vector3.Distance(transform.position, closetTarget.position);
+
+            // angle entre la target et le NPC
+            angleToTarget = Vector3.Angle(dirToTarget, transform.forward);
+
+
+            sensors[3] = dstToTarget * 10;
+            sensors[4] = angleToTarget * 10;
         }
 
         //r.direction = (transform.forward);
@@ -241,6 +238,9 @@ public class NpcScript : MonoBehaviour
         {
             this.food += 1;
             energy += 10;
+        } else if (other.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
         }
     }
 
