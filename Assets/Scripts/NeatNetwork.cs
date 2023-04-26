@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class NeatNetwork
 {
-    public NeatGenome myGenome;
-    public List<Node> nodes;
-    public List<Node> inputNodes;
-    public List<Node> outputNodes;
-    public List<Node> hiddenNodes;
-    public List<Connection> connections;
+    private NeatGenome myGenome;
+    private List<Node> nodes;
+    private List<Node> inputNodes;
+    private List<Node> outputNodes;
+    private List<Node> hiddenNodes;
+    private List<Connection> connections;
     public float fitness;
 
     public NeatNetwork(int inp, int outp, int hid)
     {
-        myGenome = CreateInitialGenome(inp, outp, hid);
-        nodes = new List<Node>();
-        inputNodes = new List<Node>();
-        outputNodes = new List<Node>();
-        hiddenNodes = new List<Node>();
-        connections = new List<Connection>();
+        MyGenome = CreateInitialGenome(inp, outp, hid);
+        Nodes = new List<Node>();
+        InputNodes = new List<Node>();
+        OutputNodes = new List<Node>();
+        HiddenNodes = new List<Node>();
+        Connections = new List<Connection>();
         CreateNetwork();
     }
 
     public NeatNetwork(NeatGenome genome)
     {
-        myGenome = genome;
-        nodes = new List<Node>();
-        inputNodes = new List<Node>();
-        outputNodes = new List<Node>();
-        hiddenNodes = new List<Node>();
-        connections = new List<Connection>();
+        MyGenome = genome;
+        Nodes = new List<Node>();
+        InputNodes = new List<Node>();
+        OutputNodes = new List<Node>();
+        HiddenNodes = new List<Node>();
+        Connections = new List<Connection>();
         CreateNetwork();
     }
 
@@ -86,40 +86,40 @@ public class NeatNetwork
     {
         ResetNetwork();
 
-        List<NodeGene> nodeGenes = myGenome.GetNodeGenes();
+        List<NodeGene> nodeGenes = MyGenome.GetNodeGenes();
         // Creation of Network Structure: Nodes
         foreach (NodeGene nodeGene in nodeGenes)
         {
             Node newNode = new Node(nodeGene.id);
-            nodes.Add(newNode);
+            Nodes.Add(newNode);
             if (nodeGene.type == NodeGene.TYPE.Input)
             {
-                inputNodes.Add(newNode);
+                InputNodes.Add(newNode);
             }
             else if (nodeGene.type == NodeGene.TYPE.Hidden)
             {
-                hiddenNodes.Add(newNode);
+                HiddenNodes.Add(newNode);
             }
             else if (nodeGene.type == NodeGene.TYPE.Output)
             {
-                outputNodes.Add(newNode);
+                OutputNodes.Add(newNode);
             }
         }
 
         // Creation of Network Structure: Edges
-        foreach (ConGene conGene in myGenome.conGenes)
+        foreach (ConGene conGene in MyGenome.ConGenes)
         {
             if (conGene.isActive == true)
             {
                 Connection newCon = new Connection(conGene.inputNode, conGene.outputNode, conGene.weight, conGene.isActive);
-                connections.Add(newCon);
+                Connections.Add(newCon);
             }
         }
 
         // Creation of Network Structure: Node Neighbors
-        foreach (Node node in nodes)
+        foreach (Node node in Nodes)
         {
-            foreach (Connection con in connections)
+            foreach (Connection con in Connections)
             {
                 if (con.inputNode == node.id)
                 {
@@ -135,38 +135,46 @@ public class NeatNetwork
 
     private void ResetNetwork()
     {
-        nodes.Clear();
-        inputNodes.Clear();
-        outputNodes.Clear();
-        hiddenNodes.Clear();
-        connections.Clear();
+        Nodes.Clear();
+        InputNodes.Clear();
+        OutputNodes.Clear();
+        HiddenNodes.Clear();
+        Connections.Clear();
     }
 
     // Main Driver Function for the NeuralNet
     public float[] FeedForwardNetwork(float[] inputs)
     {
-        float[] outputs = new float[outputNodes.Count];
-        for (int i = 0; i < inputNodes.Count; i++)
+        float[] outputs = new float[OutputNodes.Count];
+        for (int i = 0; i < InputNodes.Count; i++)
         {
-            inputNodes[i].SetInputNodeValue(inputs[i]);
-            inputNodes[i].FeedForwardValue();
-            inputNodes[i].value = 0;
+            InputNodes[i].SetInputNodeValue(inputs[i]);
+            InputNodes[i].FeedForwardValue();
+            InputNodes[i].value = 0;
         }
-        for (int i = 0; i < hiddenNodes.Count; i++)
+        for (int i = 0; i < HiddenNodes.Count; i++)
         {
-            hiddenNodes[i].SetHiddenNodeValue();
-            hiddenNodes[i].FeedForwardValue();
-            hiddenNodes[i].value = 0;
+            HiddenNodes[i].SetHiddenNodeValue();
+            HiddenNodes[i].FeedForwardValue();
+            HiddenNodes[i].value = 0;
         }
-        for (int i = 0; i < outputNodes.Count; i++)
+        for (int i = 0; i < OutputNodes.Count; i++)
         {
-            outputNodes[i].SetOutputNodeValue();
-            outputs[i] = outputNodes[i].value;
-            outputNodes[i].value = 0;
+            OutputNodes[i].SetOutputNodeValue();
+            outputs[i] = OutputNodes[i].value;
+            OutputNodes[i].value = 0;
         }
 
         return outputs;
     }
+
+    // getters and setters
+    public NeatGenome MyGenome { get => myGenome; set => myGenome = value; }
+    public List<Node> Nodes { get => nodes; set => nodes = value; }
+    public List<Node> InputNodes { get => inputNodes; set => inputNodes = value; }
+    public List<Node> OutputNodes { get => outputNodes; set => outputNodes = value; }
+    public List<Node> HiddenNodes { get => hiddenNodes; set => hiddenNodes = value; }
+    public List<Connection> Connections { get => connections; set => connections = value; }
 }
 
 public class Node

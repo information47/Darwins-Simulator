@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        for (int i=0; i<5; i++)
+        for (int i=0; i<15; i++)
         {
             Vector3 randomSpawn = new Vector3(Random.Range(17, 43), 1, Random.Range(-17, -43));
             Instantiate(npc,randomSpawn,Quaternion.identity);

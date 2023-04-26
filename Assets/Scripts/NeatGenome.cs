@@ -5,17 +5,18 @@ using UnityEngine;
 public class NeatGenome
 {
     private List<NodeGene> _nodeGenes;
-    public List<ConGene> conGenes;
+    private List<ConGene> conGenes;
+
 
     public NeatGenome()
     {
         _nodeGenes = new List<NodeGene>();
-        conGenes = new List<ConGene>();
+        ConGenes = new List<ConGene>();
     }
     public NeatGenome(List<NodeGene> nodeGens, List<ConGene> conGens)
     {
         _nodeGenes = nodeGens;
-        conGenes = conGens;
+        ConGenes = conGens;
     }
 
     // getters and setters
@@ -27,6 +28,10 @@ public class NeatGenome
     {
         return _nodeGenes;
     }
+
+    // getters and setters
+    public List<ConGene> ConGenes { get => conGenes; set => conGenes = value; }
+
 
 }
 

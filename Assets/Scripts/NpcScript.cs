@@ -50,9 +50,13 @@ public class NpcScript : MonoBehaviour
     // network
     public NeatNetwork myNetwork;
 
+    private int myBrainIndex;
+
     public int inputNodes = 5;
     public int outputNodes = 2;
     public int hiddenNodes = 0;
+
+    public int MyBrainIndex { get => myBrainIndex; set => myBrainIndex = value; }
 
     private void Start()
     {
