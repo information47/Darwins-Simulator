@@ -2375,8 +2375,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPC: {fileID: 4772594608428404653, guid: 84e48c0403862dd4a870ac2a1b0ec851, type: 3}
+  allNPC: []
   currentGeneration: 0
-  startingPopulation: 2
+  startingPopulation: 15
   keepBest: 0
   leaveWorst: 0
   currentAlive: 0

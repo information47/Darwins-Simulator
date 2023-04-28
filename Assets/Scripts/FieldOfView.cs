@@ -16,6 +16,8 @@ public class FieldOfView : MonoBehaviour
 
     public List<Transform> visibleTargets = new List<Transform>();
 
+    private bool see = false;
+
 
     private void Start()
     {
@@ -55,6 +57,16 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+
+    }
+
+    public Transform SeeClosetTarget()
+    {
+        Transform closetTraget = visibleTargets[0];
+        See = true;
+
+        return closetTraget;
+
     }
 
     public Vector3  DirFromAngle( float AngleDegrees, bool angleIsGlobal)
@@ -65,4 +77,8 @@ public class FieldOfView : MonoBehaviour
         }
         return new Vector3(Mathf.Sin(AngleDegrees * Mathf.Deg2Rad),0,Mathf.Cos(AngleDegrees * Mathf.Deg2Rad));
     }
+
+    // getters and setters
+    public bool See { get => see; set => see = value; }
+
 }

@@ -35,9 +35,6 @@ public class NeatGenome
 
 }
 
-
-
-
 public class NodeGene
 {
     public int id;

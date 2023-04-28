@@ -32,12 +32,24 @@ public class NPCManager : MonoBehaviour
 
         AllNPC = new GameObject[startingPopulation];
         AllNeatNetworks = new NeatNetwork[startingPopulation];
+        StartingNetworks();
         SpawnNPC();
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    private void StartingNetworks()
+    {
+        /*
+            Creates Initial Group of Networks from StartingPopulation integer.
+        */
+        for (int i = 0; i < startingPopulation; i++)
+        {
+            allNeatNetworks[i] = new NeatNetwork(inputNodes, outputNodes, hiddenNodes);
+        }
     }
 
     private void SpawnNPC()
@@ -53,9 +65,9 @@ public class NPCManager : MonoBehaviour
 
             AllNPC[i].gameObject.GetComponent<NpcScript>().MyBrainIndex = i;
             AllNPC[i].gameObject.GetComponent<NpcScript>().myNetwork = AllNeatNetworks[i];
-            AllNPC[i].gameObject.GetComponent<NpcScript>().inputNodes = InputNodes;
-            AllNPC[i].gameObject.GetComponent<NpcScript>().outputNodes = OutputNodes;
-            AllNPC[i].gameObject.GetComponent<NpcScript>().hiddenNodes = HiddenNodes;
+            AllNPC[i].gameObject.GetComponent<NpcScript>().InputNodes = InputNodes;
+            AllNPC[i].gameObject.GetComponent<NpcScript>().OutputNodes = OutputNodes;
+            AllNPC[i].gameObject.GetComponent<NpcScript>().HiddenNodes = HiddenNodes;
         }
     }
 

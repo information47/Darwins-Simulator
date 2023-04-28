@@ -12,79 +12,62 @@ using Debug = UnityEngine.Debug;
 public class NpcScript : MonoBehaviour
 {
     [SerializeField] private GameObject Npc;
-
-    // comportement
     private FieldOfView fow;
 
     // RayCast
     private float hitDivider = 1f;
     private float rayDistance = 5f;
 
-    private bool See = false;
-
-    private const int energyToReproduce = 150;
-    
-    private float[] sensors;
-
-    private float surviveTime = 0;
-
-
     // color
     private Renderer rend;
 
     // movement
-
-    public Vector3 target;
     private int food;
     private Vector3 lastPosition;
     private float distanceTraveled = 0f;
 
-    [Range(-1f, 1f)]
-    public float a, t;
-
     // carateristiques
     [SerializeField] private double energy = 100;
     [SerializeField] private double vitality = 100;
-    private float energyDecreaseRate = 0.5f; // taux de diminution de l'énergie par unité de distance parcourue
+    private float energyDecrease = 0.5f;
+    private float energyThreshold = 30;
+    private int energyToReproduce = 150;
+    private float vitalityLoss = 0.1f;
+
 
     // network
     public NeatNetwork myNetwork;
-
     private int myBrainIndex;
+    
+    // number of input, output and hidden nodes.
+    [SerializeField] private int inputNodes;
+    [SerializeField] private int outputNodes;
+    [SerializeField] private int hiddenNodes;
+    
+    //inputs for neural network
+    [SerializeField] private float[] sensors;
 
-    public int inputNodes = 5;
-    public int outputNodes = 2;
-    public int hiddenNodes = 0;
+    //outputs of neural network
+    [SerializeField] private float[] outputs;
 
-    public int MyBrainIndex { get => myBrainIndex; set => myBrainIndex = value; }
 
     private void Start()
     {
-        myNetwork = new NeatNetwork(inputNodes, outputNodes, hiddenNodes);
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
-        // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); // modifie la taille du NPC
+        
+        myNetwork = new NeatNetwork(InputNodes, OutputNodes, HiddenNodes);
+        
+        Sensors = new float[InputNodes];
 
-        sensors = new float[inputNodes];
-
+        // modify NPC size
+        // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); 
 
     }
-    // Update is called once per frame
+
     void Update()
     {
         energyLoss();
-
-        switch (energy)
-        {
-            case >= energyToReproduce:
-                Reproduce();
-                break;
-
-            case <= 30:
-                vitality -= 0.1;
-                break;
-
-        }
 
         if (vitality <= 0)
         {
@@ -95,15 +78,12 @@ public class NpcScript : MonoBehaviour
         InputSensors();
 
         // send sensors data as input in the network
-        float[] outputs = myNetwork.FeedForwardNetwork(sensors);
+        Outputs = myNetwork.FeedForwardNetwork(Sensors);
 
-        moveNPC(outputs[0], outputs[1]);
+        moveNPC(Outputs[0], Outputs[1]);
 
       
     }
-
-    // methodes
-
 
     void moveNPC(float speed, float rotation)
     {
@@ -130,8 +110,18 @@ public class NpcScript : MonoBehaviour
 
 
         // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
-        energy -= distanceTraveled * energyDecreaseRate * size ;
+        energy -= distanceTraveled * energyDecrease * size ;
         distanceTraveled = 0f;
+
+        if ( energy <= EnergyThreshold)
+        {
+            vitality -= VitalityLoss;
+        }
+        else if ( energy >= EnergyToReproduce)
+        {
+            Reproduce();
+        }
+
     }
 
     void Reproduce()
@@ -141,18 +131,6 @@ public class NpcScript : MonoBehaviour
         Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
         Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
         Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
-    }
-
-
-    
-    // Champs de vision
-    public Transform SeeClosetTarget()
-    {
-        Transform closetTraget = fow.visibleTargets[0]; 
-        See = true;
-
-        return closetTraget;
-        
     }
 
     private void InputSensors()
@@ -166,7 +144,7 @@ public class NpcScript : MonoBehaviour
         {
             if (hit.transform.CompareTag("Wall"))
             {
-                sensors[0] = hit.distance / hitDivider;
+                Sensors[0] = hit.distance / hitDivider;
                 Debug.DrawLine(r.origin, hit.point, Color.white);
             }
         }
@@ -175,7 +153,7 @@ public class NpcScript : MonoBehaviour
         {
             if (hit.transform.CompareTag("Wall"))
             {
-                sensors[1] = hit.distance / hitDivider;
+                Sensors[1] = hit.distance / hitDivider;
                 Debug.DrawLine(r.origin, hit.point, Color.white);
             }
         }
@@ -184,7 +162,7 @@ public class NpcScript : MonoBehaviour
         {
             if (hit.transform.CompareTag("Wall"))
             {
-                sensors[2] = hit.distance / hitDivider;
+                Sensors[2] = hit.distance / hitDivider;
                 Debug.DrawLine(r.origin, hit.point, Color.white);
             }
         }
@@ -192,18 +170,21 @@ public class NpcScript : MonoBehaviour
         // if there is at least 1 visible target in the fow
         if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
         {
-            Transform closetTarget = SeeClosetTarget();
+
+            Transform closetTarget = fow.SeeClosetTarget();
+
+            // direction to the target
             Vector3 dirToTarget = (closetTarget.position - transform.position).normalized;
 
-            // distance entre la target et le NPC
+            // distance between target and NPC
             dstToTarget = Vector3.Distance(transform.position, closetTarget.position);
 
-            // angle entre la target et le NPC
+            // angle between target and NPC
             angleToTarget = Vector3.Angle(dirToTarget, transform.forward);
 
 
-            sensors[3] = dstToTarget * 10;
-            sensors[4] = angleToTarget * 10;
+            Sensors[3] = dstToTarget;
+            Sensors[4] = angleToTarget / 10;
         }
 
         //r.direction = (transform.forward);
@@ -240,7 +221,7 @@ public class NpcScript : MonoBehaviour
 
         if (other.CompareTag("Food"))
         {
-            this.food += 1;
+            this.Food += 1;
             energy += 10;
         } else if (other.CompareTag("Wall"))
         {
@@ -248,5 +229,15 @@ public class NpcScript : MonoBehaviour
         }
     }
 
-    
+    // getters and setters
+    public int MyBrainIndex { get => myBrainIndex; set => myBrainIndex = value; }
+    public float[] Sensors { get => sensors; set => sensors = value; }
+    public int InputNodes { get => inputNodes; set => inputNodes = value; }
+    public int OutputNodes { get => outputNodes; set => outputNodes = value; }
+    public int HiddenNodes { get => hiddenNodes; set => hiddenNodes = value; }
+    public float[] Outputs { get => outputs; set => outputs = value; }
+    public float EnergyThreshold { get => energyThreshold; set => energyThreshold = value; }
+    public int EnergyToReproduce { get => energyToReproduce; set => energyToReproduce = value; }
+    public float VitalityLoss { get => vitalityLoss; set => vitalityLoss = value; }
+    public int Food { get => food; set => food = value; }
 }
