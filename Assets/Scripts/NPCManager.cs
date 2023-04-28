@@ -39,6 +39,7 @@ public class NPCManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     private void StartingNetworks()
@@ -48,7 +49,7 @@ public class NPCManager : MonoBehaviour
         */
         for (int i = 0; i < startingPopulation; i++)
         {
-            allNeatNetworks[i] = new NeatNetwork(inputNodes, outputNodes, hiddenNodes);
+            AllNeatNetworks[i] = new NeatNetwork(InputNodes, OutputNodes, HiddenNodes);
         }
     }
 
