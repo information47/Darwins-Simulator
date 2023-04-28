@@ -10,10 +10,6 @@ public class MainMenu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject gameInterface;
 
-    private void Start()
-    {
-    }
-
     public void GoToMenu()
     {
         // ICI METTRE UNE FONCTION QUI RESET LE JEU
@@ -27,9 +23,4 @@ public class MainMenu : MonoBehaviour
         configMenu.SetActive(true);
     }
 
-
-
-    private void Update()
-    {
-    }
 }
