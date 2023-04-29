@@ -8,6 +8,13 @@ public class FoodSpawner : MonoBehaviour
     public GameObject food;
     public GameObject[] listFood;
     public float timer = 0;
+    public LevelController levelController;
+    private float floorSize;
+
+    private void Start()
+    {
+        floorSize = levelController.floorSize;
+    }
 
     // Update is called once per frame
     void Update()
@@ -29,7 +36,7 @@ public class FoodSpawner : MonoBehaviour
         {
             for (int i = 0; i < 15 - listFood.Length; i++)
             {
-                Vector3 randomSpawn = new Vector3(Random.Range(16, 44), 1, Random.Range(-16, -44));
+                Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
                 Instantiate(food, randomSpawn, Quaternion.identity);
             }
         }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
+
+    public LevelController levelController;
+
     public GameObject NPC;
     public GameObject[] allNPC;
     private NeatNetwork[] allNeatNetworks;
@@ -23,10 +26,14 @@ public class NPCManager : MonoBehaviour
     public int bestTime = 100;
     public int addToBest = 50;
 
+    private float floorSize;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        floorSize = levelController.floorSize;
+
         InputNodes = 5;
         OutputNodes = 2;
 
@@ -60,7 +67,7 @@ public class NPCManager : MonoBehaviour
 
         for (int i = 0; i < startingPopulation; i++)
         {
-            Vector3 randomSpawn = new Vector3(Random.Range(17, 43), 1, Random.Range(-17, -43));
+            Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
             AllNPC[i] = Instantiate(NPC, randomSpawn, Quaternion.identity);
 
 
