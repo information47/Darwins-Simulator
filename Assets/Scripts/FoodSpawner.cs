@@ -10,6 +10,8 @@ public class FoodSpawner : MonoBehaviour
     public float timer = 0;
     public LevelController levelController;
     private float floorSize;
+    [SerializeField] private int foodNumber;
+
 
     private void Start()
     {
@@ -22,25 +24,24 @@ public class FoodSpawner : MonoBehaviour
         listFood = GameObject.FindGameObjectsWithTag("Food");
         timer += Time.deltaTime;
         
-        if (timer > 1)
-        {
-            timer = 0;
-            Spawn();
-        }
+        Spawn();
 
     }
 
     private void Spawn()
     {
-        if (listFood.Length < 10 - listFood.Length )
+        if (listFood.Length < FoodNumber)
         {
-            for (int i = 0; i < 15 - listFood.Length; i++)
+            for (int i = 0; i < FoodNumber - listFood.Length; i++)
             {
                 Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
                 Instantiate(food, randomSpawn, Quaternion.identity);
             }
         }
     }
+
+    // getters and setters
+    public int FoodNumber { get => foodNumber; set => foodNumber = value; }
 
 
 }

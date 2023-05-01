@@ -31,7 +31,7 @@ public class NpcScript : MonoBehaviour
     [SerializeField] private double vitality = 100;
     private float energyDecrease = 0.5f;
     private float energyThreshold = 30;
-    private int energyToReproduce = 150;
+    private int energyToReproduce = 130;
     private float vitalityLoss = 0.1f;
 
 
@@ -107,10 +107,11 @@ public class NpcScript : MonoBehaviour
         distanceTraveled += Vector3.Distance(transform.position, lastPosition);
         lastPosition = transform.position;
 
-
+        //diminution de ll'énergie en fonction du temps
+        energy -= energyDecrease * 2 * Time.deltaTime;
 
         // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
-        energy -= distanceTraveled * energyDecrease * size ;
+        energy -= distanceTraveled * energyDecrease/2 * size ;
         distanceTraveled = 0f;
 
         if ( energy <= EnergyThreshold)

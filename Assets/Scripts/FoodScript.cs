@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class FoodScript : MonoBehaviour
 {
-    public int Timer = 0;
+    public float Timer = 0;
 
     private void Update()
     {
-        Timer++;
-        if (Timer >= 5000)
+        Timer += Time.deltaTime;
+        if (Timer >= 1000)
         {
             Destroy(this.gameObject);
         }
