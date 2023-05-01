@@ -223,8 +223,15 @@ public class NpcScript : MonoBehaviour
         {
             this.Food += 1;
             energy += 10;
-        } else if (other.CompareTag("Wall"))
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Wall")
         {
+            // Debug.Log("Fish Died");
+            // overallFitness = 0;
             Destroy(this.gameObject);
         }
     }
