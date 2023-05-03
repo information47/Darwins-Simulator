@@ -1304,6 +1304,7 @@ MonoBehaviour:
   listFood: []
   timer: 0
   levelController: {fileID: 1992516186}
+  foodNumber: 100
 --- !u!1 &247720839
 GameObject:
   m_ObjectHideFlags: 0
@@ -7457,8 +7458,7 @@ MonoBehaviour:
   levelController: {fileID: 1992516186}
   NPC: {fileID: 4772594608428404653, guid: 84e48c0403862dd4a870ac2a1b0ec851, type: 3}
   allNPC: []
-  currentGeneration: 0
-  startingPopulation: 15
+  startingPopulation: 30
   keepBest: 0
   leaveWorst: 0
   currentAlive: 0
@@ -8348,7 +8348,7 @@ MonoBehaviour:
   wallRight: {fileID: 90344492}
   wallLeft: {fileID: 1411612388}
   slider: {fileID: 0}
-  floorSize: 100
+  floorSize: 40
 --- !u!1 &2075573578
 GameObject:
   m_ObjectHideFlags: 0

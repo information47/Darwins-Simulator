@@ -13,9 +13,8 @@ public class NPCManager : MonoBehaviour
 
     private int inputNodes, outputNodes, hiddenNodes;
 
-    [SerializeField] private int currentGeneration = 0;
+    private int currentGeneration = 0;
 
-    [SerializeField] private int startingPopulation = 15;
 
     public int keepBest, leaveWorst;
 
@@ -28,11 +27,16 @@ public class NPCManager : MonoBehaviour
 
     private float floorSize;
 
+    private int startingPopulation;
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        FloorSize = levelController.floorSize;
+        startingPopulation = levelController.StartingPopulation;
+        floorSize = levelController.FloorSize;
 
         InputNodes = 5;
         OutputNodes = 2;
@@ -41,14 +45,15 @@ public class NPCManager : MonoBehaviour
         AllNPC = new GameObject[startingPopulation];
         AllNeatNetworks = new NeatNetwork[startingPopulation];
         StartingNetworks();
-        MutatePopulation();
         InitialSpawnNPC();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        float timer = 0;
+        timer += Time.deltaTime;
+        if (timer > 10) { MutatePopulation(); }
     }
 
     private void StartingNetworks()
@@ -69,7 +74,7 @@ public class NPCManager : MonoBehaviour
 
         for (int i = 0; i < startingPopulation; i++)
         {
-            Vector3 randomSpawn = new Vector3(Random.Range(FloorSize / -2, (FloorSize / 2)), 1, Random.Range(FloorSize / -2, FloorSize / 2));
+            Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
             AllNPC[i] = Instantiate(NPC, randomSpawn, Quaternion.identity);
 
 

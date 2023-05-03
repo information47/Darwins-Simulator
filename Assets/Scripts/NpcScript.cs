@@ -217,6 +217,14 @@ public class NpcScript : MonoBehaviour
         //}
     }
 
+    private void ResetSensors()
+    {
+        for (int i = 0; i < InputNodes; i++)
+        {
+            Sensors[i] = 0;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
 

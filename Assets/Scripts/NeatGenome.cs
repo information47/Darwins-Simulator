@@ -113,7 +113,7 @@ public class NeatGenome
         }
 
         int innov = GetNextInovNum();
-        float weight = Random.Range(0f, 1f);
+        float weight = Random.Range(-1f, 1f);
         bool act = true;
         ConGene newCon = new ConGene(firstNode, secondNode, weight, act, innov);
         ConGenes.Add(newCon);

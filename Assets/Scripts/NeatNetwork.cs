@@ -16,6 +16,8 @@ public class NeatNetwork
     {
         MyGenome = CreateInitialGenome(inp, outp, hid);
         myGenome.MutateGenome();
+        myGenome.MutateGenome();
+        myGenome.MutateGenome();
         Nodes = new List<Node>();
         InputNodes = new List<Node>();
         OutputNodes = new List<Node>();

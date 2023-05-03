@@ -15,21 +15,21 @@ public class FoodSpawner : MonoBehaviour
 
     private void Start()
     {
-        floorSize = levelController.floorSize;
+        floorSize = levelController.FloorSize;
     }
 
     // Update is called once per frame
     void Update()
     {
-        listFood = GameObject.FindGameObjectsWithTag("Food");
-        timer += Time.deltaTime;
-        
-        Spawn();
+        SpawnFood();
 
     }
 
-    private void Spawn()
+    private void SpawnFood()
     {
+        listFood = GameObject.FindGameObjectsWithTag("Food");
+        timer += Time.deltaTime;
+
         if (listFood.Length < FoodNumber)
         {
             for (int i = 0; i < FoodNumber - listFood.Length; i++)
