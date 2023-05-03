@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class InGame : MonoBehaviour
 {
-    PauseMenu pauseMenu = new PauseMenu();
+    public PauseMenu pauseMenu;
     public QUI_OptionList optionList;
+    public bool isInGame;
   
     // Start is called before the first frame update
     void Start()
     {
         optionList.onChangeOption.AddListener(GameSpeed);
+        isInGame = true;
     }
 
     // Tant que la game interface est active, on prends en compte la touche ESPACE pour mettre le jeu en pause
@@ -21,13 +23,15 @@ public class InGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("ESCAPE");
-            if (pauseMenu.isPaused)
+            if (pauseMenu.isPaused == true)
             {
                 pauseMenu.ResumeGame();
+                pauseMenu.isPaused = false;
             }
-            else
+            else if(pauseMenu.isPaused == false)
             {
                 pauseMenu.PauseGame();
+                pauseMenu.isPaused = true;
             }
         }
     }

@@ -11,6 +11,8 @@ using Debug = UnityEngine.Debug;
 
 public class NpcScript : MonoBehaviour
 {
+    public string testText = "testtext";
+
     [SerializeField] private GameObject Npc;
     private FieldOfView fow;
 

@@ -131,15 +131,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc143f645f229ea4a90205677b677e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testText: testtext
   Npc: {fileID: 4772594608428404653}
-  target: {x: 0, y: 0, z: 0}
-  a: 0
-  t: 0
   energy: 100
   vitality: 100
   inputNodes: 5
   outputNodes: 2
   hiddenNodes: 0
+  sensors: []
+  outputs: []
 --- !u!114 &1133506585
 MonoBehaviour:
   m_ObjectHideFlags: 0
