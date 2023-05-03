@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         // Rotation du personnage
         if (rb.velocity.magnitude > 0.1f)
         {
-            transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0f, rb.velocity.z));
+           // transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0f, rb.velocity.z));
         }
 
         // JUMP

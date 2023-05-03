@@ -15,7 +15,7 @@ public class RandomSpawn : MonoBehaviour
 
     IEnumerator NPC_Drop()
     {
-        while (npcCount < 10)
+        while (npcCount < 2)
         { // Tant que le nombre de NPC créés est inférieur à 10
             xPos = Random.Range(-1, 11); // Définit une position x aléatoire dans une plage de valeurs données
             zPos = Random.Range(0, -14); // Définit une position z aléatoire dans une plage de valeurs données
