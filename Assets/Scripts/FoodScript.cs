@@ -20,7 +20,7 @@ public class FoodScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
      
-        if (other.CompareTag("NPC"))
+        if (other.CompareTag("NPC") || other.CompareTag("IA"))
         {
             Destroy(this.gameObject);
         }

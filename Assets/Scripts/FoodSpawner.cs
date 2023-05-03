@@ -8,11 +8,15 @@ public class FoodSpawner : MonoBehaviour
     public GameObject food;
     public GameObject[] listFood;
     public int timer = 0;
+    public int maxX ;
+    public int minX;
+    public int maxZ;
+    public int minZ;
 
     // Update is called once per frame
     void Update()
     {
-        listFood = GameObject.FindGameObjectsWithTag("Food");
+        listFood = GameObject.FindGameObjectsWithTag(food.tag);
         timer++;
         
         if (timer > 2500)
@@ -25,11 +29,11 @@ public class FoodSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        if (listFood.Length < 10 - listFood.Length )
+        if (listFood.Length < 20 - listFood.Length )
         {
             for (int i = 0; i < 15 - listFood.Length; i++)
             {
-                Vector3 randomSpawn = new Vector3(Random.Range(-11, 10), 6, Random.Range(-36, -54));
+                Vector3 randomSpawn = new Vector3(Random.Range(minX, maxX), 6, Random.Range(minZ, maxZ));
                 Instantiate(food, randomSpawn, Quaternion.identity);
             }
         }

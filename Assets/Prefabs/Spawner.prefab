@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -7462280430383587562}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Apple
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,5 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e705937f5062704e81881f8565557f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 0}
+  npc: {fileID: 7977662413385685684, guid: cd4ae69f6be0d72469ec9707a426974b, type: 3}
   listnpc: []
+  maxX: 0
+  minX: 0
+  maxZ: 0
+  minZ: 0

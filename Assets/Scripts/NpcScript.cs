@@ -52,8 +52,8 @@ public class NpcScript : MonoBehaviour
         maxX = 10;
         minZ = -54;
         maxZ = -36;
-        waypointIndexX = -1;
-        waypointIndexZ = -45;
+        waypointIndexX = Random.Range(minX, maxX); 
+        waypointIndexZ = Random.Range(minZ, maxZ);
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
         rend = GetComponent<Renderer>();
@@ -109,8 +109,11 @@ public class NpcScript : MonoBehaviour
     // déplacements
     void UpdateDestination()
     {
-        target = new Vector3(waypointIndexX, this.transform.position.y, waypointIndexZ);
-        agent.SetDestination(target);
+        if (agent.isOnNavMesh && agent.enabled)
+        {
+            target = new Vector3(waypointIndexX, this.transform.position.y, waypointIndexZ);
+            agent.SetDestination(target);    
+        }
     }
 
     void energyLoss()
@@ -141,7 +144,6 @@ public class NpcScript : MonoBehaviour
 
     void IterateWaypointIndex()
     {
-        waypoint = GameObject.FindGameObjectsWithTag("Waypoint");
 
         waypointIndexX = Random.Range(minX, maxX);
         waypointIndexZ = Random.Range(minZ, maxZ);
