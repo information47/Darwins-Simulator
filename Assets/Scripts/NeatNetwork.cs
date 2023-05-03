@@ -15,6 +15,7 @@ public class NeatNetwork
     public NeatNetwork(int inp, int outp, int hid)
     {
         MyGenome = CreateInitialGenome(inp, outp, hid);
+        myGenome.MutateGenome();
         Nodes = new List<Node>();
         InputNodes = new List<Node>();
         OutputNodes = new List<Node>();
@@ -62,20 +63,20 @@ public class NeatNetwork
             nodeId += 1;
         }
 
-        ConGene newCon1 = new ConGene(0, 6, Random.Range(0f, 1f), true, 2);
-        newConGenes.Add(newCon1);
+        //ConGene newCon1 = new ConGene(0, 6, Random.Range(0f, 1f), true, 2);
+        //newConGenes.Add(newCon1);
 
-        ConGene newCon2 = new ConGene(1, 6, Random.Range(0f, 1f), true, 2);
-        newConGenes.Add(newCon2);
+        //ConGene newCon2 = new ConGene(1, 6, Random.Range(0f, 1f), true, 2);
+        //newConGenes.Add(newCon2);
 
-        ConGene newCon3 = new ConGene(2, 6, Random.Range(0f, 1f), true, 1);
-        newConGenes.Add(newCon3);
+        //ConGene newCon3 = new ConGene(2, 6, Random.Range(0f, 1f), true, 1);
+        //newConGenes.Add(newCon3);
 
-        ConGene newCon4 = new ConGene(3, 5, Random.Range(0f, 1f), true, 2);
-        newConGenes.Add(newCon4);
+        //ConGene newCon4 = new ConGene(3, 5, Random.Range(0f, 1f), true, 2);
+        //newConGenes.Add(newCon4);
 
-        ConGene newCon5 = new ConGene(4, 5, Random.Range(0f, 1f), true, 2);
-        newConGenes.Add(newCon5);
+        //ConGene newCon5 = new ConGene(4, 5, Random.Range(0f, 1f), true, 2);
+        //newConGenes.Add(newCon5);
 
 
         NeatGenome newGenome = new NeatGenome(newNodeGenes, newConGenes);
@@ -86,7 +87,7 @@ public class NeatNetwork
     {
         ResetNetwork();
 
-        List<NodeGene> nodeGenes = MyGenome.GetNodeGenes();
+        List<NodeGene> nodeGenes = MyGenome.NodeGenes;
         // Creation of Network Structure: Nodes
         foreach (NodeGene nodeGene in nodeGenes)
         {
@@ -140,6 +141,12 @@ public class NeatNetwork
         OutputNodes.Clear();
         HiddenNodes.Clear();
         Connections.Clear();
+    }
+
+    public void MutateNetwork()
+    {
+        myGenome.MutateGenome();
+        CreateNetwork();
     }
 
     // Main Driver Function for the NeuralNet
