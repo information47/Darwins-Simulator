@@ -31,10 +31,22 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         // floor and walls setup
-        floor.transform.localScale = new Vector3(FloorSize, 0.1f, FloorSize);
+        SizeSetup();
+
+    }
+
+    private void Update()
+    {
+        SpawnFood();
         
+    }
+
+    private void SizeSetup()
+    {
+        floor.transform.localScale = new Vector3(FloorSize, 0.1f, FloorSize);
+
         wallUp.transform.localScale = new Vector3(FloorSize, 3, 0);
-        wallUp.transform.position = new Vector3(0, 1, FloorSize/2);
+        wallUp.transform.position = new Vector3(0, 1, FloorSize / 2);
 
         wallDown.transform.localScale = new Vector3(FloorSize, 3, 0);
         wallDown.transform.position = new Vector3(0, 1, FloorSize / -2);
@@ -44,12 +56,6 @@ public class LevelController : MonoBehaviour
 
         wallRight.transform.localScale = new Vector3(0, 3, FloorSize);
         wallRight.transform.position = new Vector3(FloorSize / 2, 1, 0);
-    }
-
-    private void Update()
-    {
-        SpawnFood();
-        
     }
 
     private void SpawnFood()

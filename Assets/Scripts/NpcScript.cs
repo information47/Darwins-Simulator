@@ -188,33 +188,7 @@ public class NpcScript : MonoBehaviour
             Sensors[4] = angleToTarget / 10;
         }
 
-        //r.direction = (transform.forward);
-        //if (Physics.Raycast(r, out hit, rayDistance))
-        //{
-        //    if (hit.transform.CompareTag("Food"))
-        //    {
-        //        sensors[3] = hit.distance / hitDivider;
-        //        Debug.DrawLine(r.origin, hit.point, Color.yellow);
-        //    }
-        //}
-        //r.direction = (transform.forward + transform.right);
-        //if (Physics.Raycast(r, out hit, rayDistance))
-        //{
-        //    if (hit.transform.CompareTag("Food"))
-        //    {
-        //        sensors[4] = hit.distance / hitDivider;
-        //        Debug.DrawLine(r.origin, hit.point, Color.yellow);
-        //    }
-        //}
-        //r.direction = (transform.forward - transform.right);
-        //if (Physics.Raycast(r, out hit, rayDistance))
-        //{
-        //    if (hit.transform.CompareTag("Food"))
-        //    {
-        //        sensors[5] = hit.distance / hitDivider;
-        //        Debug.DrawLine(r.origin, hit.point, Color.yellow);
-        //    }
-        //}
+        
     }
 
     private void ResetSensors()

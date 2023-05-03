@@ -51,9 +51,7 @@ public class NPCManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float timer = 0;
-        timer += Time.deltaTime;
-        if (timer > 10) { MutatePopulation(); }
+
     }
 
     private void StartingNetworks()
