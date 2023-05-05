@@ -1,11 +1,10 @@
 using QuantumTek.QuantumUI;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class InGame : MonoBehaviour
 {
-    PauseMenu pauseMenu = new PauseMenu();
+    PauseMenu pauseMenu = new();
     public QUI_OptionList optionList;
   
     // Start is called before the first frame update

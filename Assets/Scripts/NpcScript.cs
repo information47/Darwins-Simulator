@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using System.Diagnostics;
 using System.Drawing;
 using UnityEngine;
@@ -211,9 +210,8 @@ public class NpcScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Wall")
+        if (collision.transform.CompareTag("Wall"))
         {
-            // Debug.Log("Fish Died");
             // overallFitness = 0;
             Destroy(this.gameObject);
         }
