@@ -27,7 +27,7 @@ public class EventClickNPC : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnPointerClick(PointerEventData eventData)
     {
         //NPCInfos NPCInfos = eventData.pointerCurrentRaycast.gameObject.GetComponent<NPCInfos>();
-        //npcInfos.ShowNPCInfos();
+        npcInfos.slt();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

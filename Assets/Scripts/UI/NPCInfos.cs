@@ -32,4 +32,9 @@ public class NPCInfos : MonoBehaviour
     {
         npcInfosUI.SetActive(false);
     }
+
+    public void slt()
+    {
+        Debug.Log("Slt");
+    }
 }
