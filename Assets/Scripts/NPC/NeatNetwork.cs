@@ -81,9 +81,9 @@ public class NeatNetwork
         foreach (NodeGene nodeGene in nodeGenes)
         {
             Node newNode = new(nodeGene.Id);
+            newNode.SetNodeActivation(nodeGene.ActivationGene);
             Nodes.Add(newNode);
             
-            newNode.SetNodeActivation(nodeGene.ActivationGene);
 
             if (nodeGene.Type == NodeGene.TYPE.Input)
             {

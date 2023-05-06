@@ -55,7 +55,7 @@ public class NeatGenome
 
             int newId = GetNextNodeId();
 
-            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden);
+            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, new TanH());
             nodeGenes.Add(newNode);
 
             int nextInovNum = GetNextInovNum();

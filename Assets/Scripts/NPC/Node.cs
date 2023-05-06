@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Windows;
 
-public class Node : MonoBehaviour
+public class Node
 {
     public int id;
     public float value;
@@ -11,6 +10,7 @@ public class Node : MonoBehaviour
     public List<Connection> outputConnections;
     private IActivation nodeActivation;
 
+    public IActivation NodeActivation { get => nodeActivation; set => nodeActivation = value; }
 
     public Node(int ident)
     {
@@ -21,13 +21,13 @@ public class Node : MonoBehaviour
 
     public void SetNodeActivation(IActivation act)
     {
-        nodeActivation = act;
+        NodeActivation = act;
     }
     
     
     public void SetInputNodeValue(float input)
     {
-        value = this.nodeActivation.DoActivation(input);
+        value = this.NodeActivation.DoActivation(input);
     }
     
     public void SetNodeValue()
@@ -37,7 +37,7 @@ public class Node : MonoBehaviour
         {
             val += (con.weight * con.inputNodeValue);
         }
-        value = this.nodeActivation.DoActivation(val);
+        value = NodeActivation.DoActivation(val);
 
     }
 
