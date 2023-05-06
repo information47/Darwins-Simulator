@@ -7342,7 +7342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelController: {fileID: 1992516186}
   NPC: {fileID: 4772594608428404653, guid: 84e48c0403862dd4a870ac2a1b0ec851, type: 3}
-  allNPC: []
+  allNPCs: []
   keepBest: 0
   leaveWorst: 0
   currentAlive: 0
@@ -8236,7 +8236,7 @@ MonoBehaviour:
   wallLeft: {fileID: 1411612388}
   slider: {fileID: 0}
   floorSize: 40
-  startingPopulation: 1
+  startingPopulation: 10
 --- !u!1 &2075573578
 GameObject:
   m_ObjectHideFlags: 0

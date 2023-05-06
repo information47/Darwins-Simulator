@@ -8,7 +8,7 @@ using UnityEngine.AI;
 using Color = UnityEngine.Color;
 using Debug = UnityEngine.Debug;
 
-public class NpcScript : MonoBehaviour
+public class NpcController : MonoBehaviour
 {
     // [SerializeField] private GameObject Npc;
     private FieldOfView fow;
@@ -128,6 +128,9 @@ public class NpcScript : MonoBehaviour
         Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
         Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
         // Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
+
+
+
     }
 
     private void InputSensors()
