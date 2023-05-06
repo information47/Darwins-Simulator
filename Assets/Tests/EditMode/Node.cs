@@ -4,24 +4,19 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class FirstTest
+public class Node
 {
     // A Test behaves as an ordinary method
     [Test]
-    public void shouldCreateNetwork()
+    public void NodeSimplePasses()
     {
         // Use the Assert class to test conditions
-        int inp = 5;
-        int outp = 2;
-        int hidden = 0;
-
-       // NeatNetwork network = new NeatNetwork();
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
-    public IEnumerator FirstTestWithEnumeratorPasses()
+    public IEnumerator NodeWithEnumeratorPasses()
     {
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.

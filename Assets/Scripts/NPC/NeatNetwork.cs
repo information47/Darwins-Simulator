@@ -47,6 +47,7 @@ public class NeatNetwork
         for (int i = 0; i < inp; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Input);
+            newNodeGene.SetActivationGene(new Sigmoid());
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }
@@ -54,6 +55,7 @@ public class NeatNetwork
         for (int i = 0; i < outp; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Output);
+            newNodeGene.SetActivationGene(new TanH());
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }
@@ -61,6 +63,7 @@ public class NeatNetwork
         for (int i = 0; i < hid; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Hidden);
+            newNodeGene.SetActivationGene(new TanH());
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }
@@ -77,17 +80,20 @@ public class NeatNetwork
         // Creation of Network Structure: Nodes
         foreach (NodeGene nodeGene in nodeGenes)
         {
-            Node newNode = new Node(nodeGene.id);
+            Node newNode = new(nodeGene.Id);
             Nodes.Add(newNode);
-            if (nodeGene.type == NodeGene.TYPE.Input)
+            
+            newNode.SetNodeActivation(nodeGene.ActivationGene);
+
+            if (nodeGene.Type == NodeGene.TYPE.Input)
             {
                 InputNodes.Add(newNode);
             }
-            else if (nodeGene.type == NodeGene.TYPE.Hidden)
+            else if (nodeGene.Type == NodeGene.TYPE.Hidden)
             {
                 HiddenNodes.Add(newNode);
             }
-            else if (nodeGene.type == NodeGene.TYPE.Output)
+            else if (nodeGene.Type == NodeGene.TYPE.Output)
             {
                 OutputNodes.Add(newNode);
             }
@@ -147,13 +153,13 @@ public class NeatNetwork
         }
         for (int i = 0; i < HiddenNodes.Count; i++)
         {
-            HiddenNodes[i].SetHiddenNodeValue();
+            HiddenNodes[i].SetNodeValue();
             HiddenNodes[i].FeedForwardValue();
             HiddenNodes[i].value = 0;
         }
         for (int i = 0; i < OutputNodes.Count; i++)
         {
-            OutputNodes[i].SetOutputNodeValue();
+            OutputNodes[i].SetNodeValue();
             outputs[i] = OutputNodes[i].value;
             OutputNodes[i].value = 0;
         }
@@ -170,68 +176,7 @@ public class NeatNetwork
     public List<Connection> Connections { get => connections; set => connections = value; }
 }
 
-public class Node
-{
-    public int id;
-    public float value;
-    public List<Connection> inputConnections;
-    public List<Connection> outputConnections;
 
-    public Node(int ident)
-    {
-        id = ident;
-        inputConnections = new List<Connection>();
-        outputConnections = new List<Connection>();
-    }
-
-    public void SetInputNodeValue(float val)
-    {
-        val = Sigmoid(val);
-        value = val;
-    }
-    public void SetHiddenNodeValue()
-    {
-        float val = 0;
-        foreach (Connection con in inputConnections)
-        {
-            val += (con.weight * con.inputNodeValue);
-        }
-        value = TanH(val);
-    }
-    public void SetOutputNodeValue()
-    {
-        float val = 0;
-        foreach (Connection con in inputConnections)
-        {
-            val += (con.weight * con.inputNodeValue);
-        }
-        value = TanH(val);
-    }
-
-    public void FeedForwardValue()
-    {
-        foreach (Connection con in outputConnections)
-        {
-            con.inputNodeValue = value;
-        }
-    }
-
-    // Activation Functons
-    private float Sigmoid(float x)
-    {
-        return (1 / (1 + Mathf.Exp(-x)));
-    }
-
-    private float TanH(float x)
-    {
-        return ((2 / (1 + Mathf.Exp(-2 * x))) - 1);
-    }
-
-    private float TanHMod1(float x)
-    {
-        return ((2 / (1 + Mathf.Exp(-4 * x))) - 1);
-    }
-}
 
 public class Connection
 {

@@ -59,10 +59,10 @@ public class NeatGenome
             nodeGenes.Add(newNode);
 
             int nextInovNum = GetNextInovNum();
-            ConGene firstNewCon = new ConGene(firstNode, newNode.id, 1f, true, nextInovNum);
+            ConGene firstNewCon = new ConGene(firstNode, newNode.Id, 1f, true, nextInovNum);
             ConGenes.Add(firstNewCon);
             nextInovNum = GetNextInovNum();
-            ConGene secondNewCon = new ConGene(newNode.id, secondNode, mutatingCon.weight, true, nextInovNum);
+            ConGene secondNewCon = new ConGene(newNode.Id, secondNode, mutatingCon.weight, true, nextInovNum);
             ConGenes.Add(secondNewCon);
         }
     }
@@ -72,9 +72,9 @@ public class NeatGenome
         int nextID = 0;
         foreach (NodeGene node in nodeGenes)
         {
-            if (nextID <= node.id)
+            if (nextID <= node.Id)
             {
-                nextID = node.id;
+                nextID = node.Id;
             }
         }
         nextID = nextID + 1;
@@ -84,8 +84,8 @@ public class NeatGenome
     {
         int firstNode = Random.Range(0, nodeGenes.Count);
         int secondNode = Random.Range(0, nodeGenes.Count);
-        NodeGene.TYPE firstType = nodeGenes[firstNode].type;
-        NodeGene.TYPE secondType = nodeGenes[secondNode].type;
+        NodeGene.TYPE firstType = nodeGenes[firstNode].Type;
+        NodeGene.TYPE secondType = nodeGenes[secondNode].Type;
 
         // if 2 inputs or 2 outputs are connected together
         if (firstType == secondType && firstType != NodeGene.TYPE.Hidden)
@@ -108,8 +108,8 @@ public class NeatGenome
             // swap values
             (secondNode, firstNode) = (firstNode, secondNode);
 
-            firstType = nodeGenes[firstNode].type;
-            secondType = nodeGenes[secondNode].type;
+            firstType = nodeGenes[firstNode].Type;
+            secondType = nodeGenes[secondNode].Type;
         }
 
         int innov = GetNextInovNum();
@@ -174,24 +174,6 @@ public class NeatGenome
     public List<ConGene> ConGenes { get => conGenes; set => conGenes = value; }
     public List<NodeGene> NodeGenes { get => nodeGenes; set => nodeGenes = value; }
 
-}
-
-
-public class NodeGene
-{
-    public int id;
-    public enum TYPE
-    {
-        Input, Output, Hidden
-    }
-
-    public TYPE type;
-
-    public NodeGene(int givenId, TYPE givenType)
-    {
-        id = givenId;
-        type = givenType;
-    }
 }
 
 public class ConGene
