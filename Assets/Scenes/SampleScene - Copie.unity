@@ -8236,7 +8236,7 @@ MonoBehaviour:
   wallLeft: {fileID: 1411612388}
   slider: {fileID: 0}
   floorSize: 40
-  startingPopulation: 20
+  startingPopulation: 1
 --- !u!1 &2075573578
 GameObject:
   m_ObjectHideFlags: 0

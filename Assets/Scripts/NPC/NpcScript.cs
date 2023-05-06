@@ -10,7 +10,7 @@ using Debug = UnityEngine.Debug;
 
 public class NpcScript : MonoBehaviour
 {
-    [SerializeField] private GameObject Npc;
+    // [SerializeField] private GameObject Npc;
     private FieldOfView fow;
 
     // RayCast
@@ -41,7 +41,6 @@ public class NpcScript : MonoBehaviour
     // number of input, output and hidden nodes.
     [SerializeField] private int inputNodes;
     [SerializeField] private int outputNodes;
-    [SerializeField] private int hiddenNodes;
     
     //inputs for neural network
     [SerializeField] private float[] sensors;
@@ -54,8 +53,6 @@ public class NpcScript : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
-        
-        myNetwork = new NeatNetwork(InputNodes, OutputNodes, HiddenNodes);
         
         Sensors = new float[InputNodes];
 
@@ -119,7 +116,7 @@ public class NpcScript : MonoBehaviour
         }
         else if ( energy >= EnergyToReproduce)
         {
-            Reproduce();
+            //Reproduce();
         }
 
     }
@@ -130,7 +127,7 @@ public class NpcScript : MonoBehaviour
 
         Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
         Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
-        Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
+        // Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
     }
 
     private void InputSensors()
@@ -222,7 +219,6 @@ public class NpcScript : MonoBehaviour
     public float[] Sensors { get => sensors; set => sensors = value; }
     public int InputNodes { get => inputNodes; set => inputNodes = value; }
     public int OutputNodes { get => outputNodes; set => outputNodes = value; }
-    public int HiddenNodes { get => hiddenNodes; set => hiddenNodes = value; }
     public float[] Outputs { get => outputs; set => outputs = value; }
     public float EnergyThreshold { get => energyThreshold; set => energyThreshold = value; }
     public int EnergyToReproduce { get => energyToReproduce; set => energyToReproduce = value; }

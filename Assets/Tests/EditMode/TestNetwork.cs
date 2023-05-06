@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class Network
+public class TestNetwork
 {
     // A Test behaves as an ordinary method
     NeatNetwork network = new(5, 2, 0);
@@ -29,11 +30,41 @@ public class Network
     }
 
     [Test]
-    public void Mutation()
+    public void NetworkMutation()
     {
-        foreach (Node node in network.Nodes)
+        int mutateWeight = 0;
+        NeatNetwork oldNetwork = network;
+
+        network.MutateNetwork();
+
+        for (int i =0; i<network.MyGenome.ConGenes.Count; i++)
         {
-            Assert.AreNotEqual(node.NodeActivation, null);
+            if (network.MyGenome.ConGenes[i].weight != oldNetwork.MyGenome.ConGenes[i].weight)
+            {
+                mutateWeight++;
+            }
+        } 
+        Assert.Greater(mutateWeight, 1);
+
+    }
+
+    [Test]
+    public void GenomeMutation()
+    {
+        int mutateWeight = 0;
+        List<Connection> oldCon = network.Connections;
+
+        network.MyGenome.MutateGenome();
+
+        for (int i = 0; i < network.MyGenome.ConGenes.Count; i++)
+        {
+            if (network.MyGenome.ConGenes[i].weight != oldCon[i].weight)
+            {
+                mutateWeight++;
+            }
         }
+        Assert.Greater(mutateWeight, 1);
+
+
     }
 }

@@ -15,14 +15,13 @@ public class NeatNetwork
     public NeatNetwork(int inp, int outp, int hid)
     {
         MyGenome = CreateInitialGenome(inp, outp, hid);
-        myGenome.MutateGenome();
-        myGenome.MutateGenome();
-        myGenome.MutateGenome();
+
         Nodes = new List<Node>();
         InputNodes = new List<Node>();
         OutputNodes = new List<Node>();
         HiddenNodes = new List<Node>();
         Connections = new List<Connection>();
+
         CreateNetwork();
     }
 
@@ -99,7 +98,7 @@ public class NeatNetwork
             }
         }
 
-        // Creation of Network Structure: Edges
+        // Creation of Network Structure: connections
         foreach (ConGene conGene in MyGenome.ConGenes)
         {
             if (conGene.isActive == true)

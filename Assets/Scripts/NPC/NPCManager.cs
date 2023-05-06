@@ -35,16 +35,19 @@ public class NPCManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startingPopulation = levelController.StartingPopulation;
+        StartingPopulation = levelController.StartingPopulation;
         floorSize = levelController.FloorSize;
 
         InputNodes = 5;
         OutputNodes = 2;
         HiddenNodes = 0;
 
-        AllNPC = new GameObject[startingPopulation];
-        AllNeatNetworks = new NeatNetwork[startingPopulation];
+        AllNPC = new GameObject[StartingPopulation];
+        AllNeatNetworks = new NeatNetwork[StartingPopulation];
         StartingNetworks();
+        MutatePopulation();
+        MutatePopulation();
+        MutatePopulation();
         InitialSpawnNPC();
     }
 
@@ -59,7 +62,7 @@ public class NPCManager : MonoBehaviour
         /*
             Creates Initial Group of Networks from StartingPopulation integer.
         */
-        for (int i = 0; i < startingPopulation; i++)
+        for (int i = 0; i < StartingPopulation; i++)
         {
             AllNeatNetworks[i] = new NeatNetwork(InputNodes, OutputNodes, HiddenNodes);
         }
@@ -70,25 +73,25 @@ public class NPCManager : MonoBehaviour
         /* Creates Initial Group of NPC GameObjects from StartingPopulation integer 
         and matches NPC Objects to their NetworkBrains. */
 
-        for (int i = 0; i < startingPopulation; i++)
+        for (int i = 0; i < StartingPopulation; i++)
         {
+            Debug.Log("InitialSpawnNPC");
             Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
             AllNPC[i] = Instantiate(NPC, randomSpawn, Quaternion.identity);
-
 
             AllNPC[i].gameObject.GetComponent<NpcScript>().MyBrainIndex = i;
             AllNPC[i].gameObject.GetComponent<NpcScript>().myNetwork = AllNeatNetworks[i];
             AllNPC[i].gameObject.GetComponent<NpcScript>().InputNodes = InputNodes;
             AllNPC[i].gameObject.GetComponent<NpcScript>().OutputNodes = OutputNodes;
-            AllNPC[i].gameObject.GetComponent<NpcScript>().HiddenNodes = HiddenNodes;
         }
     }
 
     private void MutatePopulation()
     {
-        for (int i = 0; i < startingPopulation; i++)
+        for (int i = 0; i < StartingPopulation; i++)
         {
             AllNeatNetworks[i].MutateNetwork();
+            Debug.Log("mutatepop");
         }
     }
 
@@ -101,4 +104,5 @@ public class NPCManager : MonoBehaviour
     public GameObject[] AllNPC { get => allNPC; set => allNPC = value; }
     public NeatNetwork[] AllNeatNetworks { get => allNeatNetworks; set => allNeatNetworks = value; }
     public float FloorSize { get => floorSize; set => floorSize = value; }
+    public int StartingPopulation { get => startingPopulation; set => startingPopulation = value; }
 }
