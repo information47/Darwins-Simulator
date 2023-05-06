@@ -10,7 +10,6 @@ public class Node
     public List<Connection> outputConnections;
     private IActivation nodeActivation;
 
-    public IActivation NodeActivation { get => nodeActivation; set => nodeActivation = value; }
 
     public Node(int ident)
     {
@@ -48,5 +47,8 @@ public class Node
             con.inputNodeValue = value;
         }
     }
-    
+    // getters and setters
+    public IActivation NodeActivation { get => nodeActivation; set => nodeActivation = value; }
+
+
 }
