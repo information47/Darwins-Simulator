@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-
-
     public float ViewRadius;
     [Range(0, 360)]
     public float ViewAngle;
@@ -67,6 +65,45 @@ public class FieldOfView : MonoBehaviour
 
         return closetTraget;
 
+    }
+    public float ClosetTargetDist()
+    {
+        float dstToTarget;
+        // if there is at least 1 visible target in the fow
+        if (visibleTargets.Count != 0 && visibleTargets[0] != null)
+        {
+
+            Transform closetTarget = SeeClosetTarget();
+
+
+
+            // distance between target and NPC
+            dstToTarget = Vector3.Distance(transform.position, closetTarget.position);
+
+
+
+            return dstToTarget;
+
+        }
+        else { return 0; }
+    }
+
+    public float ClosetTargetAngle(float divider = 10)
+    {
+        float angleToTarget;
+        if (visibleTargets.Count != 0 && visibleTargets[0] != null)
+        {
+            Transform closetTarget = SeeClosetTarget();
+
+            // direction to the target
+            Vector3 dirToTarget = (closetTarget.position - transform.position).normalized;
+
+            // angle between target and NPC
+            angleToTarget = Vector3.Angle(dirToTarget, transform.forward);
+
+            return angleToTarget / divider;
+        }
+        else { return 0f; }
     }
 
     public Vector3  DirFromAngle( float AngleDegrees, bool angleIsGlobal)

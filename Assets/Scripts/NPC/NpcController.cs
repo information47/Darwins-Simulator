@@ -1,13 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.AI;
-using Color = UnityEngine.Color;
-using Debug = UnityEngine.Debug;
-using System;
 using Random = UnityEngine.Random;
 
 public class NpcController : MonoBehaviour
@@ -19,8 +10,10 @@ public class NpcController : MonoBehaviour
     private Renderer rend;
 
     // Raycast
-    private float hitDivider = 1f;
-    private float rayDistance = 40f;
+    private RayCastController rayCastController;
+
+    [SerializeField] private float hitDivider = 1f;
+    [SerializeField] private float rayDistance = 40f;
 
     // movement
     private int food;
@@ -39,13 +32,11 @@ public class NpcController : MonoBehaviour
     // network
     public NeatNetwork myNetwork;
     private int myBrainIndex;
-    
-    // number of input, output and hidden nodes.
     private int inputNodes;
     private int outputNodes;
     
     //inputs for neural network
-    [SerializeField] private float[] sensors;
+    [SerializeField] private float[] inputs;
 
     //outputs of neural network
     [SerializeField] private float[] outputs;
@@ -55,11 +46,11 @@ public class NpcController : MonoBehaviour
 
     private void Start()
     {
+        inputs = new float[inputNodes];
+        rayCastController = new RayCastController();
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
         
-        Sensors = new float[InputNodes];
-
         // modify NPC size
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); 
 
@@ -78,7 +69,7 @@ public class NpcController : MonoBehaviour
         InputSensors();
 
         // send sensors data as input in the network
-        Outputs = myNetwork.FeedForwardNetwork(Sensors);
+        Outputs = myNetwork.FeedForwardNetwork(inputs);
 
         moveNPC(Outputs[0], Outputs[1]);
 
@@ -139,76 +130,15 @@ public class NpcController : MonoBehaviour
 
     private void InputSensors()
     {
-        int sensorsIndex = 0;
-
-        float[] wallDistances = Vision(transform.position);
-        for (int i = 0; i < wallDistances.Length; i++)
-        {
-            sensors[sensorsIndex] = wallDistances[i];
-            sensorsIndex++;
-        }
-
-
-        float dstToTarget;
-        float angleToTarget;
-        // if there is at least 1 visible target in the fow
-        if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
-        {
-
-            Transform closetTarget = fow.SeeClosetTarget();
-
-            // direction to the target
-            Vector3 dirToTarget = (closetTarget.position - transform.position).normalized;
-
-            // distance between target and NPC
-            dstToTarget = Vector3.Distance(transform.position, closetTarget.position);
-
-            // angle between target and NPC
-            angleToTarget = Vector3.Angle(dirToTarget, transform.forward);
-
-            Sensors[sensorsIndex] = dstToTarget;
-            sensorsIndex++;
-
-            Sensors[sensorsIndex] = angleToTarget / 10;
-
-        }
+        // these sensors return rayHit distance if ray touch a wall (three directions)
+        inputs[0] = (rayCastController.RayHit (transform.position, transform.forward, "Wall", 40f, 1f ) );
+        inputs[1] = (rayCastController.RayHit (transform.position, transform.forward + transform.right, "Wall", 40f, 1f ) );
+        inputs[2] = (rayCastController.RayHit (transform.position, transform.forward - transform.right, "Wall", 40f, 1f ) );
 
         
-    }
+        inputs[3] = fow.ClosetTargetDist();
+        inputs[4] = fow.ClosetTargetAngle();
 
-    public float[] Vision(Vector3 position)
-    {
-        float[] distances = new float[3];
-
-        Ray r = new Ray(position, transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                distances[0] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        r.direction = (transform.forward + transform.right);
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                distances[1] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        r.direction = (transform.forward - transform.right);
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                distances[2] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        return distances;
     }
 
     private void Death()
@@ -217,17 +147,8 @@ public class NpcController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void ResetSensors()
-    {
-        for (int i = 0; i < InputNodes; i++)
-        {
-            Sensors[i] = 0;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Food"))
         {
             this.Food += 1;
@@ -246,12 +167,11 @@ public class NpcController : MonoBehaviour
 
     // getters and setters
     public int MyBrainIndex { get => myBrainIndex; set => myBrainIndex = value; }
-    public float[] Sensors { get => sensors; set => sensors = value; }
-    public int InputNodes { get => inputNodes; set => inputNodes = value; }
-    public int OutputNodes { get => outputNodes; set => outputNodes = value; }
     public float[] Outputs { get => outputs; set => outputs = value; }
     public float EnergyThreshold { get => energyThreshold; set => energyThreshold = value; }
     public int EnergyToReproduce { get => energyToReproduce; set => energyToReproduce = value; }
     public float VitalityLoss { get => vitalityLoss; set => vitalityLoss = value; }
     public int Food { get => food; set => food = value; }
+    public int InputNodes { get => inputNodes; set => inputNodes = value; }
+    public int OutputNodes { get => outputNodes; set => outputNodes = value; }
 }

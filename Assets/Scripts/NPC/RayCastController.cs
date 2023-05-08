@@ -1,64 +1,61 @@
 using log4net.Util;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class RayCastController : MonoBehaviour
+public class RayCastController
 {
-    private float hitDivider = 1f;
-    private float rayDistance = 40f;
-
-    public float sendRay(Vector3 position, Vector3 direction)
+    public float RayHit(Vector3 origin, Vector3 direction, string tag, float maxDistance, float hitDivider)
     {
-        float dist;
-        Ray r = new(position, direction);
+        float dist = 0f;
+        Ray r = new(origin, direction);
         RaycastHit hit;
 
 
-        if (Physics.Raycast(r, out hit, rayDistance) && hit.transform.CompareTag("Wall"))
+        if (Physics.Raycast(r, out hit, maxDistance) && hit.transform.CompareTag(tag))
         {
                 Debug.DrawLine(r.origin, hit.point, Color.white);
                 dist = hit.distance / hitDivider;
-                return dist;
         }
-        else { return rayDistance; }
+        return dist;
     }
 
-    public float[] Vision(Vector3 position)
-    {
-        float[] distances = new float[3];
+    //public float[] vision(vector3 position, float distance)
+    //{
+    //    float[] distances = new float[3];
 
-        Ray r = new Ray(position, transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                distances[0] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        r.direction = (transform.forward + transform.right);
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                distances[1] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        r.direction = (transform.forward - transform.right);
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                distances[2] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        return distances;
-    }
+    //    ray r = new ray(position, transform.forward);
+    //    raycasthit hit;
+    //    if (physics.raycast(r, out hit, distance))
+    //    {
+    //        if (hit.transform.comparetag("wall"))
+    //        {
+    //            distances[0] = hit.distance / hitdivider;
+    //            debug.drawline(r.origin, hit.point, color.white);
+    //        }
+    //    }
+    //    r.direction = (transform.forward + transform.right);
+    //    if (physics.raycast(r, out hit, distance))
+    //    {
+    //        if (hit.transform.comparetag("wall"))
+    //        {
+    //            distances[1] = hit.distance / hitdivider;
+    //            debug.drawline(r.origin, hit.point, color.white);
+    //        }
+    //    }
+    //    r.direction = (transform.forward - transform.right);
+    //    if (physics.raycast(r, out hit, distance))
+    //    {
+    //        if (hit.transform.comparetag("wall"))
+    //        {
+    //            distances[2] = hit.distance / hitdivider;
+    //            debug.drawline(r.origin, hit.point, color.white);
+    //        }
+    //    }
+    //    return distances;
+    //}
 
 
 }
