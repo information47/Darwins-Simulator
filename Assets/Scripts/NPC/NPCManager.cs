@@ -45,7 +45,6 @@ public class NPCManager : MonoBehaviour
         HiddenNodes = 0;
 
         InitialSpawnNPC();
-        MutatePopulation();
     }
 
     // Update is called once per frame
@@ -65,6 +64,8 @@ public class NPCManager : MonoBehaviour
             SpawnNpc(randomSpawn);
             
         }
+        MutatePopulation();
+        MutatePopulation();
     }
 
     public void SpawnNpc(Vector3 position)
@@ -91,6 +92,11 @@ public class NPCManager : MonoBehaviour
             NPC.GetComponent<NpcController>().myNetwork.MutateNetwork();
         }
 
+    }
+
+    public void Death(float fitness, int index)
+    {
+        allNetworks[index].fitness = fitness;
     }
 
 

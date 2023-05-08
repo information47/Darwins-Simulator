@@ -7,18 +7,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using Color = UnityEngine.Color;
 using Debug = UnityEngine.Debug;
+using System;
+using Random = UnityEngine.Random;
 
 public class NpcController : MonoBehaviour
 {
     // [SerializeField] private GameObject Npc;
     private FieldOfView fow;
 
-    // RayCast
-    private float hitDivider = 1f;
-    private float rayDistance = 5f;
-
     // color
     private Renderer rend;
+
+    // Raycast
+    private float hitDivider = 1f;
+    private float rayDistance = 40f;
 
     // movement
     private int food;
@@ -39,14 +41,16 @@ public class NpcController : MonoBehaviour
     private int myBrainIndex;
     
     // number of input, output and hidden nodes.
-    [SerializeField] private int inputNodes;
-    [SerializeField] private int outputNodes;
+    private int inputNodes;
+    private int outputNodes;
     
     //inputs for neural network
     [SerializeField] private float[] sensors;
 
     //outputs of neural network
     [SerializeField] private float[] outputs;
+
+    private float fitness;
 
 
     private void Start()
@@ -67,7 +71,7 @@ public class NpcController : MonoBehaviour
 
         if (vitality <= 0)
         {
-            Destroy(this.gameObject);
+            Death();
         }
 
         // fetch datas from sensors
@@ -135,38 +139,18 @@ public class NpcController : MonoBehaviour
 
     private void InputSensors()
     {
-        float dstToTarget = 0;
-        float angleToTarget = 0;
+        int sensorsIndex = 0;
 
-        Ray r = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, rayDistance))
+        float[] wallDistances = Vision(transform.position);
+        for (int i = 0; i < wallDistances.Length; i++)
         {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                Sensors[0] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        r.direction = (transform.forward + transform.right);
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                Sensors[1] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
-        }
-        r.direction = (transform.forward - transform.right);
-        if (Physics.Raycast(r, out hit, rayDistance))
-        {
-            if (hit.transform.CompareTag("Wall"))
-            {
-                Sensors[2] = hit.distance / hitDivider;
-                Debug.DrawLine(r.origin, hit.point, Color.white);
-            }
+            sensors[sensorsIndex] = wallDistances[i];
+            sensorsIndex++;
         }
 
+
+        float dstToTarget;
+        float angleToTarget;
         // if there is at least 1 visible target in the fow
         if (fow.visibleTargets.Count != 0 && fow.visibleTargets[0] != null)
         {
@@ -182,12 +166,55 @@ public class NpcController : MonoBehaviour
             // angle between target and NPC
             angleToTarget = Vector3.Angle(dirToTarget, transform.forward);
 
+            Sensors[sensorsIndex] = dstToTarget;
+            sensorsIndex++;
 
-            Sensors[3] = dstToTarget;
-            Sensors[4] = angleToTarget / 10;
+            Sensors[sensorsIndex] = angleToTarget / 10;
+
         }
 
         
+    }
+
+    public float[] Vision(Vector3 position)
+    {
+        float[] distances = new float[3];
+
+        Ray r = new Ray(position, transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                distances[0] = hit.distance / hitDivider;
+                Debug.DrawLine(r.origin, hit.point, Color.white);
+            }
+        }
+        r.direction = (transform.forward + transform.right);
+        if (Physics.Raycast(r, out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                distances[1] = hit.distance / hitDivider;
+                Debug.DrawLine(r.origin, hit.point, Color.white);
+            }
+        }
+        r.direction = (transform.forward - transform.right);
+        if (Physics.Raycast(r, out hit, rayDistance))
+        {
+            if (hit.transform.CompareTag("Wall"))
+            {
+                distances[2] = hit.distance / hitDivider;
+                Debug.DrawLine(r.origin, hit.point, Color.white);
+            }
+        }
+        return distances;
+    }
+
+    private void Death()
+    {
+        GameObject.FindObjectOfType<NPCManager>().Death(fitness, MyBrainIndex);
+        Destroy(gameObject);
     }
 
     private void ResetSensors()
@@ -212,8 +239,8 @@ public class NpcController : MonoBehaviour
     {
         if (collision.transform.CompareTag("Wall"))
         {
-            // overallFitness = 0;
-            Destroy(this.gameObject);
+            // fitness = 0;
+            Death();
         }
     }
 
