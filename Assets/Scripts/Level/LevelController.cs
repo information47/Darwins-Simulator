@@ -17,11 +17,9 @@ public class LevelController : MonoBehaviour
     public GameObject wallRight;
     public GameObject wallLeft;
 
-
-    public GameObject slider;
     [SerializeField] private float floorSize;
 
-    [SerializeField] private int startingPopulation;
+    public int startingPopulation;
 
 
 

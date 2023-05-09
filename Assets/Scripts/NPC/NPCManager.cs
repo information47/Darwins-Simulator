@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
+    public GameObject game;
 
     public LevelController levelController;
 
@@ -19,7 +20,7 @@ public class NPCManager : MonoBehaviour
     public int keepBest, leaveWorst;
 
     public int currentAlive;
-    [SerializeField] private int repoping = 10; 
+    //[SerializeField] private int repoping = 10; 
     public bool spawnFromSave = false;
     public int bestTime = 100;
     public int addToBest = 50;
@@ -35,33 +36,38 @@ public class NPCManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startingPopulation = levelController.StartingPopulation;
+        //startingPopulation = levelController.StartingPopulation;
         floorSize = levelController.FloorSize;
 
         inputNodes = 5;
         outputNodes = 2;
         hiddenNodes = 0;
 
-        InitialSpawnNPC();
+        //InitialSpawnNPC();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (allNPCs.Count < repoping)
+        // check si on est en jeu avant de repop des NPC
+        if (game.GetComponent<GameScript>().gamePlaying == true)
         {
-            for (int i = 0; i < repoping; i++)
+/*            if (allNPCs.Count < repoping)
             {
-                Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
-                SpawnNpc(randomSpawn);
+                for (int i = 0; i < repoping; i++)
+                {
+                    Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
+                    SpawnNpc(randomSpawn);
 
-            }
+                }
+            }*/
         }
-
     }
 
-    private void InitialSpawnNPC()
+    public void InitialSpawnNPC()
     {
+        startingPopulation = levelController.StartingPopulation;
+
         /* Creates Initial Group of NPC GameObjects from StartingPopulation int 
         and matches NPC Objects to their NetworkBrains. */
 

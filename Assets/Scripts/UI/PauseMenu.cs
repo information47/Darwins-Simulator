@@ -6,13 +6,11 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject inGameInterface;
-
-    public bool isPaused;
+    public GameObject game;
 
     // Start is called before the first frame update
     void Start()
     {
-        isPaused = false;
     }
 
     // Update is called once per frame
@@ -25,15 +23,21 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("PauseGame");
         inGameInterface.SetActive(false);
         pauseMenu.SetActive(true);
-        isPaused = true;
+        game.GetComponent<GameScript>().gamePaused = true;
         Time.timeScale = 0f;
+
+        // Set gamePlaying to true
+        game.GetComponent<GameScript>().gamePlaying = false;
     }
     public void ResumeGame()
     {
         Debug.Log("ResumePause");
         pauseMenu.SetActive(false);
         inGameInterface.SetActive(true);
-        isPaused = false;
+        game.GetComponent<GameScript>().gamePaused = false;
         Time.timeScale = 1f;
+
+        // Set gamePlaying to false
+        game.GetComponent<GameScript>().gamePlaying = true;
     }
 }
