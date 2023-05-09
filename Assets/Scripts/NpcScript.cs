@@ -110,7 +110,7 @@ public class NpcScript : MonoBehaviour
 
 
 
-        // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
+        // diminution de l'ï¿½nergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecrease * size ;
         distanceTraveled = 0f;
 
@@ -127,11 +127,11 @@ public class NpcScript : MonoBehaviour
 
     void Reproduce()
     {
-        energy /= 2f; // transfert de la moitié de l'énergie au nouvel enfant
+        energy /= 2f; // transfert de la moitiï¿½ de l'ï¿½nergie au nouvel enfant
 
-        Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
+        Vector2 randomCircle = Random.insideUnitCircle * 2f; // gï¿½nï¿½re une position alï¿½atoire dans un cercle de rayon 2 autour du parent
         Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
-        Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
+        Instantiate(Npc, childPosition, Quaternion.identity); // crï¿½e un nouvel objet NPC
     }
 
     private void InputSensors()
@@ -235,6 +235,8 @@ public class NpcScript : MonoBehaviour
             // overallFitness = 0;
             Destroy(this.gameObject);
 
+            ParticleSystem particleSystemInstance = Instantiate(deathParticles, transform.position, Quaternion.identity);
+               Destroy(particleSystemInstance.gameObject, 2.0f);
 
         }
     }
