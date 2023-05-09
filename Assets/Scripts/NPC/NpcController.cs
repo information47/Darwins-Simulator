@@ -18,13 +18,13 @@ public class NpcController : MonoBehaviour
     // movement
     private int food;
     private Vector3 lastPosition;
-    private float distanceTraveled = 0f;
+    private float distanceTraveled;
 
     // carateristiques
     [SerializeField] private double energy = 100;
     [SerializeField] private double vitality = 100;
     private float energyDecrease = 0.5f;
-    private float energyThreshold = 30;
+    private float energyLimit = 30;
     private int energyToReproduce = 130;
     private float vitalityLoss = 0.1f;
 
@@ -58,7 +58,7 @@ public class NpcController : MonoBehaviour
 
     void Update()
     {
-        energyLoss();
+        EnergyLoss();
 
         if (vitality <= 0)
         {
@@ -69,14 +69,27 @@ public class NpcController : MonoBehaviour
         InputSensors();
 
         // send sensors data as input in the network
-        Outputs = myNetwork.FeedForwardNetwork(inputs);
+        outputs = myNetwork.FeedForwardNetwork(inputs);
 
-        moveNPC(Outputs[0], Outputs[1]);
+        MoveNPC(outputs[0], outputs[1]);
 
       
     }
 
-    void moveNPC(float speed, float rotation)
+    private void InputSensors()
+    {
+        // these sensors return rayHit distance if ray touch a wall (three directions)
+        inputs[0] = (rayCastController.RayHit(transform.position, transform.forward, "Wall", rayDistance, 1f));
+        inputs[1] = (rayCastController.RayHit(transform.position, transform.forward + transform.right, "Wall", rayDistance, hitDivider));
+        inputs[2] = (rayCastController.RayHit(transform.position, transform.forward - transform.right, "Wall", rayDistance, hitDivider));
+
+
+        inputs[3] = fow.ClosetTargetDist();
+        inputs[4] = fow.ClosetTargetAngle();
+
+    }
+
+    void MoveNPC(float speed, float rotation)
     {
         // get position
         Vector3 input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, speed * 2f), 1f);
@@ -89,7 +102,7 @@ public class NpcController : MonoBehaviour
         transform.eulerAngles += new Vector3(0, (rotation * 90), 0) * Time.deltaTime;
     }
     
-    void energyLoss()
+    void EnergyLoss()
     {
         //calcul de la taille du NPC
         float size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
@@ -105,11 +118,11 @@ public class NpcController : MonoBehaviour
         energy -= distanceTraveled * energyDecrease/2 * size ;
         distanceTraveled = 0f;
 
-        if ( energy <= EnergyThreshold)
+        if ( energy <= energyLimit)
         {
-            vitality -= VitalityLoss;
+            vitality -= vitalityLoss;
         }
-        else if ( energy >= EnergyToReproduce)
+        else if ( energy >= energyToReproduce)
         {
             //Reproduce();
         }
@@ -128,19 +141,6 @@ public class NpcController : MonoBehaviour
 
     }
 
-    private void InputSensors()
-    {
-        // these sensors return rayHit distance if ray touch a wall (three directions)
-        inputs[0] = (rayCastController.RayHit (transform.position, transform.forward, "Wall", 40f, 1f ) );
-        inputs[1] = (rayCastController.RayHit (transform.position, transform.forward + transform.right, "Wall", 40f, 1f ) );
-        inputs[2] = (rayCastController.RayHit (transform.position, transform.forward - transform.right, "Wall", 40f, 1f ) );
-
-        
-        inputs[3] = fow.ClosetTargetDist();
-        inputs[4] = fow.ClosetTargetAngle();
-
-    }
-
     private void Death()
     {
         GameObject.FindObjectOfType<NPCManager>().Death(fitness, MyBrainIndex);
@@ -151,7 +151,7 @@ public class NpcController : MonoBehaviour
     {
         if (other.CompareTag("Food"))
         {
-            this.Food += 1;
+            this.food += 1;
             energy += 10;
         }
     }
@@ -167,11 +167,6 @@ public class NpcController : MonoBehaviour
 
     // getters and setters
     public int MyBrainIndex { get => myBrainIndex; set => myBrainIndex = value; }
-    public float[] Outputs { get => outputs; set => outputs = value; }
-    public float EnergyThreshold { get => energyThreshold; set => energyThreshold = value; }
-    public int EnergyToReproduce { get => energyToReproduce; set => energyToReproduce = value; }
-    public float VitalityLoss { get => vitalityLoss; set => vitalityLoss = value; }
-    public int Food { get => food; set => food = value; }
     public int InputNodes { get => inputNodes; set => inputNodes = value; }
     public int OutputNodes { get => outputNodes; set => outputNodes = value; }
 }

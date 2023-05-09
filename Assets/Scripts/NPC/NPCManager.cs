@@ -14,18 +14,16 @@ public class NPCManager : MonoBehaviour
 
     private int inputNodes, outputNodes, hiddenNodes;
 
-    private int currentGeneration = 0;
-
     private int npcsSpawned = 0;
 
     public int keepBest, leaveWorst;
 
     public int currentAlive;
-    private bool repoping = false;
-
+    [SerializeField] private int repoping = 10; 
     public bool spawnFromSave = false;
     public int bestTime = 100;
     public int addToBest = 50;
+   // [SerializeField] private int repoping;
 
     private float floorSize;
 
@@ -37,12 +35,12 @@ public class NPCManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartingPopulation = levelController.StartingPopulation;
+        startingPopulation = levelController.StartingPopulation;
         floorSize = levelController.FloorSize;
 
-        InputNodes = 5;
-        OutputNodes = 2;
-        HiddenNodes = 0;
+        inputNodes = 5;
+        outputNodes = 2;
+        hiddenNodes = 0;
 
         InitialSpawnNPC();
     }
@@ -50,6 +48,15 @@ public class NPCManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (allNPCs.Count < repoping)
+        {
+            for (int i = 0; i < repoping; i++)
+            {
+                Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
+                SpawnNpc(randomSpawn);
+
+            }
+        }
 
     }
 
@@ -58,7 +65,7 @@ public class NPCManager : MonoBehaviour
         /* Creates Initial Group of NPC GameObjects from StartingPopulation int 
         and matches NPC Objects to their NetworkBrains. */
 
-        for (int i = 0; i < StartingPopulation; i++)
+        for (int i = 0; i < startingPopulation; i++)
         {
             Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
             SpawnNpc(randomSpawn);
@@ -71,14 +78,14 @@ public class NPCManager : MonoBehaviour
     public void SpawnNpc(Vector3 position)
     // create a NPC with a network
     {
-        NeatNetwork newNetwork = new(InputNodes, OutputNodes, HiddenNodes);
+        NeatNetwork newNetwork = new(inputNodes, outputNodes, hiddenNodes);
         allNetworks.Add(newNetwork);
         
         GameObject newNPC = Instantiate(NPC, position, Quaternion.identity);
         newNPC.GetComponent<NpcController>().MyBrainIndex = npcsSpawned;
         newNPC.GetComponent<NpcController>().myNetwork = newNetwork;
-        newNPC.GetComponent<NpcController>().InputNodes = InputNodes;
-        newNPC.GetComponent<NpcController>().OutputNodes = OutputNodes;
+        newNPC.GetComponent<NpcController>().InputNodes = inputNodes;
+        newNPC.GetComponent<NpcController>().OutputNodes = outputNodes;
         
         allNPCs.Add(newNPC);
 
@@ -98,13 +105,4 @@ public class NPCManager : MonoBehaviour
     {
         allNetworks[index].fitness = fitness;
     }
-
-
-
-    // getters and setters
-    public int InputNodes { get => inputNodes; set => inputNodes = value; }
-    public int OutputNodes { get => outputNodes; set => outputNodes = value; }
-    public int HiddenNodes { get => hiddenNodes; set => hiddenNodes = value; }
-    public float FloorSize { get => floorSize; set => floorSize = value; }
-    public int StartingPopulation { get => startingPopulation; set => startingPopulation = value; }
 }
