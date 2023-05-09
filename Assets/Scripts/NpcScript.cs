@@ -20,6 +20,7 @@ public class NpcScript : MonoBehaviour
 
     // color
     private Renderer rend;
+    public ParticleSystem deathParticles;
 
     // movement
     private int food;
