@@ -233,6 +233,8 @@ public class NpcScript : MonoBehaviour
             // Debug.Log("Fish Died");
             // overallFitness = 0;
             Destroy(this.gameObject);
+
+
         }
     }
 
