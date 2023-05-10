@@ -22,20 +22,27 @@ public class NeatGenome
     public void MutateGenome()
     {
         //define the probability of creating a new connexion or a new node. 
-        float createEdgeChance = 90f;
+        float createConChance = 90f;
         float createNodeChance = 10f;
-        float chanceEdge = Random.Range(0f, 100f);
-        float chanceNode = Random.Range(0f, 100f);
+        float removeConChance = 10f;
 
-        if (chanceNode <= createNodeChance)
+        float removeCon = Random.Range(0f, 100f);
+        float createCon = Random.Range(0f, 100f);
+        float createNode = Random.Range(0f, 100f);
+
+        if (createNode <= createNodeChance)
         {
             // Create Random New Node
             AddRandomNode();
         }
-        if (chanceEdge <= createEdgeChance)
+        if (createCon <= createConChance)
         {
             // Create Random New Edge
             AddRandomConnection();
+        }
+        if (removeCon <= removeConChance)
+        {
+            RemoveRandomCon();
         }
         // Mutate The Weights
         MutateWeights();
@@ -45,7 +52,7 @@ public class NeatGenome
     {
         if (ConGenes.Count != 0)
         {
-            int randomCon = Random.Range(0, ConGenes.Count);
+            int randomCon = Random.Range(0, ConGenes.Count); // count -1 ?
             ConGene mutatingCon = ConGenes[randomCon];
             int firstNode = mutatingCon.inputNode;
             int secondNode = mutatingCon.outputNode;
@@ -118,6 +125,12 @@ public class NeatGenome
         ConGene newCon = new ConGene(firstNode, secondNode, weight, act, innov);
         ConGenes.Add(newCon);
         return true;
+    }
+
+    public void RemoveRandomCon()
+    {
+        int conToRemove = Random.Range(0, conGenes.Count - 1);
+        ConGenes[conToRemove].isActive = false;
     }
 
     private int GetNextInovNum()
