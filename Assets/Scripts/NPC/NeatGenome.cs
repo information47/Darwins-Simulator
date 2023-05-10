@@ -6,6 +6,8 @@ public class NeatGenome
 {
     private List<NodeGene> nodeGenes;
     private List<ConGene> conGenes;
+    private Activations activations = new Activations();
+
 
 
     public NeatGenome()
@@ -17,6 +19,8 @@ public class NeatGenome
     {
         NodeGenes = nodeGens;
         ConGenes = conGens;
+        
+
     }
 
     public void MutateGenome()
@@ -51,8 +55,11 @@ public class NeatGenome
     private void AddRandomNode()
     {
         if (ConGenes.Count != 0)
-        {
+        {   int randomFunction = Random.Range(0, activations.functions.Count-1);
             int randomCon = Random.Range(0, ConGenes.Count); // count -1 ?
+
+
+
             ConGene mutatingCon = ConGenes[randomCon];
             int firstNode = mutatingCon.inputNode;
             int secondNode = mutatingCon.outputNode;
@@ -62,7 +69,7 @@ public class NeatGenome
 
             int newId = GetNextNodeId();
 
-            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, new TanH());
+            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, activations.functions[randomFunction]);
             nodeGenes.Add(newNode);
 
             int nextInovNum = GetNextInovNum();

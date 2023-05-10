@@ -151,7 +151,6 @@ public class NPCManager : MonoBehaviour
         allNPCs.Remove(npc);
     }
 
-    int i = 1;
     private void CheckFitness(NeatNetwork network)
     {   
 

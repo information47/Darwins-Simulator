@@ -15,7 +15,7 @@ public class TestNetwork
 
         foreach(NodeGene nodeGene in network.MyGenome.NodeGenes)
         {
-            Assert.AreNotEqual(nodeGene.ActivationGene, null);
+            Assert.AreNotEqual(nodeGene.activationGene, null);
         }
 
     }

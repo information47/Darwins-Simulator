@@ -8,7 +8,7 @@ public class Node
     public float value;
     public List<Connection> inputConnections;
     public List<Connection> outputConnections;
-    private IActivation nodeActivation;
+    private Activations.actFunc nodeActivation;
 
 
     public Node(int ident)
@@ -18,7 +18,7 @@ public class Node
         outputConnections = new List<Connection>();
     }
 
-    public void SetNodeActivation(IActivation act)
+    public void SetNodeActivation(Activations.actFunc act)
     {
         NodeActivation = act;
     }
@@ -26,7 +26,7 @@ public class Node
     
     public void SetInputNodeValue(float input)
     {
-        value = this.NodeActivation.DoActivation(input);
+        value = NodeActivation(input);
     }
     
     public void SetNodeValue()
@@ -36,7 +36,7 @@ public class Node
         {
             val += (con.weight * con.inputNodeValue);
         }
-        value = NodeActivation.DoActivation(val);
+        value = NodeActivation(val);
 
     }
 
@@ -48,7 +48,7 @@ public class Node
         }
     }
     // getters and setters
-    public IActivation NodeActivation { get => nodeActivation; set => nodeActivation = value; }
+    public Activations.actFunc NodeActivation { get => nodeActivation; set => nodeActivation = value; }
 
 
 }

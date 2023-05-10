@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Activations
 {
-    private List<actFunc> functions;
-    private delegate float actFunc(float x);
+    public List<actFunc> functions;
+    public delegate float actFunc(float x);
+
+
 
     public Activations()
     {

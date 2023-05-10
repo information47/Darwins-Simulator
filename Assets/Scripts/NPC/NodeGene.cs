@@ -11,29 +11,30 @@ public class NodeGene
     }
 
     private TYPE type;
-    private IActivation activationGene;
+    public Activations.actFunc activationGene;
 
-    public void SetActivationGene(IActivation activation)
+
+
+    public void SetActivationGene(Activations.actFunc activation)
     {
-        this.ActivationGene = activation;
+        this.activationGene = activation;
     }
 
-    public NodeGene(int givenId, TYPE givenType)
+public NodeGene(int givenId, TYPE givenType)
     {
         Id = givenId;
         Type = givenType;
 
     }
 
-    public NodeGene(int givenId, TYPE givenType, IActivation activation)
+    public NodeGene(int givenId, TYPE givenType, Activations.actFunc activationFunc)
     {
         Id = givenId;
         Type = givenType;
-        ActivationGene = activation;
+        activationGene = activationFunc;
     }
         
     // getters and setters
     public int Id { get => id; set => id = value; }
     public TYPE Type { get => type; set => type = value; }
-    public IActivation ActivationGene { get => activationGene; set => activationGene = value; }
 }

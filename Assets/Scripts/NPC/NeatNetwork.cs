@@ -12,6 +12,8 @@ public class NeatNetwork
     private List<Node> hiddenNodes;
     private List<Connection> connections;
     public float fitness = 0;
+    private Activations activations = new();
+    
 
 
     public NeatNetwork(int inp, int outp, int hid, int id)
@@ -51,7 +53,7 @@ public class NeatNetwork
         for (int i = 0; i < inp; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Input);
-            newNodeGene.SetActivationGene(new Sigmoid());
+            newNodeGene.SetActivationGene(activations.functions[0]); //Sigmoid()
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }
@@ -59,7 +61,7 @@ public class NeatNetwork
         for (int i = 0; i < outp; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Output);
-            newNodeGene.SetActivationGene(new TanH());
+            newNodeGene.SetActivationGene(activations.functions[1]); //TanH()
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }
@@ -67,7 +69,7 @@ public class NeatNetwork
         for (int i = 0; i < hid; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Hidden);
-            newNodeGene.SetActivationGene(new TanH());
+            newNodeGene.SetActivationGene(activations.functions[1]); //TanH()
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }
@@ -85,7 +87,7 @@ public class NeatNetwork
         foreach (NodeGene nodeGene in nodeGenes)
         {
             Node newNode = new(nodeGene.Id);
-            newNode.SetNodeActivation(nodeGene.ActivationGene);
+            newNode.SetNodeActivation(nodeGene.activationGene);
             Nodes.Add(newNode);
             
 
