@@ -13,7 +13,7 @@ public class NpcController : MonoBehaviour
     private RayCastController rayCastController;
 
     [SerializeField] private float hitDivider = 1f;
-    [SerializeField] private float rayDistance = 40f;
+    [SerializeField] private float rayDistance = 10f;
 
     // movement
     private int food;
@@ -31,7 +31,7 @@ public class NpcController : MonoBehaviour
 
     // network
     public NeatNetwork myNetwork;
-    private int myBrainIndex;
+    private int id;
     private int inputNodes;
     private int outputNodes;
     
@@ -112,7 +112,7 @@ public class NpcController : MonoBehaviour
         lastPosition = transform.position;
 
         //diminution de ll'énergie en fonction du temps
-        energy -= energyDecrease * 2 * Time.deltaTime;
+        energy -= energyDecrease * 1 * Time.deltaTime;
 
         // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecrease/2 * size ;
@@ -143,7 +143,7 @@ public class NpcController : MonoBehaviour
 
     private void Death()
     {
-        GameObject.FindObjectOfType<NPCManager>().Death(fitness, MyBrainIndex);
+        GameObject.FindObjectOfType<NPCManager>().Death(fitness, id);
         Destroy(gameObject);
     }
 
@@ -153,6 +153,7 @@ public class NpcController : MonoBehaviour
         {
             this.food += 1;
             energy += 10;
+            fitness++;
         }
     }
 
@@ -166,7 +167,7 @@ public class NpcController : MonoBehaviour
     }
 
     // getters and setters
-    public int MyBrainIndex { get => myBrainIndex; set => myBrainIndex = value; }
+    public int Id { get => id; set => id = value; }
     public int InputNodes { get => inputNodes; set => inputNodes = value; }
     public int OutputNodes { get => outputNodes; set => outputNodes = value; }
 }

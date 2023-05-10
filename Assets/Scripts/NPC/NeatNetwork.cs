@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class NeatNetwork
 {
+    private int id;
     private NeatGenome myGenome;
     private List<Node> nodes;
     private List<Node> inputNodes;
     private List<Node> outputNodes;
     private List<Node> hiddenNodes;
     private List<Connection> connections;
-    public float fitness;
+    public float fitness = 0;
 
-    public NeatNetwork(int inp, int outp, int hid)
+
+    public NeatNetwork(int inp, int outp, int hid, int id)
     {
         MyGenome = CreateInitialGenome(inp, outp, hid);
-
+        myGenome.MutateGenome();
+        Id = id;
         Nodes = new List<Node>();
         InputNodes = new List<Node>();
         OutputNodes = new List<Node>();
@@ -25,9 +28,11 @@ public class NeatNetwork
         CreateNetwork();
     }
 
-    public NeatNetwork(NeatGenome genome)
+    public NeatNetwork(NeatGenome genome, int id)
     {
+        Id = id;
         MyGenome = genome;
+        MyGenome.MutateGenome();
         Nodes = new List<Node>();
         InputNodes = new List<Node>();
         OutputNodes = new List<Node>();
@@ -173,6 +178,7 @@ public class NeatNetwork
     public List<Node> OutputNodes { get => outputNodes; set => outputNodes = value; }
     public List<Node> HiddenNodes { get => hiddenNodes; set => hiddenNodes = value; }
     public List<Connection> Connections { get => connections; set => connections = value; }
+    public int Id { get => id; set => id = value; }
 }
 
 

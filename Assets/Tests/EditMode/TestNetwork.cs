@@ -7,8 +7,7 @@ using UnityEngine.TestTools;
 
 public class TestNetwork
 {
-    // A Test behaves as an ordinary method
-    NeatNetwork network = new(5, 2, 0);
+    NeatNetwork network = new(5, 2, 0, 0);
 
     [Test]
     public void ActivationGenesNotNull()

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NPCManager : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class NPCManager : MonoBehaviour
     
     public List<NeatNetwork> allNetworks = new List<NeatNetwork>();
     public List<GameObject> allNPCs = new List<GameObject>();
+    private List<NeatNetwork> bestNetworks = new List<NeatNetwork> ();
 
     private int inputNodes, outputNodes, hiddenNodes;
 
@@ -19,7 +22,7 @@ public class NPCManager : MonoBehaviour
     public int keepBest, leaveWorst;
 
     public int currentAlive;
-    [SerializeField] private int repoping = 10; 
+    [SerializeField] private int repopingLimit = 10; 
     public bool spawnFromSave = false;
     public int bestTime = 100;
     public int addToBest = 50;
@@ -48,18 +51,35 @@ public class NPCManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (allNPCs.Count < repoping)
-        {
-            for (int i = 0; i < repoping; i++)
-            {
-                Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
-                SpawnNpc(randomSpawn);
-
-            }
-        }
+        repoping();
 
     }
 
+    private void repoping()
+    {
+        if (allNPCs.Count < repopingLimit)
+        {
+            Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
+            if (bestNetworks.Count != 0)
+            {
+                Debug.Log("bestNetwork count >0");
+                for (int i = 0; i < repopingLimit - allNPCs.Count; i++)
+                {
+                    SpawnNpc(bestNetworks[0].MyGenome, randomSpawn);
+
+                }
+            }
+            else
+            {
+                for (int i = 0; i < repopingLimit - allNPCs.Count; i++)
+                {
+                    SpawnNpc(randomSpawn);
+
+                }
+            }
+        }
+    }
+    
     private void InitialSpawnNPC()
     {
         /* Creates Initial Group of NPC GameObjects from StartingPopulation int 
@@ -78,15 +98,32 @@ public class NPCManager : MonoBehaviour
     public void SpawnNpc(Vector3 position)
     // create a NPC with a network
     {
-        NeatNetwork newNetwork = new(inputNodes, outputNodes, hiddenNodes);
+        Debug.Log("npc vide");
+        NeatNetwork newNetwork = new(inputNodes, outputNodes, hiddenNodes, npcsSpawned);
         allNetworks.Add(newNetwork);
         
         GameObject newNPC = Instantiate(NPC, position, Quaternion.identity);
-        newNPC.GetComponent<NpcController>().MyBrainIndex = npcsSpawned;
+        newNPC.GetComponent<NpcController>().Id = npcsSpawned;
         newNPC.GetComponent<NpcController>().myNetwork = newNetwork;
         newNPC.GetComponent<NpcController>().InputNodes = inputNodes;
         newNPC.GetComponent<NpcController>().OutputNodes = outputNodes;
         
+        allNPCs.Add(newNPC);
+
+        npcsSpawned++;
+    }
+
+    public void SpawnNpc(NeatGenome genome, Vector3 position)
+    {
+        NeatNetwork newNetwork = new NeatNetwork(genome, npcsSpawned);
+        allNetworks.Add(newNetwork);
+
+        GameObject newNPC = Instantiate(NPC, position, Quaternion.identity);
+        newNPC.GetComponent<NpcController>().Id = npcsSpawned;
+        newNPC.GetComponent<NpcController>().myNetwork = newNetwork;
+        newNPC.GetComponent<NpcController>().InputNodes = inputNodes;
+        newNPC.GetComponent<NpcController>().OutputNodes = outputNodes;
+
         allNPCs.Add(newNPC);
 
         npcsSpawned++;
@@ -101,8 +138,37 @@ public class NPCManager : MonoBehaviour
 
     }
 
-    public void Death(float fitness, int index)
+    public void Death(float fitness, int id)
     {
-        allNetworks[index].fitness = fitness;
+        // recupere le network
+        NeatNetwork network = allNetworks.FirstOrDefault(obj => obj.Id == id);
+        GameObject npc = allNPCs.FirstOrDefault(obj => obj.gameObject.GetComponent<NpcController>().Id == id);
+
+        network.fitness = fitness;
+        CheckFitness(network);
+
+        allNetworks.Remove(network);
+        allNPCs.Remove(npc);
+    }
+
+    int i = 1;
+    private void CheckFitness(NeatNetwork network)
+    {   
+
+        if (bestNetworks.Count != 0)
+        {
+            for (int i = bestNetworks.Count - 1; i >= 0; i --)
+            {
+                if (bestNetworks[i].fitness < network.fitness)
+                {
+                    bestNetworks.Insert(i, network);
+                    bestNetworks.RemoveAt(bestNetworks.Count - 1);
+                }
+            }
+        }
+        else
+        {
+            bestNetworks.Add(network);
+        }
     }
 }
