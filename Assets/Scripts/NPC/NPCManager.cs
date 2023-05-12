@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class NPCManager : MonoBehaviour
 {
+    public GameObject game;
 
     public LevelController levelController;
 
@@ -40,20 +41,23 @@ public class NPCManager : MonoBehaviour
     void Start()
     {
         repopingLimit = levelController.repopingLimit;
-        startingPopulation = levelController.StartingPopulation;
         floorSize = levelController.FloorSize;
 
         inputNodes = 5;
         outputNodes = 2;
         hiddenNodes = 0;
 
-        InitialSpawnNPC();
+        //InitialSpawnNPC();
     }
 
     // Update is called once per frame
     void Update()
     {
-        repoping();
+        // check si on est en jeu avant de repop des NPC
+        if (game.GetComponent<GameScript>().gamePlaying == true)
+        {
+            repoping();
+        }
 
     }
 
@@ -83,8 +87,11 @@ public class NPCManager : MonoBehaviour
         }
     }
     
-    private void InitialSpawnNPC()
+    public void InitialSpawnNPC()
     {
+        floorSize = levelController.FloorSize;
+        startingPopulation = levelController.StartingPopulation;
+
         /* Creates Initial Group of NPC GameObjects from StartingPopulation int 
         and matches NPC Objects to their NetworkBrains. */
 

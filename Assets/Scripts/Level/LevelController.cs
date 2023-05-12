@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
+    public GameObject game;
+
     public GameObject food;
     public GameObject[] listFood;
     public float timer = 0;
@@ -17,11 +19,9 @@ public class LevelController : MonoBehaviour
     public GameObject wallRight;
     public GameObject wallLeft;
 
-
-    public GameObject slider;
     [SerializeField] private float floorSize;
 
-    [SerializeField] private int startingPopulation;
+    [SerializeField] public int startingPopulation;
     [SerializeField] public int repopingLimit;
 
 
@@ -32,17 +32,18 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         // floor and walls setup
-        SizeSetup();
-
+        //SizeSetup();
     }
 
     private void Update()
     {
-        SpawnFood();
-        
+        if (game.GetComponent<GameScript>().gamePlaying == true)
+        {
+            SpawnFood();
+        }
     }
 
-    private void SizeSetup()
+    public void SizeSetup()
     {
         floor.transform.localScale = new Vector3(FloorSize, 0.1f, FloorSize);
 

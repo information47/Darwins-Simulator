@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InGame : MonoBehaviour
 {
-    PauseMenu pauseMenu = new();
+    public GameObject pauseMenu;
+    public GameObject game;
     public QUI_OptionList optionList;
   
     // Start is called before the first frame update
@@ -20,13 +21,13 @@ public class InGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("ESCAPE");
-            if (pauseMenu.isPaused)
+            if (game.GetComponent<GameScript>().gamePaused == true)
             {
-                pauseMenu.ResumeGame();
+                pauseMenu.GetComponent<PauseMenu>().ResumeGame();
             }
             else
             {
-                pauseMenu.PauseGame();
+                pauseMenu.GetComponent<PauseMenu>().PauseGame();
             }
         }
     }
