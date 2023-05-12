@@ -13,7 +13,7 @@ public class NpcController : MonoBehaviour
     private RayCastController rayCastController;
 
     [SerializeField] private float hitDivider = 1f;
-    [SerializeField] private float rayDistance = 10f;
+    [SerializeField] private float rayDistance = 50f;
 
     // movement
     private int food;
@@ -21,12 +21,13 @@ public class NpcController : MonoBehaviour
     private float distanceTraveled;
 
     // carateristiques
-    [SerializeField] private double energy = 100;
-    [SerializeField] private double vitality = 100;
+    [SerializeField] private float energy = 100;
+    [SerializeField] private float vitality = 100;
     private float energyDecrease = 0.5f;
     private float energyLimit = 30;
     private int energyToReproduce = 130;
     private float vitalityLoss = 0.1f;
+    private float speedMultiplier = 4;
 
 
     // network
@@ -71,6 +72,8 @@ public class NpcController : MonoBehaviour
         // send sensors data as input in the network
         outputs = myNetwork.FeedForwardNetwork(inputs);
 
+        if (outputs[0] < 0) outputs[0] = outputs[0] * (-1);
+
         MoveNPC(outputs[0], outputs[1]);
 
       
@@ -85,14 +88,15 @@ public class NpcController : MonoBehaviour
 
 
         inputs[3] = fow.ClosetTargetDist();
-        inputs[4] = fow.ClosetTargetAngle();
+        inputs[4] = fow.ClosetTargetAngle(divider: 2);
+        // inputs[5] = this.energy / 28;
 
     }
 
     void MoveNPC(float speed, float rotation)
     {
         // get position
-        Vector3 input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, speed * 2f), 1f);
+        Vector3 input = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, speed * speedMultiplier), 1f);
         input = transform.TransformDirection(input);
 
         // move NPC
@@ -112,7 +116,7 @@ public class NpcController : MonoBehaviour
         lastPosition = transform.position;
 
         //diminution de ll'énergie en fonction du temps
-        energy -= energyDecrease * 1 * Time.deltaTime;
+        energy -= energyDecrease * 0.5f * Time.deltaTime;
 
         // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecrease/2 * size ;

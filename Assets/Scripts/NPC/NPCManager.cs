@@ -22,11 +22,12 @@ public class NPCManager : MonoBehaviour
     public int keepBest, leaveWorst;
 
     public int currentAlive;
-    [SerializeField] private int repopingLimit = 10; 
+    [SerializeField] private int repopingLimit = 4; 
     public bool spawnFromSave = false;
     public int bestTime = 100;
     public int addToBest = 50;
-   // [SerializeField] private int repoping;
+    // [SerializeField] private int repoping;
+    private float bestNetworkDivider = 2;
 
     private float floorSize;
 
@@ -38,6 +39,7 @@ public class NPCManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        repopingLimit = levelController.repopingLimit;
         startingPopulation = levelController.StartingPopulation;
         floorSize = levelController.FloorSize;
 
@@ -65,7 +67,8 @@ public class NPCManager : MonoBehaviour
                 Debug.Log("bestNetwork count >0");
                 for (int i = 0; i < repopingLimit - allNPCs.Count; i++)
                 {
-                    SpawnNpc(bestNetworks[0].MyGenome, randomSpawn);
+                    int random = (int)Random.Range(0, (bestNetworks.Count - 1)/bestNetworkDivider);
+                    SpawnNpc(bestNetworks[random].MyGenome, randomSpawn);
 
                 }
             }
@@ -98,7 +101,6 @@ public class NPCManager : MonoBehaviour
     public void SpawnNpc(Vector3 position)
     // create a NPC with a network
     {
-        Debug.Log("npc vide");
         NeatNetwork newNetwork = new(inputNodes, outputNodes, hiddenNodes, npcsSpawned);
         allNetworks.Add(newNetwork);
         

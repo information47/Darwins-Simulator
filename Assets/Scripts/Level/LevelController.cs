@@ -22,6 +22,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private float floorSize;
 
     [SerializeField] private int startingPopulation;
+    [SerializeField] public int repopingLimit;
 
 
 
@@ -45,16 +46,16 @@ public class LevelController : MonoBehaviour
     {
         floor.transform.localScale = new Vector3(FloorSize, 0.1f, FloorSize);
 
-        wallUp.transform.localScale = new Vector3(FloorSize, 3, 0);
-        wallUp.transform.position = new Vector3(0, 1, FloorSize / 2);
+        wallUp.transform.localScale = new Vector3(FloorSize, 3, 1);
+        wallUp.transform.position = new Vector3(1, 1, FloorSize / 2);
 
-        wallDown.transform.localScale = new Vector3(FloorSize, 3, 0);
+        wallDown.transform.localScale = new Vector3(FloorSize, 3, 1);
         wallDown.transform.position = new Vector3(0, 1, FloorSize / -2);
 
-        wallLeft.transform.localScale = new Vector3(0, 3, FloorSize);
+        wallLeft.transform.localScale = new Vector3(1, 3, FloorSize);
         wallLeft.transform.position = new Vector3(FloorSize / -2, 1, 0);
 
-        wallRight.transform.localScale = new Vector3(0, 3, FloorSize);
+        wallRight.transform.localScale = new Vector3(1, 3, FloorSize);
         wallRight.transform.position = new Vector3(FloorSize / 2, 1, 0);
     }
 

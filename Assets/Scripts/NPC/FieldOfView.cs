@@ -1,16 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    public float ViewRadius;
+    public float ViewRadius = 15;
     [Range(0, 360)]
     public float ViewAngle;
 
     public LayerMask TargetMask;
     public LayerMask ObstacleMask;
+    public string foodTag = "food";
 
     public List<Transform> visibleTargets = new List<Transform>();
 
@@ -31,7 +33,6 @@ public class FieldOfView : MonoBehaviour
             FindVisibleTargets();
         }
     }
-
 
     void FindVisibleTargets()
     {

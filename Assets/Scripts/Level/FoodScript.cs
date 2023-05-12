@@ -11,7 +11,7 @@ public class FoodScript : MonoBehaviour
     private void Update()
     {
         Timer += Time.deltaTime;
-        if (Timer >= 1000)
+        if (Timer >= 15000)
         {
             Destroy(this.gameObject);
         }

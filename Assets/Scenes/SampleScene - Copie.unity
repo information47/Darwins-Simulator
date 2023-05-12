@@ -7346,9 +7346,10 @@ MonoBehaviour:
   keepBest: 0
   leaveWorst: 0
   currentAlive: 0
+  repopingLimit: 10
   spawnFromSave: 0
   bestTime: 100
-  addToBest: 50
+  addToBest: 5
 --- !u!1 &1815760907
 GameObject:
   m_ObjectHideFlags: 0
@@ -8228,15 +8229,16 @@ MonoBehaviour:
   food: {fileID: 7977662413385685684, guid: 5c45898ce9a4d654b8eb7cdfa9bb4948, type: 3}
   listFood: []
   timer: 0
-  foodNumber: 50
+  foodNumber: 60
   floor: {fileID: 1465172683}
   wallUp: {fileID: 1186030080}
   wallDown: {fileID: 353950129}
   wallRight: {fileID: 90344492}
   wallLeft: {fileID: 1411612388}
   slider: {fileID: 0}
-  floorSize: 40
-  startingPopulation: 10
+  floorSize: 60
+  startingPopulation: 4
+  repopingLimit: 4
 --- !u!1 &2075573578
 GameObject:
   m_ObjectHideFlags: 0

@@ -69,7 +69,8 @@ public class NeatGenome
 
             int newId = GetNextNodeId();
 
-            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, activations.functions[randomFunction]);
+            // NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, activations.functions[randomFunction]);
+            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, activations.functions[1]); //TanH()
             nodeGenes.Add(newNode);
 
             int nextInovNum = GetNextInovNum();
@@ -136,8 +137,11 @@ public class NeatGenome
 
     public void RemoveRandomCon()
     {
-        int conToRemove = Random.Range(0, conGenes.Count - 1);
-        ConGenes[conToRemove].isActive = false;
+        if (ConGenes.Count != 0)
+        {
+            int conToRemove = Random.Range(0, conGenes.Count);
+            ConGenes[conToRemove].isActive = false;
+        }
     }
 
     private int GetNextInovNum()

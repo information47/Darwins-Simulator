@@ -69,7 +69,8 @@ public class NeatNetwork
         for (int i = 0; i < hid; i++)
         {
             NodeGene newNodeGene = new NodeGene(nodeId, NodeGene.TYPE.Hidden);
-            newNodeGene.SetActivationGene(activations.functions[1]); //TanH()
+            int random = Random.Range(0, activations.functions.Count-1);
+            newNodeGene.SetActivationGene(activations.functions[random]); // random
             newNodeGenes.Add(newNodeGene);
             nodeId += 1;
         }

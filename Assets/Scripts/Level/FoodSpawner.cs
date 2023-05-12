@@ -11,6 +11,7 @@ public class FoodSpawner : MonoBehaviour
     public LevelController levelController;
     private float floorSize;
     [SerializeField] private int foodNumber;
+    private float foodMargin = 2f;
 
 
     private void Start()
@@ -34,7 +35,7 @@ public class FoodSpawner : MonoBehaviour
         {
             for (int i = 0; i < FoodNumber - listFood.Length; i++)
             {
-                Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
+                Vector3 randomSpawn = new Vector3(Random.Range(floorSize-foodMargin / -2, (floorSize-foodMargin / 2)), 1, Random.Range(floorSize-foodMargin / -2, floorSize-foodMargin / 2));
                 Instantiate(food, randomSpawn, Quaternion.identity);
             }
         }
