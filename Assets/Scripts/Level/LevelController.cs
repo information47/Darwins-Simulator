@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
+    public GameObject game;
+
     public GameObject food;
     public GameObject[] listFood;
     public float timer = 0;
@@ -29,17 +31,18 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         // floor and walls setup
-        SizeSetup();
-
+        //SizeSetup();
     }
 
     private void Update()
     {
-        SpawnFood();
-        
+        if (game.GetComponent<GameScript>().gamePlaying == true)
+        {
+            SpawnFood();
+        }
     }
 
-    private void SizeSetup()
+    public void SizeSetup()
     {
         floor.transform.localScale = new Vector3(FloorSize, 0.1f, FloorSize);
 

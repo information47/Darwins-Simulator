@@ -66,6 +66,7 @@ public class NPCManager : MonoBehaviour
 
     public void InitialSpawnNPC()
     {
+        floorSize = levelController.FloorSize;
         startingPopulation = levelController.StartingPopulation;
 
         /* Creates Initial Group of NPC GameObjects from StartingPopulation int 

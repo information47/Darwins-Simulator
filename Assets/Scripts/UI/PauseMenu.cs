@@ -20,7 +20,6 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        Debug.Log("PauseGame");
         inGameInterface.SetActive(false);
         pauseMenu.SetActive(true);
         game.GetComponent<GameScript>().gamePaused = true;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FoodSliderController : MonoBehaviour
+public class FloorSizeSliderController : MonoBehaviour
 {
-    [SerializeField] private Slider foodSlider;
+    [SerializeField] private Slider floorSizeSlider;
     [SerializeField] private Text sliderText;
     public float sliderValue;
     public GameObject levelControllerObject;
@@ -13,12 +13,12 @@ public class FoodSliderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foodSlider.onValueChanged.AddListener((v) =>
+        floorSizeSlider.onValueChanged.AddListener((v) =>
         {
             sliderText.text = v.ToString("0");
-            sliderValue = foodSlider.value;
+            sliderValue = floorSizeSlider.value;
             // Envois la starting population au levelController
-            levelControllerObject.GetComponent<LevelController>().FoodNumber = (int)sliderValue;
+            levelControllerObject.GetComponent<LevelController>().FloorSize = (int)sliderValue;
 
         });
     }
