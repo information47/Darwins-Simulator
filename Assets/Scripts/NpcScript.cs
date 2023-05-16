@@ -14,6 +14,9 @@ public class NpcScript : MonoBehaviour
     [SerializeField] private GameObject Npc;
     private FieldOfView fow;
 
+    //Camera
+    private Camera npcCamera;
+
     // RayCast
     private float hitDivider = 1f;
     private float rayDistance = 5f;
@@ -51,6 +54,15 @@ public class NpcScript : MonoBehaviour
     [SerializeField] private float[] outputs;
 
 
+    private void Awake()
+    {
+        // Récupérer la référence à la caméra spécifique au NPC
+        npcCamera = GetComponentInChildren<Camera>();
+        npcCamera.enabled = false;
+    }
+
+
+
     private void Start()
     {
         rend = GetComponent<Renderer>();
@@ -63,6 +75,12 @@ public class NpcScript : MonoBehaviour
         // modify NPC size
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); 
 
+    }
+
+    private void OnMouseDown()
+    {
+        npcCamera.enabled = true;
+        UnityEngine.Debug.Log("test");
     }
 
     void Update()
