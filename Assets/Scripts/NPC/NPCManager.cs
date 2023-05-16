@@ -23,11 +23,10 @@ public class NPCManager : MonoBehaviour
     public int keepBest, leaveWorst;
 
     public int currentAlive;
-    [SerializeField] private int repopingLimit = 4; 
+    private int repopingLimit; 
     public bool spawnFromSave = false;
     public int bestTime = 100;
     public int addToBest = 50;
-    // [SerializeField] private int repoping;
     private float bestNetworkDivider = 2;
 
     private float floorSize;
@@ -68,7 +67,6 @@ public class NPCManager : MonoBehaviour
             Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
             if (bestNetworks.Count != 0)
             {
-                Debug.Log("bestNetwork count >0");
                 for (int i = 0; i < repopingLimit - allNPCs.Count; i++)
                 {
                     int random = (int)Random.Range(0, (bestNetworks.Count - 1)/bestNetworkDivider);
