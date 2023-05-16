@@ -44,9 +44,16 @@ public class NpcController : MonoBehaviour
 
     private float fitness;
 
+    [SerializeField] private Healthbar healthbar;
+    private float currentHealth;
+    [SerializeField] private float maxVitality = 100;
+
 
     private void Start()
     {
+        vitality = maxVitality;
+        healthbar.UpdateHealthBar(maxVitality, vitality);
+
         inputs = new float[inputNodes];
         rayCastController = new RayCastController();
         rend = GetComponent<Renderer>();
@@ -125,6 +132,7 @@ public class NpcController : MonoBehaviour
         if ( energy <= energyLimit)
         {
             vitality -= vitalityLoss;
+            healthbar.UpdateHealthBar(maxVitality, vitality);
         }
         else if ( energy >= energyToReproduce)
         {

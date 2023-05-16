@@ -56,7 +56,8 @@ public class NPCManager : MonoBehaviour
         // check si on est en jeu avant de repop des NPC
         if (game.GetComponent<GameScript>().gamePlaying == true)
         {
-            repoping();
+            repopingLimit = levelController.repopingLimit;
+            repoping(); 
         }
 
     }
