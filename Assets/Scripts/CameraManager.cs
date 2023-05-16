@@ -24,6 +24,10 @@ public class CameraManager : MonoBehaviour
                 // Désactiver la caméra si elle n'est pas la caméra principale
                 camera.enabled = false;
             }
+            else
+            {
+                camera.enabled = true;
+            }
         }
     }
 }

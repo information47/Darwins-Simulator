@@ -3,7 +3,10 @@ guid: d2346daa21ef276459ea4662aab4839b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - game: {instanceID: 0}
+  - levelController: {instanceID: 0}
+  - NPC: {fileID: 4952678636786038613, guid: 84e48c0403862dd4a870ac2a1b0ec851, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
