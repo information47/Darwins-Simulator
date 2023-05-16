@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 19d6bd93a2ddf2a41bb27efe8ef9cc72
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - circleSprite: {fileID: 21300000, guid: 2a05f3bcfe8108d4fb7b1999a1864423, type: 3}
+  - rectTransform: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
