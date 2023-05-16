@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/NPC/Activations.cs.meta
-guid: 0dc8624f3a930684ea523a01f08b0538
-========
-guid: 056a2edc52ad94f43ad24f6ab8c95508
->>>>>>>> it3Robin:Assets/Scripts/animation.cs.meta
+guid: b2bbb1698aac13049b3a26a6b9766973
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
