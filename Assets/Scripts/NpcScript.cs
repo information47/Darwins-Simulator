@@ -253,3 +253,4 @@ public class NpcScript : MonoBehaviour
     public float VitalityLoss { get => vitalityLoss; set => vitalityLoss = value; }
     public int Food { get => food; set => food = value; }
 }
+

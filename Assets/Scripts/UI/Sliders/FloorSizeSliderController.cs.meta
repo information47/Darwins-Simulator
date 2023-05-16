@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/animation.cs.meta
-guid: 056a2edc52ad94f43ad24f6ab8c95508
-========
-guid: 0dc8624f3a930684ea523a01f08b0538
->>>>>>>> main:Assets/Scripts/NPC/Activations.cs.meta
+guid: 1d9ad8a5f9ac19747a539857a1e4827a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

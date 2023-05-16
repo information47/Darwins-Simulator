@@ -131,14 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc143f645f229ea4a90205677b677e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Npc: {fileID: 4772594608428404653}
-  deathParticles: {fileID: 3784687071789614065, guid: ba57e4cc447a9124193a13615b10c2b9, type: 3}
+  hitDivider: 1
+  rayDistance: 10
   energy: 100
   vitality: 100
-  inputNodes: 5
-  outputNodes: 2
-  hiddenNodes: 0
-  sensors: []
+  inputs: []
   outputs: []
 --- !u!114 &1133506585
 MonoBehaviour:
@@ -159,7 +156,8 @@ MonoBehaviour:
     m_Bits: 8
   ObstacleMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
+  foodTag: food
   visibleTargets: []
 --- !u!1 &4772594609949346780
 GameObject:

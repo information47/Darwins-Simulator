@@ -6,6 +6,8 @@ public class NeatGenome
 {
     private List<NodeGene> nodeGenes;
     private List<ConGene> conGenes;
+    private Activations activations = new Activations();
+
 
 
     public NeatGenome()
@@ -17,25 +19,34 @@ public class NeatGenome
     {
         NodeGenes = nodeGens;
         ConGenes = conGens;
+        
+
     }
 
     public void MutateGenome()
     {
         //define the probability of creating a new connexion or a new node. 
-        float createEdgeChance = 90f;
+        float createConChance = 90f;
         float createNodeChance = 10f;
-        float chanceEdge = Random.Range(0f, 100f);
-        float chanceNode = Random.Range(0f, 100f);
+        float removeConChance = 10f;
 
-        if (chanceNode <= createNodeChance)
+        float removeCon = Random.Range(0f, 100f);
+        float createCon = Random.Range(0f, 100f);
+        float createNode = Random.Range(0f, 100f);
+
+        if (createNode <= createNodeChance)
         {
             // Create Random New Node
             AddRandomNode();
         }
-        if (chanceEdge <= createEdgeChance)
+        if (createCon <= createConChance)
         {
             // Create Random New Edge
             AddRandomConnection();
+        }
+        if (removeCon <= removeConChance)
+        {
+            RemoveRandomCon();
         }
         // Mutate The Weights
         MutateWeights();
@@ -44,8 +55,11 @@ public class NeatGenome
     private void AddRandomNode()
     {
         if (ConGenes.Count != 0)
-        {
-            int randomCon = Random.Range(0, ConGenes.Count);
+        {   int randomFunction = Random.Range(0, activations.functions.Count-1);
+            int randomCon = Random.Range(0, ConGenes.Count); // count -1 ?
+
+
+
             ConGene mutatingCon = ConGenes[randomCon];
             int firstNode = mutatingCon.inputNode;
             int secondNode = mutatingCon.outputNode;
@@ -55,14 +69,15 @@ public class NeatGenome
 
             int newId = GetNextNodeId();
 
-            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden);
+            // NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, activations.functions[randomFunction]);
+            NodeGene newNode = new NodeGene(newId, NodeGene.TYPE.Hidden, activations.functions[1]); //TanH()
             nodeGenes.Add(newNode);
 
             int nextInovNum = GetNextInovNum();
-            ConGene firstNewCon = new ConGene(firstNode, newNode.id, 1f, true, nextInovNum);
+            ConGene firstNewCon = new ConGene(firstNode, newNode.Id, 1f, true, nextInovNum);
             ConGenes.Add(firstNewCon);
             nextInovNum = GetNextInovNum();
-            ConGene secondNewCon = new ConGene(newNode.id, secondNode, mutatingCon.weight, true, nextInovNum);
+            ConGene secondNewCon = new ConGene(newNode.Id, secondNode, mutatingCon.weight, true, nextInovNum);
             ConGenes.Add(secondNewCon);
         }
     }
@@ -72,9 +87,9 @@ public class NeatGenome
         int nextID = 0;
         foreach (NodeGene node in nodeGenes)
         {
-            if (nextID <= node.id)
+            if (nextID <= node.Id)
             {
-                nextID = node.id;
+                nextID = node.Id;
             }
         }
         nextID = nextID + 1;
@@ -84,8 +99,8 @@ public class NeatGenome
     {
         int firstNode = Random.Range(0, nodeGenes.Count);
         int secondNode = Random.Range(0, nodeGenes.Count);
-        NodeGene.TYPE firstType = nodeGenes[firstNode].type;
-        NodeGene.TYPE secondType = nodeGenes[secondNode].type;
+        NodeGene.TYPE firstType = nodeGenes[firstNode].Type;
+        NodeGene.TYPE secondType = nodeGenes[secondNode].Type;
 
         // if 2 inputs or 2 outputs are connected together
         if (firstType == secondType && firstType != NodeGene.TYPE.Hidden)
@@ -108,16 +123,25 @@ public class NeatGenome
             // swap values
             (secondNode, firstNode) = (firstNode, secondNode);
 
-            firstType = nodeGenes[firstNode].type;
-            secondType = nodeGenes[secondNode].type;
+            firstType = nodeGenes[firstNode].Type;
+            secondType = nodeGenes[secondNode].Type;
         }
 
         int innov = GetNextInovNum();
-        float weight = Random.Range(0f, 1f);
+        float weight = Random.Range(-1f, 1f);
         bool act = true;
         ConGene newCon = new ConGene(firstNode, secondNode, weight, act, innov);
         ConGenes.Add(newCon);
         return true;
+    }
+
+    public void RemoveRandomCon()
+    {
+        if (ConGenes.Count != 0)
+        {
+            int conToRemove = Random.Range(0, conGenes.Count);
+            ConGenes[conToRemove].isActive = false;
+        }
     }
 
     private int GetNextInovNum()
@@ -174,24 +198,6 @@ public class NeatGenome
     public List<ConGene> ConGenes { get => conGenes; set => conGenes = value; }
     public List<NodeGene> NodeGenes { get => nodeGenes; set => nodeGenes = value; }
 
-}
-
-
-public class NodeGene
-{
-    public int id;
-    public enum TYPE
-    {
-        Input, Output, Hidden
-    }
-
-    public TYPE type;
-
-    public NodeGene(int givenId, TYPE givenType)
-    {
-        id = givenId;
-        type = givenType;
-    }
 }
 
 public class ConGene
