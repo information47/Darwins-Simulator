@@ -147,13 +147,13 @@ public class NPCManager : MonoBehaviour
 
     }
 
-    public void Death(float fitness, int id)
+    public void Death(float fitness, int id) 
     {
         // recupere le network
         NeatNetwork network = allNetworks.FirstOrDefault(obj => obj.Id == id);
         GameObject npc = allNPCs.FirstOrDefault(obj => obj.gameObject.GetComponent<NpcController>().Id == id);
 
-        network.fitness = fitness;
+        network.fitness = fitness; 
         CheckFitness(network);
 
         allNetworks.Remove(network);

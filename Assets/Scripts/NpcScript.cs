@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
+//using TMPro;
 using System.Diagnostics;
 using System.Drawing;
 using UnityEngine;
@@ -57,7 +57,7 @@ public class NpcScript : MonoBehaviour
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
         
-        myNetwork = new NeatNetwork(InputNodes, OutputNodes, HiddenNodes);
+      //  myNetwork = new NeatNetwork(InputNodes, OutputNodes, HiddenNodes);
         
         Sensors = new float[InputNodes];
 
