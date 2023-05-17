@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc143f645f229ea4a90205677b677e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathParticles: {fileID: 3784687071789614065, guid: ba57e4cc447a9124193a13615b10c2b9, type: 3}
   hitDivider: 1
   rayDistance: 10
   npcCamera: {fileID: 6431712624291287785}
