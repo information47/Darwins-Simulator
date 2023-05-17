@@ -15,8 +15,9 @@ public class NpcController : MonoBehaviour
     [SerializeField] private float hitDivider = 1f;
     [SerializeField] private float rayDistance = 50f;
 
-    //Camera
+    //Camera && Popup
     public Camera npcCamera;
+    public Canvas Popup;
 
     // movement
     private int food;
@@ -52,6 +53,7 @@ public class NpcController : MonoBehaviour
         // Récupérer la référence à la caméra spécifique au NPC
         npcCamera = GetComponentInChildren<Camera>();
         npcCamera.enabled = false;
+        Popup.gameObject.SetActive(false);
     }
     [SerializeField] private Healthbar healthbar;
     private float currentHealth;
@@ -66,22 +68,22 @@ public class NpcController : MonoBehaviour
         rayCastController = new RayCastController();
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
-        
+
+
         // modify NPC size
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); 
 
     }
     void OnMouseDown()
     {
-        UnityEngine.Debug.Log("test 1");
+        UnityEngine.Debug.Log(Popup.enabled);
         if (npcCamera != null)
         {
-            // Désactiver la caméra principale
-            /*Camera.main.enabled = false;*/
-
-            UnityEngine.Debug.Log("test 2");
             // Activer la caméra du NPC
             npcCamera.enabled = true;
+
+            //affiches Popup 
+            Popup.gameObject.SetActive(true);
         }
     }
 
@@ -104,7 +106,13 @@ public class NpcController : MonoBehaviour
 
         MoveNPC(outputs[0], outputs[1]);
 
-      
+        // fermer popup
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Popup.gameObject.SetActive(false);
+        }
+
+
     }
     
 
