@@ -1733,6 +1733,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353950129}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &360824174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 360824175}
+  - component: {fileID: 360824176}
+  m_Layer: 0
+  m_Name: CameraManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &360824175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360824174}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1992516184}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360824176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360824174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d11a9e4f4ef8d5046b4d7bb62d0ee814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &372446268
 GameObject:
   m_ObjectHideFlags: 0
@@ -4410,7 +4454,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -8115,12 +8159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 460508676}
   levelController: {fileID: 1992516186}
-  NPC: {fileID: 4772594608428404653, guid: 84e48c0403862dd4a870ac2a1b0ec851, type: 3}
+  NPC: {fileID: 4952678636786038613, guid: 84e48c0403862dd4a870ac2a1b0ec851, type: 3}
   allNPCs: []
   keepBest: 0
   leaveWorst: 0
   currentAlive: 0
-  repopingLimit: 10
   spawnFromSave: 0
   bestTime: 100
   addToBest: 50
@@ -9257,6 +9300,7 @@ Transform:
   - {fileID: 479886122}
   - {fileID: 1708219690}
   - {fileID: 460508677}
+  - {fileID: 360824175}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9296,7 +9340,7 @@ MonoBehaviour:
   wallLeft: {fileID: 1411612388}
   floorSize: 40
   startingPopulation: 2
-  repopingLimit: 0
+  repopingLimit: 10
 --- !u!1 &2018351414
 GameObject:
   m_ObjectHideFlags: 0

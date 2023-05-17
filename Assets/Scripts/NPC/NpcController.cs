@@ -15,6 +15,9 @@ public class NpcController : MonoBehaviour
     [SerializeField] private float hitDivider = 1f;
     [SerializeField] private float rayDistance = 50f;
 
+    //Camera
+    public Camera npcCamera;
+
     // movement
     private int food;
     private Vector3 lastPosition;
@@ -44,10 +47,15 @@ public class NpcController : MonoBehaviour
 
     private float fitness;
 
+    private void Awake()
+    {
+        // Récupérer la référence à la caméra spécifique au NPC
+        npcCamera = GetComponentInChildren<Camera>();
+        npcCamera.enabled = false;
+    }
     [SerializeField] private Healthbar healthbar;
     private float currentHealth;
     [SerializeField] private float maxVitality = 100;
-
 
     private void Start()
     {
@@ -62,6 +70,19 @@ public class NpcController : MonoBehaviour
         // modify NPC size
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); 
 
+    }
+    void OnMouseDown()
+    {
+        UnityEngine.Debug.Log("test 1");
+        if (npcCamera != null)
+        {
+            // Désactiver la caméra principale
+            /*Camera.main.enabled = false;*/
+
+            UnityEngine.Debug.Log("test 2");
+            // Activer la caméra du NPC
+            npcCamera.enabled = true;
+        }
     }
 
     void Update()
@@ -85,6 +106,7 @@ public class NpcController : MonoBehaviour
 
       
     }
+    
 
     private void InputSensors()
     {
