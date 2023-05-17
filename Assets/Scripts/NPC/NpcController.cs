@@ -45,14 +45,16 @@ public class NpcController : MonoBehaviour
     private float fitness;
 
     [SerializeField] private Healthbar healthbar;
-    private float currentHealth;
     [SerializeField] private float maxVitality = 100;
 
+    [SerializeField] private Energybar Energybar;
+    [SerializeField] private float maxEnergy = 100;
 
     private void Start()
     {
         vitality = maxVitality;
         healthbar.UpdateHealthBar(maxVitality, vitality);
+        //Energybar.UpdateEnergyBar(maxEnergy, energy);
 
         inputs = new float[inputNodes];
         rayCastController = new RayCastController();
@@ -128,6 +130,8 @@ public class NpcController : MonoBehaviour
         // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecrease/2 * size ;
         distanceTraveled = 0f;
+
+        //Energybar.UpdateEnergyBar(maxEnergy, energy); // MISE A JOUR DE ENERGYBAR
 
         if ( energy <= energyLimit)
         {
