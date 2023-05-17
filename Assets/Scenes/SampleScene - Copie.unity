@@ -9306,7 +9306,7 @@ MonoBehaviour:
   food: {fileID: 7977662413385685684, guid: 5c45898ce9a4d654b8eb7cdfa9bb4948, type: 3}
   listFood: []
   timer: 0
-  foodNumber: 60
+  foodNumber: 800
   floor: {fileID: 1465172683}
   wallUp: {fileID: 1186030080}
   wallDown: {fileID: 353950129}
