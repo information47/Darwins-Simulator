@@ -12,23 +12,35 @@ public class WindowGraph : MonoBehaviour
     private float graphHeight;
     private float graphWidth;
 
+    private List<GameObject> displayedNodes = new List<GameObject>();
+    private List<GameObject> displayedConnections = new List<GameObject>();
+
     private void Awake()
     {
-        NeatNetwork network = new(5, 2, 3, 1);
-        network.MutateNetwork();
-        network.MutateNetwork();
-        network.MutateNetwork();
         graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
-        ShowNetwork(network);
     }
 
     public void ShowNetwork(NeatNetwork network)
     {
-        Vector2[] positions = GetNodesPositions(network);
+        // Supprimer les objets de neurones affichés précédemment
+        foreach (GameObject nodeObject in displayedNodes)
+        {
+            Destroy(nodeObject);
+        }
+        displayedNodes.Clear();
+
+        // Supprimer les objets de connexions affichés précédemment
+        foreach (GameObject connectionObject in displayedConnections)
+        {
+            Destroy(connectionObject);
+        }
+        displayedConnections.Clear();
+
+        Vector2[] nodePositions = GetNodesPositions(network);
         // shows nodes on graph
         for (int i = 0; i < network.Nodes.Count; i++)
         {
-            CreateCircle(positions[i]);
+            CreateCircle(nodePositions[i]);
         }
 
         // shows connexions on graph
@@ -36,12 +48,20 @@ public class WindowGraph : MonoBehaviour
         {
             if (network.Connections[i].isActive)
             {
-                Vector2 fromPosition = positions[network.Connections[i].inputNode];
-                Vector2 toPosition = positions[network.Connections[i].outputNode];
+                Vector2 fromPosition = nodePositions[network.Connections[i].inputNode];
+                Vector2 toPosition = nodePositions[network.Connections[i].outputNode];
 
                 CreateLine(fromPosition, toPosition);
             }
         }
+    }
+    public void HideWindow()
+    {
+        gameObject.SetActive(false);
+    }
+    public void ShowWindow()
+    {
+        gameObject.SetActive(true);
     }
 
     public Vector2[] GetNodesPositions(NeatNetwork network)
@@ -107,6 +127,8 @@ public class WindowGraph : MonoBehaviour
         //define the minimun position into the graphContainer
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
+
+        displayedNodes.Add(gameObject);
     }
 
     private void CreateLine(Vector2 startPosition, Vector2 endPosition)
@@ -131,13 +153,16 @@ public class WindowGraph : MonoBehaviour
 
 
         // orientation
-        if (difference.magnitude > 0.001f)
+        if (difference.magnitude > 0.001f) // eviter les divisions par 0
         {
             lineRectTransform.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg);
         }
         else
         {
-            lineRectTransform.localEulerAngles = Vector3.zero; // Aucune rotation si la ligne est très courte
+            // Aucune rotation si la ligne est très courte
+            lineRectTransform.localEulerAngles = Vector3.zero;
         }
+
+        displayedConnections.Add(lineObject);
     }
 }

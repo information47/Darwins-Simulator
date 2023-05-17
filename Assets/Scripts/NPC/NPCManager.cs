@@ -64,11 +64,11 @@ public class NPCManager : MonoBehaviour
     {
         if (allNPCs.Count < repopingLimit)
         {
-            Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
             if (bestNetworks.Count != 0)
             {
                 for (int i = 0; i < repopingLimit - allNPCs.Count; i++)
                 {
+                    Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
                     int random = (int)Random.Range(0, (bestNetworks.Count - 1)/bestNetworkDivider);
                     SpawnNpc(bestNetworks[random].MyGenome, randomSpawn);
 
@@ -78,6 +78,7 @@ public class NPCManager : MonoBehaviour
             {
                 for (int i = 0; i < repopingLimit - allNPCs.Count; i++)
                 {
+                    Vector3 randomSpawn = new Vector3(Random.Range(floorSize / -2, (floorSize / 2)), 1, Random.Range(floorSize / -2, floorSize / 2));
                     SpawnNpc(randomSpawn);
 
                 }

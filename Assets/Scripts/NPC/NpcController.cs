@@ -170,6 +170,27 @@ public class NpcController : MonoBehaviour
         }
     }
 
+    private void OnMouseDown()
+    {
+        // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
+        ShowWindowGraph();
+    }
+
+    private void ShowWindowGraph()
+    {
+        // Obtenez une référence au script WindowGraph
+        WindowGraph windowGraph = FindObjectOfType<WindowGraph>();
+
+        // Vérifiez si le script WindowGraph existe dans la scène
+        if (windowGraph != null)
+        {
+            windowGraph.HideWindow();
+            // Appelez la fonction ShowNetwork pour afficher le graphique
+            windowGraph.ShowNetwork(myNetwork);
+            windowGraph.ShowWindow();
+        }
+    }
+
     // getters and setters
     public int Id { get => id; set => id = value; }
     public int InputNodes { get => inputNodes; set => inputNodes = value; }
