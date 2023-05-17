@@ -8,6 +8,7 @@ public class NpcController : MonoBehaviour
 
     // color
     private Renderer rend;
+    public ParticleSystem deathParticles;
 
     // Raycast
     private RayCastController rayCastController;
@@ -178,6 +179,8 @@ public class NpcController : MonoBehaviour
     private void Death()
     {
         GameObject.FindObjectOfType<NPCManager>().Death(fitness, id);
+        ParticleSystem particleSystemInstance = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        Destroy(particleSystemInstance.gameObject, 2.0f);
         Destroy(gameObject);
     }
 
