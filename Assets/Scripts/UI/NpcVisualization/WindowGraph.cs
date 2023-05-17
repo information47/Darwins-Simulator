@@ -14,7 +14,12 @@ public class WindowGraph : MonoBehaviour
 
     private void Awake()
     {
+        NeatNetwork network = new(5, 2, 3, 1);
+        network.MutateNetwork();
+        network.MutateNetwork();
+        network.MutateNetwork();
         graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
+        ShowNetwork(network);
     }
 
     public void ShowNetwork(NeatNetwork network)
@@ -42,9 +47,11 @@ public class WindowGraph : MonoBehaviour
     public Vector2[] GetNodesPositions(NeatNetwork network)
     {
         Vector2[] positions = new Vector2[network.Nodes.Count]; 
+        
         graphHeight = graphContainer.sizeDelta.y;
         graphWidth = graphContainer.sizeDelta.x;
-
+        
+        // space between nodes on Y axis
         float inputSpacing = graphHeight / (network.InputNodes.Count - 1);
         float outputSpacing = graphHeight / (network.OutputNodes.Count - 1);
         float hiddenSpacing = graphHeight / (network.HiddenNodes.Count - 1);
@@ -87,60 +94,50 @@ public class WindowGraph : MonoBehaviour
     {
         GameObject gameObject = new("Circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
+        
+        // get the circle shape
         gameObject.GetComponent<Image>().sprite = circleSprite;
 
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
+        
+        // circle size
         rectTransform.sizeDelta = new Vector2(11, 11);
+        
+        //define the minimun position into the graphContainer
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
     }
-
-    private void DrawLine(Vector2 from, Vector2 to)
-    {
-        GameObject lineObject = new GameObject("Line", typeof(Image));
-        lineObject.transform.SetParent(graphContainer, false);
-        lineObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
-
-        Vector2 dir = (from - to).normalized;
-        float distance = Vector2.Distance(from, to);
-
-        RectTransform rectTransform = lineObject.GetComponent<RectTransform>();
-        rectTransform.anchorMin = new Vector2(0, 0);
-        rectTransform.anchorMax = new Vector2(0, 0);
-        rectTransform.sizeDelta = new Vector2(100, 3f);
-        rectTransform.anchoredPosition = from;
-        // rectTransform.localEulerAngles
-    }
-
 
     private void CreateLine(Vector2 startPosition, Vector2 endPosition)
     {
+        // crete a green line
         GameObject lineObject = new GameObject("Line", typeof(Image));
         lineObject.transform.SetParent(graphContainer, false);
         Image lineImage = lineObject.GetComponent<Image>();
         lineImage.color = Color.green;
-
-        RectTransform lineRectTransform = lineObject.GetComponent<RectTransform>();
+        
         Vector2 difference = endPosition - startPosition;
+        
+        // Line center position
+        RectTransform lineRectTransform = lineObject.GetComponent<RectTransform>();
+        lineRectTransform.anchoredPosition = startPosition + difference * 0.5f;
         
         // line width
         lineRectTransform.sizeDelta = new Vector2(difference.magnitude, 3f);
         
         lineRectTransform.anchorMin = new Vector2(0, 0);
         lineRectTransform.anchorMax = new Vector2(0, 0);
-        
-        // Line center position
-        lineRectTransform.anchoredPosition = startPosition + difference * 0.5f;
+
 
         // orientation
-        if (difference.y != 0 || difference.x != 0)
+        if (difference.magnitude > 0.001f)
         {
             lineRectTransform.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg);
         }
         else
         {
-            lineRectTransform.localEulerAngles = Vector3.zero; // Aucune rotation si difference.y et difference.x sont nuls
+            lineRectTransform.localEulerAngles = Vector3.zero; // Aucune rotation si la ligne est très courte
         }
     }
 }
