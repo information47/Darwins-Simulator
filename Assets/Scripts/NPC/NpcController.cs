@@ -50,18 +50,21 @@ public class NpcController : MonoBehaviour
 
     private void Awake()
     {
-        // Récupérer la référence à la caméra spécifique au NPC
+        // Rï¿½cupï¿½rer la rï¿½fï¿½rence ï¿½ la camï¿½ra spï¿½cifique au NPC
         npcCamera = GetComponentInChildren<Camera>();
         npcCamera.enabled = false;
     }
     [SerializeField] private Healthbar healthbar;
-    private float currentHealth;
     [SerializeField] private float maxVitality = 100;
+
+    [SerializeField] private Energybar Energybar;
+    [SerializeField] private float maxEnergy = 100;
 
     private void Start()
     {
         vitality = maxVitality;
         healthbar.UpdateHealthBar(maxVitality, vitality);
+        //Energybar.UpdateEnergyBar(maxEnergy, energy);
 
         inputs = new float[inputNodes];
         rayCastController = new RayCastController();
@@ -77,11 +80,11 @@ public class NpcController : MonoBehaviour
         UnityEngine.Debug.Log("test 1");
         if (npcCamera != null)
         {
-            // Désactiver la caméra principale
+            // Dï¿½sactiver la camï¿½ra principale
             /*Camera.main.enabled = false;*/
 
             UnityEngine.Debug.Log("test 2");
-            // Activer la caméra du NPC
+            // Activer la camï¿½ra du NPC
             npcCamera.enabled = true;
         }
     }
@@ -145,12 +148,14 @@ public class NpcController : MonoBehaviour
         distanceTraveled += Vector3.Distance(transform.position, lastPosition);
         lastPosition = transform.position;
 
-        //diminution de ll'énergie en fonction du temps
+        //diminution de ll'ï¿½nergie en fonction du temps
         energy -= energyDecrease * 0.5f * Time.deltaTime;
 
-        // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
+        // diminution de l'ï¿½nergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecrease/2 * size ;
         distanceTraveled = 0f;
+
+        //Energybar.UpdateEnergyBar(maxEnergy, energy); // MISE A JOUR DE ENERGYBAR
 
         if ( energy <= energyLimit)
         {
@@ -166,11 +171,11 @@ public class NpcController : MonoBehaviour
 
     void Reproduce()
     {
-        energy /= 2f; // transfert de la moitié de l'énergie au nouvel enfant
+        energy /= 2f; // transfert de la moitiï¿½ de l'ï¿½nergie au nouvel enfant
 
-        Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
+        Vector2 randomCircle = Random.insideUnitCircle * 2f; // gï¿½nï¿½re une position alï¿½atoire dans un cercle de rayon 2 autour du parent
         Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
-        // Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
+        // Instantiate(Npc, childPosition, Quaternion.identity); // crï¿½e un nouvel objet NPC
 
 
 
