@@ -7969,7 +7969,6 @@ MonoBehaviour:
   keepBest: 0
   leaveWorst: 0
   currentAlive: 0
-  repopingLimit: 10
   spawnFromSave: 0
   bestTime: 100
   addToBest: 50
@@ -9146,7 +9145,7 @@ MonoBehaviour:
   wallLeft: {fileID: 1411612388}
   floorSize: 40
   startingPopulation: 2
-  repopingLimit: 0
+  repopingLimit: 10
 --- !u!1 &2018351414
 GameObject:
   m_ObjectHideFlags: 0

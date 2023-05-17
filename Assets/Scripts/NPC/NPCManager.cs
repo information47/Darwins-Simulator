@@ -23,7 +23,7 @@ public class NPCManager : MonoBehaviour
     public int keepBest, leaveWorst;
 
     public int currentAlive;
-    [SerializeField] private int repopingLimit = 4; 
+    private int repopingLimit; 
     public bool spawnFromSave = false;
     public int bestTime = 100;
     public int addToBest = 50;
