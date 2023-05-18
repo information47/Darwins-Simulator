@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class WindowGraph : MonoBehaviour
 {
@@ -51,7 +53,7 @@ public class WindowGraph : MonoBehaviour
                 Vector2 fromPosition = nodePositions[network.Connections[i].inputNode];
                 Vector2 toPosition = nodePositions[network.Connections[i].outputNode];
 
-                CreateLine(fromPosition, toPosition);
+                CreateLine(fromPosition, toPosition, network.Connections[i].weight);
             }
         }
     }
@@ -132,13 +134,20 @@ public class WindowGraph : MonoBehaviour
         displayedNodes.Add(gameObject);
     }
 
-    private void CreateLine(Vector2 startPosition, Vector2 endPosition)
+    private void CreateLine(Vector2 startPosition, Vector2 endPosition, float weight)
     {
-        // crete a green line
+        // define the line color depending on the weight sign.
+        Color lineColor = weight >= 0 ? Color.green : Color.red;
+        
+        // define the color intensity depending on the weight grandeur
+        float colorIntensity = Mathf.Abs(weight);
+        lineColor *= colorIntensity;
+        
+        // crete a line
         GameObject lineObject = new GameObject("Line", typeof(Image));
         lineObject.transform.SetParent(graphContainer, false);
         Image lineImage = lineObject.GetComponent<Image>();
-        lineImage.color = Color.green;
+        lineImage.color = lineColor;
         
         Vector2 difference = endPosition - startPosition;
         
