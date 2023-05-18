@@ -103,7 +103,8 @@ public class WindowGraph : MonoBehaviour
             {
                 hiddenNumber++;
                 float yPosition = graphHeight - hiddenNumber * hiddenSpacing;
-                float xPostion = graphWidth / 2;
+                int offset = Random.Range(-80, +80);
+                float xPostion = graphWidth / 2 + offset;
                 positions[i] = new Vector2(xPostion, yPosition);
             }
         }
@@ -122,7 +123,7 @@ public class WindowGraph : MonoBehaviour
         rectTransform.anchoredPosition = anchoredPosition;
         
         // circle size
-        rectTransform.sizeDelta = new Vector2(11, 11);
+        rectTransform.sizeDelta = new Vector2(20, 20);
         
         //define the minimun position into the graphContainer
         rectTransform.anchorMin = new Vector2(0, 0);
