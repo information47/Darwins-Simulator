@@ -75,18 +75,6 @@ public class NpcController : MonoBehaviour
         // this.transform.localScale = new Vector3((float)1.5, 1, (float)1.5); 
 
     }
-    void OnMouseDown()
-    {
-        UnityEngine.Debug.Log(Popup.enabled);
-        if (npcCamera != null)
-        {
-            // Activer la caméra du NPC
-            npcCamera.enabled = true;
-
-            //affiches Popup 
-            Popup.gameObject.SetActive(true);
-        }
-    }
 
     void Update()
     {
@@ -212,7 +200,17 @@ public class NpcController : MonoBehaviour
     private void OnMouseDown()
     {
         // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
-        ShowWindowGraph();
+        // ShowWindowGraph();
+
+        UnityEngine.Debug.Log(Popup.enabled);
+        if (npcCamera != null)
+        {
+            // Activer la caméra du NPC
+            npcCamera.enabled = true;
+
+            //affiches Popup 
+            Popup.gameObject.SetActive(true);
+        }
     }
 
     private void ShowWindowGraph()
