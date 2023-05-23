@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 3714001513798526962}
   - component: {fileID: 2740691672100127945}
   - component: {fileID: 8632504861541019283}
+  - component: {fileID: 5596620817503262275}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Popup
@@ -419,6 +420,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5596620817503262275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274497645340720357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a85bfd018c25a4093a8e6cd1d8a171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1700086054332644625
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +560,7 @@ RectTransform:
   m_GameObject: {fileID: 2203549918305327232}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.9999999, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7749971944342904843}
@@ -557,7 +570,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 1451.1799}
+  m_SizeDelta: {x: 380, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3992649710761351607
 MonoBehaviour:
@@ -887,7 +900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -93,13 +93,6 @@ public class NpcController : MonoBehaviour
 
         MoveNPC(Mathf.Abs(outputs[0]), outputs[1]);
 
-        // fermer popup
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Popup.gameObject.SetActive(false);
-        }
-
-
     }
     
 
@@ -200,39 +193,16 @@ public class NpcController : MonoBehaviour
     private void OnMouseDown()
     {
         // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
-        ShowWindowGraph();
 
         if (npcCamera != null)
         {
             // Activer la caméra du NPC
             npcCamera.enabled = true;
 
-            //affiches Popup 
-            Popup.gameObject.SetActive(true);
+            //affiche Popup 
+            Popup.gameObject.GetComponent<PopupController>().ShowPopup(myNetwork);
+
         }
-    }
-
-    private void ShowWindowGraph()
-    {
-        // get the NPC windowgraph object
-        WindowGraph windowGraph = FindObjectOfType<WindowGraph>();
-
-        if (windowGraph != null)
-        {
-            windowGraph.ShowNetwork(myNetwork);
-        }
-    }
-
-    private void HideGraph()
-    {
-        // get the NPC windowgraph object
-        WindowGraph windowGraph = FindObjectOfType<WindowGraph>();
-
-        if (windowGraph != null)
-        {
-            windowGraph.HideWindow();
-        }
-
     }
 
     // getters and setters

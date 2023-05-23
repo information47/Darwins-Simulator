@@ -157,7 +157,7 @@ public class WindowGraph : MonoBehaviour
         lineRectTransform.anchoredPosition = startPosition + difference * 0.5f;
         
         // line width
-        lineRectTransform.sizeDelta = new Vector2(difference.magnitude, 3f);
+        lineRectTransform.sizeDelta = new Vector2(difference.magnitude, 6f);
         
         lineRectTransform.anchorMin = new Vector2(0, 0);
         lineRectTransform.anchorMax = new Vector2(0, 0);
