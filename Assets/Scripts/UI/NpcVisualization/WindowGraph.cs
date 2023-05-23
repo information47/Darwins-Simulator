@@ -57,6 +57,7 @@ public class WindowGraph : MonoBehaviour
             }
         }
     }
+
     public void HideWindow()
     {
         gameObject.SetActive(false);

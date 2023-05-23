@@ -72,9 +72,7 @@ public class NpcController : MonoBehaviour
         // send sensors data as input in the network
         outputs = myNetwork.FeedForwardNetwork(inputs);
 
-        if (outputs[0] < 0) outputs[0] = outputs[0] * (-1);
-
-        MoveNPC(outputs[0], outputs[1]);
+        MoveNPC(Mathf.Abs(outputs[0]), outputs[1]);
 
       
     }
