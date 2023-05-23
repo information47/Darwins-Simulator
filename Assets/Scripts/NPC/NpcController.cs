@@ -172,21 +172,30 @@ public class NpcController : MonoBehaviour
     {
         // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
         ShowWindowGraph();
+        HideGraph();
     }
 
     private void ShowWindowGraph()
     {
-        // Obtenez une référence au script WindowGraph
+        // get the NPC windowgraph object
         WindowGraph windowGraph = FindObjectOfType<WindowGraph>();
 
-        // Vérifiez si le script WindowGraph existe dans la scène
+        if (windowGraph != null)
+        {
+            windowGraph.ShowNetwork(myNetwork);
+        }
+    }
+
+    private void HideGraph()
+    {
+        // get the NPC windowgraph object
+        WindowGraph windowGraph = FindObjectOfType<WindowGraph>();
+
         if (windowGraph != null)
         {
             windowGraph.HideWindow();
-            // Appelez la fonction ShowNetwork pour afficher le graphique
-            windowGraph.ShowNetwork(myNetwork);
-            windowGraph.ShowWindow();
         }
+
     }
 
     // getters and setters
