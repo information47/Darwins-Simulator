@@ -200,10 +200,8 @@ public class NpcController : MonoBehaviour
     private void OnMouseDown()
     {
         // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
-<<<<<<< HEAD
-        // ShowWindowGraph();
+        ShowWindowGraph();
 
-        UnityEngine.Debug.Log(Popup.enabled);
         if (npcCamera != null)
         {
             // Activer la caméra du NPC
@@ -212,10 +210,6 @@ public class NpcController : MonoBehaviour
             //affiches Popup 
             Popup.gameObject.SetActive(true);
         }
-=======
-        ShowWindowGraph();
-        HideGraph();
->>>>>>> interfacePaul
     }
 
     private void ShowWindowGraph()
