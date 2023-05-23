@@ -103,9 +103,7 @@ public class NpcController : MonoBehaviour
         // send sensors data as input in the network
         outputs = myNetwork.FeedForwardNetwork(inputs);
 
-        if (outputs[0] < 0) outputs[0] = outputs[0] * (-1);
-
-        MoveNPC(outputs[0], outputs[1]);
+        MoveNPC(Mathf.Abs(outputs[0]), outputs[1]);
 
         // fermer popup
         if (Input.GetKeyDown(KeyCode.M))
@@ -208,6 +206,27 @@ public class NpcController : MonoBehaviour
         {
             // fitness = 0;
             Death();
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
+        ShowWindowGraph();
+    }
+
+    private void ShowWindowGraph()
+    {
+        // Obtenez une référence au script WindowGraph
+        WindowGraph windowGraph = FindObjectOfType<WindowGraph>();
+
+        // Vérifiez si le script WindowGraph existe dans la scène
+        if (windowGraph != null)
+        {
+            windowGraph.HideWindow();
+            // Appelez la fonction ShowNetwork pour afficher le graphique
+            windowGraph.ShowNetwork(myNetwork);
+            windowGraph.ShowWindow();
         }
     }
 
