@@ -24,9 +24,11 @@ public class PopupController : MonoBehaviour
     public void HidePopup()
     {
         gameObject.SetActive(false);
+        GameScript.Instance.UnregisterPopup(this);
     }
     public void ShowPopup(NeatNetwork network)
     {
+        GameScript.Instance.RegisterPopup(this);
         gameObject.SetActive(true);
 
         // get the NPC windowgraph object

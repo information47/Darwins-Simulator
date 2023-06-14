@@ -19,7 +19,6 @@ public class FloorSizeSliderController : MonoBehaviour
             sliderValue = floorSizeSlider.value;
             // Envois la starting population au levelController
             levelControllerObject.GetComponent<LevelController>().FloorSize = (int)sliderValue;
-
         });
     }
 

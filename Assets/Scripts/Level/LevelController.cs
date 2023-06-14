@@ -19,18 +19,21 @@ public class LevelController : MonoBehaviour
     public GameObject wallRight;
     public GameObject wallLeft;
 
+    //Obstacles
+    public GameObject Obstacle;
+    private GameObject[] ListObstacle;
+
     [SerializeField] private float floorSize;
 
     [SerializeField] public int startingPopulation;
     [SerializeField] public int repopingLimit;
-
-
-
+    [SerializeField] public GameObject grass;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        SpawnObstacles();
         // floor and walls setup
         //SizeSetup();
     }
@@ -73,6 +76,15 @@ public class LevelController : MonoBehaviour
                 Instantiate(food, randomSpawn, Quaternion.identity);
             }
         }
+    }
+
+    private void SpawnObstacles(){
+        ListObstacle = GameObject.FindGameObjectsWithTag("Obs");
+        
+        for(int i = 0; i < 10; i++){
+            Vector3 randomSpawn = new Vector3(Random.Range(FloorSize / -2, (FloorSize / 2)), 0.05f, Random.Range(FloorSize / -2, FloorSize / 2));
+            Instantiate(Obstacle, randomSpawn, Quaternion.identity);
+        }    
     }
     
     // getters and setters

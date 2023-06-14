@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Healthbar : MonoBehaviour
 {
     [SerializeField] private Image healthbarSprite;
+    public Camera OtherCam;
     private Camera cam;
 
     private void Start()
@@ -20,6 +21,13 @@ public class Healthbar : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position);
+        if (OtherCam.enabled != true)
+        {
+            transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position);
+        }
+        else
+        {
+            transform.rotation = Quaternion.LookRotation(transform.position - OtherCam.transform.position);
+        }
     }
 }

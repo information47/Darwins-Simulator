@@ -30,7 +30,6 @@ public class PauseMenu : MonoBehaviour
     }
     public void ResumeGame()
     {
-        Debug.Log("ResumePause");
         pauseMenu.SetActive(false);
         inGameInterface.SetActive(true);
         game.GetComponent<GameScript>().gamePaused = false;

@@ -20,7 +20,6 @@ public class InGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("ESCAPE");
             if (game.GetComponent<GameScript>().gamePaused == true)
             {
                 pauseMenu.GetComponent<PauseMenu>().ResumeGame();

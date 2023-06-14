@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Food
   - Popup
+  - Obs
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
+  - Obs
   - 
   - 
   - 

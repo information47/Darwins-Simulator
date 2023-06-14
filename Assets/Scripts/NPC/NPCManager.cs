@@ -42,7 +42,7 @@ public class NPCManager : MonoBehaviour
         repopingLimit = levelController.repopingLimit;
         floorSize = levelController.FloorSize;
 
-        inputNodes = 5;
+        inputNodes = 6;
         outputNodes = 2;
         hiddenNodes = 0;
 

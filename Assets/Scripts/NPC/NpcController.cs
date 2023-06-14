@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class NpcController : MonoBehaviour
@@ -19,6 +21,14 @@ public class NpcController : MonoBehaviour
     //Camera && Popup
     public Camera npcCamera;
     public Canvas Popup;
+    private int FoodEated = 0;
+    private float tempsDeCreation ;
+    float tempsEcoule;
+    float age;
+    public Text textComponent;
+    public Text textFood;
+    public Text textEnergy;
+    public Text textVitality;
 
     // movement
     private int food;
@@ -31,7 +41,7 @@ public class NpcController : MonoBehaviour
     private float energyDecrease = 0.5f;
     private float energyLimit = 30;
     private int energyToReproduce = 130;
-    private float vitalityLoss = 0.1f;
+    private float vitalityLoss = 0.2f;
     private float speedMultiplier = 4;
 
 
@@ -51,24 +61,29 @@ public class NpcController : MonoBehaviour
 
     private void Awake()
     {
-        // Récupérer la référence à la caméra spécifique au NPC
+        // Rï¿½cupï¿½rer la rï¿½fï¿½rence ï¿½ la camï¿½ra spï¿½cifique au NPC
         npcCamera = GetComponentInChildren<Camera>();
         npcCamera.enabled = false;
         Popup.gameObject.SetActive(false);
     }
     [SerializeField] private Healthbar healthbar;
-    private float currentHealth;
     [SerializeField] private float maxVitality = 100;
+
+    [SerializeField] private Energybar energybar;
+    [SerializeField] private float maxEnergy = 100;
 
     private void Start()
     {
-        vitality = maxVitality;
         healthbar.UpdateHealthBar(maxVitality, vitality);
+        //energybar.UpdateEnergyBar(maxEnergy, energy);
 
         inputs = new float[inputNodes];
         rayCastController = new RayCastController();
         rend = GetComponent<Renderer>();
         fow = GetComponent<FieldOfView>();
+
+        //age compteur
+        tempsDeCreation = Time.time;
 
 
         // modify NPC size
@@ -93,6 +108,13 @@ public class NpcController : MonoBehaviour
 
         MoveNPC(Mathf.Abs(outputs[0]), outputs[1]);
 
+        AgeCounter();
+        string formatedage = age.ToString("F2");
+        textComponent.text = formatedage ;
+        textFood.text = FoodEated.ToString("N0");
+        textEnergy.text = energy.ToString("N0");
+        textEnergy.text = energy.ToString("N0");
+        textVitality.text = vitality.ToString("N0");
     }
     
 
@@ -106,8 +128,8 @@ public class NpcController : MonoBehaviour
 
         inputs[3] = fow.ClosetTargetDist();
         inputs[4] = fow.ClosetTargetAngle(divider: 2);
-        // inputs[5] = this.energy / 28;
-
+        inputs[5] = energy / 20;
+        inputs[6] = vitality / 20;
     }
 
     void MoveNPC(float speed, float rotation)
@@ -125,6 +147,10 @@ public class NpcController : MonoBehaviour
     
     void EnergyLoss()
     {
+        // consommation du cerveau en energie
+        double brainConsumption = myNetwork.Connections.Count * 0.001;
+        energy -= (float)brainConsumption;
+
         //calcul de la taille du NPC
         float size = transform.localScale.x * transform.localScale.y * transform.localScale.z;
         
@@ -132,39 +158,54 @@ public class NpcController : MonoBehaviour
         distanceTraveled += Vector3.Distance(transform.position, lastPosition);
         lastPosition = transform.position;
 
-        //diminution de ll'énergie en fonction du temps
+        //diminution de l'energie en fonction du temps
         energy -= energyDecrease * 0.5f * Time.deltaTime;
 
-        // diminution de l'énergie en fonction de la distance parcourue et de la taille du NPC
+        // diminution de l'ï¿½nergie en fonction de la distance parcourue et de la taille du NPC
         energy -= distanceTraveled * energyDecrease/2 * size ;
         distanceTraveled = 0f;
 
-        if ( energy <= energyLimit)
-        {
-            vitality -= vitalityLoss;
-            healthbar.UpdateHealthBar(maxVitality, vitality);
-        }
-        else if ( energy >= energyToReproduce)
+        //Energybar.UpdateEnergyBar(maxEnergy, energy); // MISE A JOUR DE ENERGYBAR
+
+         vitality -= LossBasedOnEnergy();
+
+        if ( energy >= energyToReproduce)
         {
             //Reproduce();
         }
+        
+        healthbar.UpdateHealthBar(maxVitality, vitality);
 
     }
 
     void Reproduce()
     {
-        energy /= 2f; // transfert de la moitié de l'énergie au nouvel enfant
+        energy /= 2f; // transfert de la moitie de l'energie au nouvel enfant
 
-        Vector2 randomCircle = Random.insideUnitCircle * 2f; // génère une position aléatoire dans un cercle de rayon 2 autour du parent
+        Vector2 randomCircle = Random.insideUnitCircle * 2f; // gï¿½nï¿½re une position alï¿½atoire dans un cercle de rayon 2 autour du parent
         Vector3 childPosition = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
-        // Instantiate(Npc, childPosition, Quaternion.identity); // crée un nouvel objet NPC
+        // Instantiate(Npc, childPosition, Quaternion.identity); // crï¿½e un nouvel objet NPC
 
 
 
     }
+    private float LossBasedOnEnergy()
+    {
+        double loss = -0.0001 * (energy - energyLimit);
+        if (loss<0) loss = 0;
+       
+        return (float)loss;
+    }
 
     private void Death()
     {
+        // Si le Popup de ce NPC est actuellement affichÃ©
+        if (Popup.gameObject.activeInHierarchy)
+        {
+            // Cacher le Popup avant de dÃ©truire le NPC
+            Popup.gameObject.GetComponent<PopupController>().HidePopup();
+        }
+
         GameObject.FindObjectOfType<NPCManager>().Death(fitness, id);
         ParticleSystem particleSystemInstance = Instantiate(deathParticles, transform.position, Quaternion.identity);
         Destroy(particleSystemInstance.gameObject, 2.0f);
@@ -178,12 +219,13 @@ public class NpcController : MonoBehaviour
             this.food += 1;
             energy += 10;
             fitness++;
+            FoodEated++;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Wall"))
+        if (collision.transform.CompareTag("Wall") || collision.transform.CompareTag("Obs"))
         {
             // fitness = 0;
             Death();
@@ -193,16 +235,30 @@ public class NpcController : MonoBehaviour
     private void OnMouseDown()
     {
         // Appeler une fonction pour afficher le canvas ou activer le GameObject WindowGraph
-
         if (npcCamera != null)
         {
-            // Activer la caméra du NPC
-            npcCamera.enabled = true;
+            // Utilise la mÃ©thode SwitchCamera pour changer de camÃ©ra
+            GameScript.Instance.SwitchCamera(npcCamera);
+
+            // Cache tous les autres popups    // Si le Popup de ce NPC est actuellement affichÃ©
+            if (Popup.gameObject.activeInHierarchy)
+            {
+                // Cacher le Popup avant de dÃ©truire le NPC
+                Popup.gameObject.GetComponent<PopupController>().HidePopup();
+            }
+            GameScript.Instance.HideAllPopups();
 
             //affiche Popup 
             Popup.gameObject.GetComponent<PopupController>().ShowPopup(myNetwork);
-
         }
+    }
+
+    private void AgeCounter()
+    {
+        tempsEcoule = Time.time - tempsDeCreation;
+        age = tempsEcoule/10;
+        
+
     }
 
     // getters and setters
