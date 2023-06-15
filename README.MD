@@ -18,3 +18,4 @@ Darwin’s Simulator est un projet Unity 3D. Comme son nom l’indique, il a pou
 Ainsi, grâce à ces entrées et sortie, le réseau permet à l’individu d'évoluer dans son monde en fonction de ses valeurs d’entrée.
 
 une version 2 orientée comportements sociaux plutôt que sciences est à venir.x plutôt que sciences est à venir.
+![apercu en simulation](./apercu.gif)
